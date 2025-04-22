@@ -1,0 +1,126 @@
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { CreateTrackDto, createTrackDto } from '@/api/dto/tracks.dto.ts';
+import { Input } from '@/components/ui/input.tsx';
+import { Button } from '@/components/ui/button.tsx';
+import { Label } from '@/components/ui/label.tsx';
+import MultipleSelector, { Option } from '@/components/ui/multiselect.tsx';
+import useGenreQuery from '@/features/tracks/hooks/use-genre-query.ts';
+import { mapGenre } from '@/features/tracks/lib/utils.ts';
+import TrackImage from '@/features/tracks/components/track-image.tsx';
+import { useQueryClient } from '@tanstack/react-query';
+import { createTrack, updateTrack } from '@/api/tracks.api.ts';
+import { toast } from 'sonner';
+import { Track } from '@/types/entities/track.ts';
+
+interface CreateTrackFormProps {
+  onClose: () => void;
+  isEdit?: boolean;
+  track?: Track;
+}
+
+const TrackForm = ({ onClose, isEdit, track }: CreateTrackFormProps) => {
+  const { genres: genresData } = useGenreQuery();
+  const queryClient = useQueryClient();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: zodResolver(createTrackDto),
+    defaultValues: {
+      title: track?.title ?? '',
+      artist: track?.artist ?? '',
+      album: track?.album ?? '',
+      coverImage: track?.coverImage ?? '',
+      genres: track?.genres ?? [],
+    },
+  });
+
+  const genreOptions = mapGenre(genresData);
+
+  const genres = watch('genres');
+  const image = watch('coverImage');
+
+  const handleSelectGenre = (options: Option[]) => {
+    setValue(
+      'genres',
+      options.map((option) => option.value)
+    );
+  };
+
+  const onSubmit = async (data: CreateTrackDto) => {
+    try {
+      if (isEdit && track) {
+        await updateTrack(track?.id, data);
+      } else {
+        await createTrack(data);
+      }
+      await queryClient.invalidateQueries({ queryKey: ['tracks'] });
+      toast.success(isEdit ? 'Track updated' : 'Track created');
+      onClose();
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error?.message);
+      }
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
+      <div className="w-64 self-center">
+        <TrackImage image={image} alt="Track image" />
+      </div>
+      <Input
+        label="Image URL"
+        placeholder="Provide image URL"
+        error={errors.coverImage?.message}
+        {...register('coverImage')}
+      />
+      <Input
+        label="Title"
+        error={errors.title?.message}
+        placeholder="Enter task title"
+        {...register('title')}
+      />
+      <Input
+        label="Artist"
+        error={errors.artist?.message}
+        placeholder="Enter task artist"
+        {...register('artist')}
+      />
+      <Input
+        label="Album"
+        error={errors.album?.message}
+        placeholder="Enter task album"
+        {...register('album')}
+      />
+      <div className="*:not-first:mt-2">
+        <Label>Multiselect</Label>
+        <MultipleSelector
+          value={mapGenre(genres)}
+          defaultOptions={genreOptions}
+          onChange={handleSelectGenre}
+          placeholder="Select genres"
+          hideClearAllButton
+          hidePlaceholderWhenSelected
+          emptyIndicator={
+            <p className="text-center text-sm">No results found</p>
+          }
+        />
+      </div>
+      <div className="self-end mt-4 space-x-2">
+        <Button type="button" variant="secondary" onClick={onClose}>
+          Cancel
+        </Button>
+        <Button type="submit" disabled={isSubmitting}>
+          {isEdit ? 'Update' : 'Create'}
+        </Button>
+      </div>
+    </form>
+  );
+};
+
+export default TrackForm;
