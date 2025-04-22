@@ -166,9 +166,9 @@ const AudioSnackbar = () => {
             exit={{ y: 100, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
           >
-            <div className="flex justify-between items-center gap-5">
-              <div className="flex grow gap-2 items-center">
-                <div className="mb-2 w-[100px]">
+            <div className="flex justify-center lg:justify-between items-center flex-col lg:flex-row gap-5">
+              <div className="flex grow gap-2 items-center justify-between flex-col lg:flex-row">
+                <div className="mb-2 text-center lg:text-start w-[200px]">
                   <h4 className="text-sm font-medium text-slate-900 dark:text-white truncate">
                     {trackName}
                   </h4>
@@ -188,6 +188,7 @@ const AudioSnackbar = () => {
                 currentTime={currentTime}
                 duration={duration}
                 onTimeChange={handleTimeChange}
+                showWaveform
               />
 
               <VolumeControl
