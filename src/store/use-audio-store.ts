@@ -14,6 +14,7 @@ interface AudioState {
 interface AudioAction {
   setGlobalAudioRef: (ref: HTMLAudioElement | null) => void;
   addToQueue: (track: Track) => void;
+  removeFromQueue: (trackId: string) => void;
   resetQueue: () => void;
   next: () => void;
   previous: () => void;
@@ -43,6 +44,13 @@ const useAudioStore = create<AudioState & AudioAction>((set, get) => ({
   addToQueue: (track) =>
     set((state) => ({
       queue: [...state.queue, track],
+    })),
+
+  removeFromQueue: (trackId) =>
+    set((state) => ({
+      queue: state.queue.filter((t) => t.id !== trackId),
+      currentTrackId:
+        state.currentTrackId === trackId ? null : state.currentTrackId,
     })),
 
   resetQueue: () =>
