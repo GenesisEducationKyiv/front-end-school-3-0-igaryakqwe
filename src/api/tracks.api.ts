@@ -81,7 +81,7 @@ export const deleteTrack = async (id: string) => {
 };
 
 export const deleteTracks = async (ids: string[]) => {
-  const response = await fetch(`${API_URL}/tracks`, {
+  const response = await fetch(`${API_URL}/tracks/delete`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

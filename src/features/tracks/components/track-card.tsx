@@ -5,31 +5,46 @@ import {
   CardContent,
   CardDescription,
   CardTitle,
-} from '@/components/ui/card.tsx';
-import { Badge } from '@/components/ui/badge.tsx';
-import { Track } from '@/types/entities/track.ts';
-import TrackImage from '@/features/tracks/components/track-image.tsx';
-import TrackDialog from '@/features/tracks/components/track-dialog.tsx';
-import { Button } from '@/components/ui/button.tsx';
+} from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Track } from '@/types/entities/track';
+import TrackImage from '@/features/tracks/components/track-image';
+import TrackDialog from '@/features/tracks/components/track-dialog';
+import { Button } from '@/components/ui/button';
 import { EditIcon, Trash2Icon } from 'lucide-react';
-import ConfirmationDialog from '@/components/confirmation-dialog.tsx';
-import useDeleteTrackMutation from '@/features/tracks/hooks/use-delete-track-mutation.ts';
-import TrackUpload from '@/features/tracks/components/track-upload.tsx';
-import TrackAudio from '@/features/tracks/components/track-audio.tsx';
+import ConfirmationDialog from '@/components/confirmation-dialog';
+import useDeleteTrackMutation from '@/features/tracks/hooks/use-delete-track-mutation';
+import TrackUpload from '@/features/tracks/components/track-upload';
+import TrackAudio from '@/features/tracks/components/track-audio';
+import { Checkbox } from '@/components/ui/checkbox.tsx';
+import useTracksStore from '@/features/tracks/store/use-tracks-store.tsx';
 
 interface TrackCardProps {
   track: Track;
 }
 
 const TrackCard = ({ track }: TrackCardProps) => {
+  const { selectedTracksIds, selectTrack } = useTracksStore();
   const { deleteTrack, isDeleting } = useDeleteTrackMutation();
+
+  const isSelected = selectedTracksIds.includes(track.id);
 
   const handleDelete = () => {
     deleteTrack(track.id);
   };
 
+  const handleSelect = () => {
+    selectTrack(track.id);
+  };
+
   return (
     <Card className="w-full relative p-0 gap-0 max-w-md mx-auto overflow-hidden">
+      <Checkbox
+        checked={isSelected}
+        onCheckedChange={handleSelect}
+        className="size-5 cursor-pointer absolute left-4 top-4 z-10 bg-white hover:scale-125 transition-all"
+      />
+
       <TrackImage
         image={track.coverImage}
         alt={`${track.title} by ${track.artist}`}

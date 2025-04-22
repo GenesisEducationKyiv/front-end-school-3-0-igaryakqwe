@@ -44,10 +44,10 @@ const ConfirmationDialog = ({
           </AlertDialogHeader>
         </div>
         <AlertDialogFooter>
-          <AlertDialogCancel>Скасувати</AlertDialogCancel>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction asChild>
             <Button isLoading={isLoading} onClick={onSubmit}>
-              Підтвердити
+              Confirm
             </Button>
           </AlertDialogAction>
         </AlertDialogFooter>
