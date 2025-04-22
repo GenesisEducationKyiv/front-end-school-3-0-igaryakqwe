@@ -4,7 +4,7 @@ import TracksFilters from '@/features/tracks/components/tracks-filters.tsx';
 import TrackDialog from '@/features/tracks/components/track-dialog.tsx';
 import { PlusIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button.tsx';
-import AudioSnackbar from '@/components/audio/audio-snackbar.tsx';
+import AudioSnackbar from '@/features/tracks/components/audio-snackbar.tsx';
 import DeleteManyTracksDialog from '@/features/tracks/components/delete-many-tracks-dialog.tsx';
 
 const TracksPage = () => {

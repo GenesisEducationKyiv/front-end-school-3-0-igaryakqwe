@@ -16,18 +16,19 @@ interface TrackAudioProps {
 }
 
 const TrackAudio = ({ track }: TrackAudioProps) => {
-  const currentTrackId = useAudioStore((state) => state.currentTrackId);
-  const isPlaying = useAudioStore((state) => state.isPlaying);
-  const currentTime = useAudioStore((state) => state.currentTime);
-  const globalAudioRef = useAudioStore((state) => state.globalAudioRef);
-
-  const setCurrentTrackId = useAudioStore((state) => state.setCurrentTrackId);
-  const togglePlay = useAudioStore((state) => state.togglePlay);
-  const setCurrentTime = useAudioStore((state) => state.setCurrentTime);
-  const next = useAudioStore((state) => state.next);
-  const previous = useAudioStore((state) => state.previous);
-  const addToQueue = useAudioStore((state) => state.addToQueue);
-  const removeFromQueue = useAudioStore((state) => state.removeFromQueue);
+  const {
+    globalAudioRef,
+    currentTrackId,
+    isPlaying,
+    currentTime,
+    setCurrentTrackId,
+    setCurrentTime,
+    togglePlay,
+    addToQueue,
+    removeFromQueue,
+    previous,
+    next,
+  } = useAudioStore();
 
   const isThisPlaying = isPlaying && currentTrackId === track.id;
 
