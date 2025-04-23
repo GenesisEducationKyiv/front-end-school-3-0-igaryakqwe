@@ -3,11 +3,11 @@ import { UploadIcon } from 'lucide-react';
 import { useFileUpload } from '@/hooks/use-file-upload.ts';
 import { Button } from '@/components/ui/button.tsx';
 import useTrackUploadMutation from '@/features/tracks/hooks/use-track-upload-mutation.ts';
-import { toast } from 'sonner';
 import {
   ALLOWED_AUDIO_TYPES,
   MAX_FILE_SIZE,
 } from '@/features/tracks/lib/constants';
+import { toast } from '@/lib/toast';
 
 interface TrackUploadProps {
   trackId: string;
@@ -45,6 +45,7 @@ const TrackUpload = ({ trackId }: TrackUploadProps) => {
       <div className="inline-flex w-full items-center gap-2 align-top">
         <div className="relative w-full inline-block">
           <Button
+            data-testid={`upload-track-${trackId}`}
             className="w-full"
             onClick={openFileDialog}
             isLoading={isUploading}

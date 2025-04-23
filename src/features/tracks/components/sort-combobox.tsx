@@ -38,6 +38,7 @@ const SortCombobox = () => {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
+          data-testid="sort-select"
           variant="outline"
           role="combobox"
           aria-expanded={open}

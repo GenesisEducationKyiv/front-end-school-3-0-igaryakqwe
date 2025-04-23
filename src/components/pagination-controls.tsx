@@ -28,7 +28,7 @@ const PaginationControls = ({
           <PaginationItem key={i}>
             <PaginationLink
               href="#"
-              onClick={e => {
+              onClick={(e) => {
                 e.preventDefault();
                 onPageChange(i);
               }}
@@ -46,7 +46,7 @@ const PaginationControls = ({
       <PaginationItem key={1}>
         <PaginationLink
           href="#"
-          onClick={e => {
+          onClick={(e) => {
             e.preventDefault();
             onPageChange(1);
           }}
@@ -73,7 +73,7 @@ const PaginationControls = ({
         <PaginationItem key={i}>
           <PaginationLink
             href="#"
-            onClick={e => {
+            onClick={(e) => {
               e.preventDefault();
               onPageChange(i);
             }}
@@ -98,7 +98,7 @@ const PaginationControls = ({
         <PaginationItem key={totalPages}>
           <PaginationLink
             href="#"
-            onClick={e => {
+            onClick={(e) => {
               e.preventDefault();
               onPageChange(totalPages);
             }}
@@ -116,12 +116,13 @@ const PaginationControls = ({
   if (totalPages <= 1) return null;
 
   return (
-    <Pagination>
+    <Pagination data-testid="pagination">
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
+            data-testid="pagination-prev"
             href="#"
-            onClick={e => {
+            onClick={(e) => {
               e.preventDefault();
               if (currentPage > 1) onPageChange(currentPage - 1);
             }}
@@ -135,8 +136,9 @@ const PaginationControls = ({
 
         <PaginationItem>
           <PaginationNext
+            data-testid="pagination-next"
             href="#"
-            onClick={e => {
+            onClick={(e) => {
               e.preventDefault();
               if (currentPage < totalPages) onPageChange(currentPage + 1);
             }}

@@ -29,13 +29,14 @@ const GenresCombobox = () => {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
+          data-testid="filter-genre"
           variant="outline"
           role="combobox"
           aria-expanded={open}
           className="w-full justify-between"
         >
           {genre
-            ? genres?.find(genreItem => genreItem === genre)
+            ? genres?.find((genreItem) => genreItem === genre)
             : 'All genres'}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -59,21 +60,21 @@ const GenresCombobox = () => {
               <CommandItem
                 value=""
                 className={cn(genre === '' && 'font-semibold bg-gray-100')}
-                onSelect={currentValue => {
+                onSelect={(currentValue) => {
                   setGenre(currentValue);
                   setOpen(false);
                 }}
               >
                 All genres
               </CommandItem>
-              {genres?.map(genreItem => (
+              {genres?.map((genreItem) => (
                 <CommandItem
                   key={genreItem}
                   value={genreItem}
                   className={cn(
                     genre === genreItem && 'font-semibold bg-gray-100'
                   )}
-                  onSelect={currentValue => {
+                  onSelect={(currentValue) => {
                     setGenre(currentValue === genre ? '' : currentValue);
                     setOpen(false);
                   }}

@@ -27,27 +27,30 @@ const TracksFilters = () => {
       <CardTitle className="text-2xl">Filters</CardTitle>
       <CardContent className="p-0 space-y-2">
         <Input
+          data-testid="search-input"
           label="Search"
           value={search}
           placeholder="Enter title..."
           onChange={handleSearchChange}
         />
-        <div>
-          <Label className="text-sm font-medium">Select Genre</Label>
-          <GenresCombobox />
-        </div>
         <Input
+          data-testid="filter-artist"
           label="Artist"
           value={artist}
           placeholder="Enter artist..."
           onChange={handleArtistChange}
         />
         <Input
+          data-testid="filter-album"
           label="Album"
           value={album}
           placeholder="Enter album..."
           onChange={handleAlbumChange}
         />
+        <div>
+          <Label className="text-sm font-medium">Select Genre</Label>
+          <GenresCombobox />
+        </div>
         <div className="flex items-end w-full gap-2">
           <div className="w-full">
             <Label className="text-sm font-medium">Sort By</Label>

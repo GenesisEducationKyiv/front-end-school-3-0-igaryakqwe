@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { uploadTrackFile } from '@/api/tracks.api.ts';
-import { toast } from 'sonner';
+import { toast } from '@/lib/toast';
 
 const useTrackUploadMutation = (id: string) => {
   const queryClient = useQueryClient();

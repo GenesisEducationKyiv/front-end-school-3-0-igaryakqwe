@@ -7,7 +7,7 @@ import {
 } from '@/components/ui/avatar.tsx';
 
 interface TrackImage {
-  image?: string;
+  image?: string | null;
   alt?: string;
   className?: string;
 }
@@ -17,7 +17,7 @@ const TrackImage = ({ image, alt, className }: TrackImage) => {
     <div className={cn('aspect-square w-full p-6', className)}>
       <Avatar className="w-full h-full rounded-lg">
         <AvatarImage
-          src={image}
+          src={image ?? undefined}
           alt={alt}
           className="object-cover w-full h-full rounded-lg"
         />

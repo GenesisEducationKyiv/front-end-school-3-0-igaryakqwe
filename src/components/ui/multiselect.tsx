@@ -411,6 +411,7 @@ const MultipleSelector = ({
 
   return (
     <Command
+      data-testid="genre-selector"
       ref={dropdownRef}
       {...commandProps}
       onKeyDown={(e) => {

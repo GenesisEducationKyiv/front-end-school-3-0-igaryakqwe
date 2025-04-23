@@ -1,6 +1,6 @@
 import { deleteTrack } from '@/api/tracks.api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
+import { toast } from '@/lib/toast';
 
 const useDeleteTrackMutation = () => {
   const queryClient = useQueryClient();

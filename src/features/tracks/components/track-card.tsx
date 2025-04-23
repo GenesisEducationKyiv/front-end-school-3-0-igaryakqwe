@@ -24,7 +24,7 @@ interface TrackCardProps {
 }
 
 const TrackCard = ({ track }: TrackCardProps) => {
-  const { selectedTracksIds, selectTrack } = useTracksStore();
+  const { isSelectMode, selectedTracksIds, selectTrack } = useTracksStore();
   const { deleteTrack, isDeleting } = useDeleteTrackMutation();
 
   const isSelected = selectedTracksIds.includes(track.id);
@@ -38,12 +38,18 @@ const TrackCard = ({ track }: TrackCardProps) => {
   };
 
   return (
-    <Card className="w-full relative p-0 gap-0 max-w-md mx-auto overflow-hidden">
-      <Checkbox
-        checked={isSelected}
-        onCheckedChange={handleSelect}
-        className="size-5 cursor-pointer absolute left-4 top-4 z-10 bg-white hover:scale-125 transition-all"
-      />
+    <Card
+      data-testid={`track-item-${track.id}`}
+      className="w-full relative p-0 gap-0 max-w-md mx-auto overflow-hidden"
+    >
+      {isSelectMode && (
+        <Checkbox
+          data-testid={`track-checkbox-${track.id}`}
+          checked={isSelected}
+          onCheckedChange={handleSelect}
+          className="size-5 cursor-pointer absolute left-4 top-4 z-10 bg-white hover:scale-125 transition-all"
+        />
+      )}
 
       <TrackImage
         image={track.coverImage}
@@ -53,12 +59,25 @@ const TrackCard = ({ track }: TrackCardProps) => {
 
       <CardContent className="pb-6 h-full flex flex-col justify-between">
         <div className="mb-4">
-          <CardTitle className="text-xl truncate text-center">
+          <CardTitle
+            data-testid={`track-item-${track.id}-title`}
+            className="text-xl truncate text-center"
+          >
             {track.title}
           </CardTitle>
           <CardDescription className="text-center text-muted-foreground">
-            <p className="truncate">{track.album}</p>
-            <p className="truncate">By {track.artist}</p>
+            <p
+              data-testid={`track-item-${track.id}-album`}
+              className="truncate"
+            >
+              {track.album}
+            </p>
+            <p
+              data-testid={`track-item-${track.id}-artist`}
+              className="truncate"
+            >
+              By {track.artist}
+            </p>
           </CardDescription>
 
           <div className="flex flex-wrap items-center justify-center gap-1 mt-2">
@@ -79,6 +98,7 @@ const TrackCard = ({ track }: TrackCardProps) => {
       <div className="flex gap-2 absolute top-2 right-2 z-10">
         <TrackDialog track={track} isEdit>
           <Button
+            data-testid={`edit-track-${track.id}`}
             variant="ghost"
             size="icon"
             className="bg-background/80 backdrop-blur-sm hover:bg-background/90"
@@ -93,7 +113,11 @@ const TrackCard = ({ track }: TrackCardProps) => {
           onSubmit={handleDelete}
           isLoading={isDeleting}
         >
-          <Button variant="destructive" size="icon">
+          <Button
+            data-testid={`delete-track-${track.id}`}
+            variant="destructive"
+            size="icon"
+          >
             <Trash2Icon className="h-4 w-4 text-white" />
           </Button>
         </ConfirmationDialog>

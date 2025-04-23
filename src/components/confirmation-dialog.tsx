@@ -30,7 +30,7 @@ const ConfirmationDialog = ({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent data-testid="confirm-dialog">
         <div className="flex flex-col gap-2 max-sm:items-center sm:flex-row sm:gap-4">
           <div
             className="flex size-9 shrink-0 items-center justify-center rounded-full border"
@@ -44,9 +44,15 @@ const ConfirmationDialog = ({
           </AlertDialogHeader>
         </div>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel data-testid="cancel-delete">
+            Cancel
+          </AlertDialogCancel>
           <AlertDialogAction asChild>
-            <Button isLoading={isLoading} onClick={onSubmit}>
+            <Button
+              data-testid="confirm-delete"
+              isLoading={isLoading}
+              onClick={onSubmit}
+            >
               Confirm
             </Button>
           </AlertDialogAction>

@@ -10,8 +10,8 @@ import { mapGenre } from '@/features/tracks/lib/utils.ts';
 import TrackImage from '@/features/tracks/components/track-image.tsx';
 import { useQueryClient } from '@tanstack/react-query';
 import { createTrack, updateTrack } from '@/api/tracks.api.ts';
-import { toast } from 'sonner';
 import { Track } from '@/types/entities/track.ts';
+import { toast } from '@/lib/toast';
 
 interface CreateTrackFormProps {
   onClose: () => void;
@@ -69,36 +69,48 @@ const TrackForm = ({ onClose, isEdit, track }: CreateTrackFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
+    <form
+      data-testid="track-form"
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col gap-2 px-1"
+    >
       <div className="w-64 self-center">
         <TrackImage image={image} alt="Track image" />
       </div>
       <Input
+        id="cover-image"
+        data-testid="input-cover-image"
         label="Image URL"
         placeholder="Provide image URL"
         error={errors.coverImage?.message}
         {...register('coverImage')}
       />
       <Input
+        id="title"
+        data-testid="input-title"
         label="Title"
         error={errors.title?.message}
         placeholder="Enter task title"
         {...register('title')}
       />
       <Input
+        id="artist"
+        data-testid="input-artist"
         label="Artist"
         error={errors.artist?.message}
         placeholder="Enter task artist"
         {...register('artist')}
       />
       <Input
+        id="album"
+        data-testid="input-album"
         label="Album"
         error={errors.album?.message}
         placeholder="Enter task album"
         {...register('album')}
       />
       <div className="*:not-first:mt-2">
-        <Label>Multiselect</Label>
+        <Label>Genre</Label>
         <MultipleSelector
           value={mapGenre(genres)}
           defaultOptions={genreOptions}
@@ -110,12 +122,21 @@ const TrackForm = ({ onClose, isEdit, track }: CreateTrackFormProps) => {
             <p className="text-center text-sm">No results found</p>
           }
         />
+        {errors.genres && (
+          <p data-testid="error-genres" className="text-sm text-red-500">
+            {errors.genres.message}
+          </p>
+        )}
       </div>
       <div className="self-end mt-4 space-x-2">
         <Button type="button" variant="secondary" onClick={onClose}>
           Cancel
         </Button>
-        <Button type="submit" disabled={isSubmitting}>
+        <Button
+          data-testid="submit-button"
+          type="submit"
+          disabled={isSubmitting}
+        >
           {isEdit ? 'Update' : 'Create'}
         </Button>
       </div>

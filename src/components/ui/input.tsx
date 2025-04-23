@@ -9,7 +9,7 @@ interface InputProps extends React.ComponentProps<'input'> {
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, label, error, ...props }, ref) => {
+  ({ className, type, label, error, id, ...props }, ref) => {
     return (
       <div className="space-y-1">
         {label && <Label>{label}</Label>}
@@ -25,7 +25,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           )}
           {...props}
         />
-        {error && <p className="text-sm text-red-500">{error}</p>}
+        {error && (
+          <p data-testid={cn(`error-${id}`)} className="text-sm text-red-500">
+            {error}
+          </p>
+        )}
       </div>
     );
   }

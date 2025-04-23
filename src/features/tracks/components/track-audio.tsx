@@ -112,7 +112,10 @@ const TrackAudio = ({ track }: TrackAudioProps) => {
               onClick={handleRemoveTrack}
             >
               {isRemoving ? (
-                <Loader2Icon className="animate-spin text-muted-foreground" />
+                <Loader2Icon
+                  data-testid="loading-indicator"
+                  className="animate-spin text-muted-foreground"
+                />
               ) : (
                 <Trash2Icon />
               )}

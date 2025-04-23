@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { removeTrackFile } from '@/api/tracks.api.ts';
-import { toast } from 'sonner';
+import { toast } from '@/lib/toast';
 
 const useRemoveTrackMutation = () => {
   const queryClient = useQueryClient();

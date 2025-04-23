@@ -4,6 +4,7 @@ import { APIDeleteResponse, APIError, APIResponse } from '@/types/api.ts';
 import { CreateTrackDto } from '@/api/dto/tracks.dto.ts';
 
 export const getTracks = async (params?: string) => {
+  await new Promise((resolve) => setTimeout(resolve, 10000));
   const response = await fetch(`${API_URL}/tracks${params}`, {
     method: 'GET',
     headers: {
