@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+
 import PlaybackControls from '@/components/audio/playback-controls.tsx';
-import VolumeControl from '@/components/audio/volume-control.tsx';
 import TimeScrubber from '@/components/audio/time-scrubber.tsx';
-import { getAudioFile } from '@/features/tracks/lib/utils.ts';
+import VolumeControl from '@/components/audio/volume-control.tsx';
 import useAudioController from '@/features/tracks/hooks/use-audio-controller.ts';
+import { getAudioFile } from '@/features/tracks/lib/utils.ts';
 
 const AudioSnackbar = () => {
   const [visible, setVisible] = useState(false);
@@ -27,7 +28,7 @@ const AudioSnackbar = () => {
 
   const trackName = currentStoreTrack?.title || 'No track selected';
   const trackArtist = currentStoreTrack?.artist || 'Unknown artist';
-  const audioFile = getAudioFile(currentStoreTrack?.audioFile) as string;
+  const audioFile = getAudioFile(currentStoreTrack?.audioFile);
 
   useEffect(() => {
     if (currentStoreTrack) {

@@ -1,10 +1,10 @@
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import useTracksSearch from '@/features/tracks/hooks/use-tracks-search.ts';
-import GenresCombobox from '@/features/tracks/components/genres-combobox.tsx';
 import { Label } from '@/components/ui/label.tsx';
-import SortCombobox from '@/features/tracks/components/sort-combobox.tsx';
 import ChangeOrderButton from '@/features/tracks/components/change-order-button.tsx';
+import GenresCombobox from '@/features/tracks/components/genres-combobox.tsx';
+import SortCombobox from '@/features/tracks/components/sort-combobox.tsx';
+import useTracksSearch from '@/features/tracks/hooks/use-tracks-search.ts';
 
 const TracksFilters = () => {
   const { search, setSearch, artist, setArtist, album, setAlbum } =

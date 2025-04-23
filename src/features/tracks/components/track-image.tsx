@@ -1,10 +1,10 @@
-import { cn } from '@/lib/utils.ts';
-import { MUSIC_ICON } from '@/constants/icons.ts';
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from '@/components/ui/avatar.tsx';
+import { MUSIC_ICON } from '@/constants/icons.ts';
+import { cn } from '@/lib/utils.ts';
 
 interface TrackImage {
   image?: string | null;

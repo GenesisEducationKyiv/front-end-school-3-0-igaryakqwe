@@ -1,21 +1,22 @@
-import { useState } from 'react';
-import useTracksSearch from '@/features/tracks/hooks/use-tracks-search.ts';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover.tsx';
-import { Button } from '@/components/ui/button.tsx';
 import { ChevronsUpDown } from 'lucide-react';
+import { useState } from 'react';
+
+import { Button } from '@/components/ui/button.tsx';
 import {
   Command,
   CommandGroup,
   CommandItem,
   CommandList,
 } from '@/components/ui/command.tsx';
-import { cn } from '@/lib/utils.ts';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover.tsx';
+import useTracksSearch from '@/features/tracks/hooks/use-tracks-search.ts';
 import { SORT_VALUES } from '@/features/tracks/lib/constants.ts';
 import { getSortValue } from '@/features/tracks/lib/utils.ts';
+import { cn } from '@/lib/utils.ts';
 import { SortValue } from '@/types/entities/track.ts';
 
 const SortCombobox = () => {

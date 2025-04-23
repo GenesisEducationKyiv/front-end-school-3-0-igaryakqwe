@@ -1,6 +1,7 @@
+import { ArrowDownWideNarrowIcon, ArrowUpWideNarrowIcon } from 'lucide-react';
+
 import { Button } from '@/components/ui/button.tsx';
 import useTracksSearch from '@/features/tracks/hooks/use-tracks-search.ts';
-import { ArrowDownWideNarrowIcon, ArrowUpWideNarrowIcon } from 'lucide-react';
 
 const ChangeOrderButton = () => {
   const { order, setOrder } = useTracksSearch();

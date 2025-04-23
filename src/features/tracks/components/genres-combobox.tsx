@@ -1,6 +1,6 @@
 import { ChevronsUpDown, Loader } from 'lucide-react';
+import { useState } from 'react';
 
-import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import {
   Command,
@@ -17,13 +17,18 @@ import {
 } from '@/components/ui/popover';
 import useGenreQuery from '@/features/tracks/hooks/use-genre-query.ts';
 import useTracksSearch from '@/features/tracks/hooks/use-tracks-search.ts';
-import { useState } from 'react';
+import { cn } from '@/lib/utils';
 
 const GenresCombobox = () => {
   const [open, setOpen] = useState(false);
   const { genre, setGenre } = useTracksSearch();
 
   const { genres, isLoading } = useGenreQuery();
+
+  const handleSelectGenre = async (selectedGenre: string) => {
+    await setGenre(selectedGenre === genre ? '' : selectedGenre);
+    setOpen(false);
+  };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -60,8 +65,8 @@ const GenresCombobox = () => {
               <CommandItem
                 value=""
                 className={cn(genre === '' && 'font-semibold bg-gray-100')}
-                onSelect={(currentValue) => {
-                  setGenre(currentValue);
+                onSelect={async (currentValue) => {
+                  await setGenre(currentValue);
                   setOpen(false);
                 }}
               >
@@ -74,10 +79,9 @@ const GenresCombobox = () => {
                   className={cn(
                     genre === genreItem && 'font-semibold bg-gray-100'
                   )}
-                  onSelect={(currentValue) => {
-                    setGenre(currentValue === genre ? '' : currentValue);
-                    setOpen(false);
-                  }}
+                  onSelect={async (currentValue) =>
+                    await handleSelectGenre(currentValue)
+                  }
                 >
                   {genreItem}
                 </CommandItem>

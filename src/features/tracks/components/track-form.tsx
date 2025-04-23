@@ -1,17 +1,18 @@
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
+
 import { CreateTrackDto, createTrackDto } from '@/api/dto/tracks.dto.ts';
-import { Input } from '@/components/ui/input.tsx';
+import { createTrack, updateTrack } from '@/api/tracks.api.ts';
 import { Button } from '@/components/ui/button.tsx';
+import { Input } from '@/components/ui/input.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import MultipleSelector, { Option } from '@/components/ui/multiselect.tsx';
+import TrackImage from '@/features/tracks/components/track-image.tsx';
 import useGenreQuery from '@/features/tracks/hooks/use-genre-query.ts';
 import { mapGenre } from '@/features/tracks/lib/utils.ts';
-import TrackImage from '@/features/tracks/components/track-image.tsx';
-import { useQueryClient } from '@tanstack/react-query';
-import { createTrack, updateTrack } from '@/api/tracks.api.ts';
-import { Track } from '@/types/entities/track.ts';
 import { toast } from '@/lib/toast';
+import { Track } from '@/types/entities/track.ts';
 
 interface CreateTrackFormProps {
   onClose: () => void;

@@ -1,23 +1,24 @@
 'use client';
 
+import { EditIcon, Trash2Icon } from 'lucide-react';
+
+import ConfirmationDialog from '@/components/confirmation-dialog';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardTitle,
 } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Track } from '@/types/entities/track';
-import TrackImage from '@/features/tracks/components/track-image';
-import TrackDialog from '@/features/tracks/components/track-dialog';
-import { Button } from '@/components/ui/button';
-import { EditIcon, Trash2Icon } from 'lucide-react';
-import ConfirmationDialog from '@/components/confirmation-dialog';
-import useDeleteTrackMutation from '@/features/tracks/hooks/use-delete-track-mutation';
-import TrackUpload from '@/features/tracks/components/track-upload';
-import TrackAudio from '@/features/tracks/components/track-audio';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
+import TrackAudio from '@/features/tracks/components/track-audio';
+import TrackDialog from '@/features/tracks/components/track-dialog';
+import TrackImage from '@/features/tracks/components/track-image';
+import TrackUpload from '@/features/tracks/components/track-upload';
+import useDeleteTrackMutation from '@/features/tracks/hooks/use-delete-track-mutation';
 import useTracksStore from '@/features/tracks/store/use-tracks-store.tsx';
+import { Track } from '@/types/entities/track';
 
 interface TrackCardProps {
   track: Track;

@@ -1,5 +1,6 @@
-import { getGenres } from '@/api/genres.api.ts';
 import { useQuery } from '@tanstack/react-query';
+
+import { getGenres } from '@/api/genres.api.ts';
 
 const useGenreQuery = () => {
   const {

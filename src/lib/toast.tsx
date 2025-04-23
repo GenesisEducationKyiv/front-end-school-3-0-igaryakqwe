@@ -1,4 +1,5 @@
 import { toast as dependencyToast } from 'sonner';
+
 import { Toast } from '@/components/ui/sonner.tsx';
 
 export const toast = {

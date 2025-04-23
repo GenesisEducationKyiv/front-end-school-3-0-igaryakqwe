@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import useAudioStore from '@/store/use-audio-store.ts';
+
 import { getAudioFile } from '@/features/tracks/lib/utils.ts';
+import useAudioStore from '@/store/use-audio-store.ts';
 
 const useAudioController = () => {
   const [duration, setDuration] = useState(0);
@@ -33,7 +34,7 @@ const useAudioController = () => {
 
   useEffect(() => {
     if (audioRef.current && currentStoreTrack) {
-      audioRef.current.src = audioFile as string;
+      audioRef.current.src = audioFile!;
       audioRef.current.load();
       if (isPlaying) {
         audioRef.current.play().catch((error) => {

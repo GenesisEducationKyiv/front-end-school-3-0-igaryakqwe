@@ -1,4 +1,5 @@
 import { parseAsInteger, parseAsString, parseAsStringLiteral } from 'nuqs';
+
 import { SortOrder, SortValue } from '@/types/entities/track.ts';
 
 export const MAX_TRACKS_PER_PAGE = 6;

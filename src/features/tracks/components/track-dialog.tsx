@@ -1,10 +1,11 @@
+import { PropsWithChildren, useState } from 'react';
+
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog.tsx';
-import { PropsWithChildren, useState } from 'react';
 import TrackForm from '@/features/tracks/components/track-form.tsx';
 import { Track } from '@/types/entities/track.ts';
 

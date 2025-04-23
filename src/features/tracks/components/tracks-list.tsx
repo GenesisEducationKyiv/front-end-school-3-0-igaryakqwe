@@ -1,13 +1,13 @@
+import { Card, CardTitle } from '@/components/ui/card.tsx';
 import TrackCard from '@/features/tracks/components/track-card.tsx';
+import TrackCardSkeleton from '@/features/tracks/components/track-card-skeleton.tsx';
 import useTracksQuery from '@/features/tracks/hooks/use-tracks-query.ts';
 import { MAX_TRACKS_PER_PAGE } from '@/features/tracks/lib/constants.ts';
-import TrackCardSkeleton from '@/features/tracks/components/track-card-skeleton.tsx';
-import { Card, CardTitle } from '@/components/ui/card.tsx';
 
 const TracksList = () => {
   const { tracks, isLoading } = useTracksQuery();
 
-  if (!tracks.length) {
+  if (!tracks.length && !isLoading) {
     return (
       <Card className="w-full grid place-items-center h-full">
         <CardTitle>No tracks found</CardTitle>

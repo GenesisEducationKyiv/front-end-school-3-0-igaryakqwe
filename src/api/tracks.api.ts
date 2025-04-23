@@ -1,10 +1,9 @@
-import { API_URL } from '@/constants/global';
-import { Track } from '@/types/entities/track.ts';
-import { APIDeleteResponse, APIError, APIResponse } from '@/types/api.ts';
 import { CreateTrackDto } from '@/api/dto/tracks.dto.ts';
+import { API_URL } from '@/constants/global';
+import { APIDeleteResponse, APIError, APIResponse } from '@/types/api.ts';
+import { Track } from '@/types/entities/track.ts';
 
 export const getTracks = async (params?: string) => {
-  await new Promise((resolve) => setTimeout(resolve, 10000));
   const response = await fetch(`${API_URL}/tracks${params}`, {
     method: 'GET',
     headers: {

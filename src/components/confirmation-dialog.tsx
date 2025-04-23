@@ -1,3 +1,6 @@
+import { CircleAlertIcon } from 'lucide-react';
+import { PropsWithChildren } from 'react';
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,8 +12,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { CircleAlertIcon } from 'lucide-react';
-import { PropsWithChildren } from 'react';
 import { Button } from '@/components/ui/button';
 
 interface ConfirmationDialogProps extends PropsWithChildren {

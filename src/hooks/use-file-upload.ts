@@ -1,30 +1,28 @@
-'use client';
-
 import type React from 'react';
 import {
-  useCallback,
-  useRef,
-  useState,
   type ChangeEvent,
   type DragEvent,
   type InputHTMLAttributes,
+  useCallback,
+  useRef,
+  useState,
 } from 'react';
 
-export type FileMetadata = {
+export interface FileMetadata {
   name: string;
   size: number;
   type: string;
   url: string;
   id: string;
-};
+}
 
-export type FileWithPreview = {
+export interface FileWithPreview {
   file: File | FileMetadata;
   id: string;
   preview?: string;
-};
+}
 
-export type FileUploadOptions = {
+export interface FileUploadOptions {
   maxFiles?: number; // Only used when multiple is true, defaults to Infinity
   maxSize?: number; // in bytes
   accept?: string;
@@ -32,15 +30,15 @@ export type FileUploadOptions = {
   initialFiles?: FileMetadata[];
   onFilesChange?: (files: FileWithPreview[]) => void; // Callback when files change
   onFilesAdded?: (addedFiles: FileWithPreview[]) => void; // Callback when new files are added
-};
+}
 
-export type FileUploadState = {
+export interface FileUploadState {
   files: FileWithPreview[];
   isDragging: boolean;
   errors: string[];
-};
+}
 
-export type FileUploadActions = {
+export interface FileUploadActions {
   addFiles: (files: FileList | File[]) => void;
   removeFile: (id: string) => void;
   clearFiles: () => void;
@@ -56,7 +54,7 @@ export type FileUploadActions = {
   ) => InputHTMLAttributes<HTMLInputElement> & {
     ref: React.Ref<HTMLInputElement>;
   };
-};
+}
 
 export const useFileUpload = (
   options: FileUploadOptions = {}
@@ -157,7 +155,7 @@ export const useFileUpload = (
 
       const newState = {
         ...prev,
-        files: [],
+        files: [] as FileWithPreview[],
         errors: [],
       };
 
@@ -276,8 +274,7 @@ export const useFileUpload = (
       setState((prev) => {
         const fileToRemove = prev.files.find((file) => file.id === id);
         if (
-          fileToRemove &&
-          fileToRemove.preview &&
+          fileToRemove?.preview &&
           fileToRemove.file instanceof File &&
           fileToRemove.file.type.startsWith('image/')
         ) {

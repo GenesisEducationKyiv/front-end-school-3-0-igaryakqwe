@@ -1,4 +1,5 @@
 import { useQueryStates } from 'nuqs';
+
 import { SEARCH_PARAMS_SCHEMA } from '@/features/tracks/lib/constants.ts';
 import { SortOrder, SortValue } from '@/types/entities/track.ts';
 

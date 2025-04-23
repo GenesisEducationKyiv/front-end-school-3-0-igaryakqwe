@@ -1,8 +1,8 @@
-import TracksList from '@/features/tracks/components/tracks-list.tsx';
-import TracksPagination from '@/features/tracks/components/tracks-pagination.tsx';
-import TracksFilters from '@/features/tracks/components/tracks-filters.tsx';
 import AudioSnackbar from '@/features/tracks/components/audio-snackbar.tsx';
+import TracksFilters from '@/features/tracks/components/tracks-filters.tsx';
+import TracksList from '@/features/tracks/components/tracks-list.tsx';
 import TracksListHeader from '@/features/tracks/components/tracks-list-header.tsx';
+import TracksPagination from '@/features/tracks/components/tracks-pagination.tsx';
 
 const TracksPage = () => {
   return (

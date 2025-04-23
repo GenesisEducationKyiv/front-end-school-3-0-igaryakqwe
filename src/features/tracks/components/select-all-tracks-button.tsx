@@ -1,8 +1,8 @@
-import { Button } from '@/components/ui/button.tsx';
 import { CheckCheckIcon, SquareCheckIcon } from 'lucide-react';
+
+import { Button } from '@/components/ui/button.tsx';
 import useTracksQuery from '@/features/tracks/hooks/use-tracks-query.ts';
 import useTracksStore from '@/features/tracks/store/use-tracks-store.tsx';
-import { toast } from '@/lib/toast.tsx';
 
 const SelectAllTracksButton = () => {
   const { tracks } = useTracksQuery();
@@ -25,7 +25,6 @@ const SelectAllTracksButton = () => {
   };
 
   const handleSelectMode = () => {
-    toast.error('1231321');
     toggleSelectMode();
   };
 

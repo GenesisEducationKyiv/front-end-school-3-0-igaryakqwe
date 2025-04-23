@@ -1,6 +1,7 @@
+import { AlertCircle, CheckCircle2, Info, XCircle } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { Toaster as Sonner, ToasterProps } from 'sonner';
-import { CheckCircle2, XCircle, AlertCircle, Info } from 'lucide-react';
+
 import { cn } from '@/lib/utils';
 
 const Toaster = ({ ...props }: ToasterProps) => {
@@ -9,7 +10,6 @@ const Toaster = ({ ...props }: ToasterProps) => {
   return (
     <Sonner
       data-testid="toast-container"
-      duration={100000}
       theme={theme as ToasterProps['theme']}
       className="toaster group"
       style={
@@ -65,4 +65,4 @@ const Toast = ({ id, title, description, type = 'info' }: ToastProps) => {
   );
 };
 
-export { Toaster, Toast };
+export { Toast, Toaster };

@@ -1,8 +1,9 @@
-import SelectAllTracksButton from '@/features/tracks/components/select-all-tracks-button.tsx';
-import DeleteManyTracksDialog from '@/features/tracks/components/delete-many-tracks-dialog.tsx';
-import TrackDialog from '@/features/tracks/components/track-dialog.tsx';
-import { Button } from '@/components/ui/button.tsx';
 import { PlusIcon } from 'lucide-react';
+
+import { Button } from '@/components/ui/button.tsx';
+import DeleteManyTracksDialog from '@/features/tracks/components/delete-many-tracks-dialog.tsx';
+import SelectAllTracksButton from '@/features/tracks/components/select-all-tracks-button.tsx';
+import TrackDialog from '@/features/tracks/components/track-dialog.tsx';
 
 const TracksListHeader = () => {
   return (

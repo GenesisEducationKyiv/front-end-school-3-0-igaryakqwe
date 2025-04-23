@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+
 import { Track } from '@/types/entities/track.ts';
 
 interface AudioState {

@@ -1,11 +1,12 @@
 import { createSerializer } from 'nuqs';
+
+import { Option } from '@/components/ui/multiselect.tsx';
+import { API_URL } from '@/constants/global.ts';
 import {
   SEARCH_PARAMS_SCHEMA,
   SORT_OPTIONS_MAPPER,
 } from '@/features/tracks/lib/constants.ts';
 import { SortValue, Track } from '@/types/entities/track.ts';
-import { Option } from '@/components/ui/multiselect.tsx';
-import { API_URL } from '@/constants/global.ts';
 
 export const serialize = createSerializer(SEARCH_PARAMS_SCHEMA);
 
@@ -22,7 +23,8 @@ export const mapGenre = (genres?: string[]): Option[] => {
 };
 
 export const getSortValue = (value?: SortValue) => {
-  return SORT_OPTIONS_MAPPER[value || 'title'];
+  if (!value) return 'No sorting';
+  return SORT_OPTIONS_MAPPER[value];
 };
 
 export const getAudioFile = (fileName?: string) => {

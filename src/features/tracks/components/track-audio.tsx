@@ -1,15 +1,16 @@
 'use client';
 
+import { Loader2Icon, Trash2Icon } from 'lucide-react';
 import { memo, useEffect, useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
+
 import PlaybackControls from '@/components/audio/playback-controls';
 import TimeScrubber from '@/components/audio/time-scrubber';
-import type { Track } from '@/types/entities/track.ts';
-import useAudioStore from '@/store/use-audio-store';
-import { getAudioFile } from '@/features/tracks/lib/utils.ts';
 import { Button } from '@/components/ui/button';
-import { Loader2Icon, Trash2Icon } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 import useRemoveTrackMutation from '@/features/tracks/hooks/use-remove-track-mutation.ts';
+import { getAudioFile } from '@/features/tracks/lib/utils.ts';
+import useAudioStore from '@/store/use-audio-store';
+import type { Track } from '@/types/entities/track.ts';
 
 interface TrackAudioProps {
   track: Track;

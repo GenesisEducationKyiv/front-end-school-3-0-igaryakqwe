@@ -1,11 +1,15 @@
+import '@/index.css';
+
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import '@/index.css';
-import App from '@/App.tsx';
-import Providers from '@/providers';
-import { Toaster } from '@/components/ui/sonner.tsx';
 
-createRoot(document.getElementById('root')!).render(
+import App from '@/App.tsx';
+import { Toaster } from '@/components/ui/sonner.tsx';
+import Providers from '@/providers';
+
+const rootElement = document.getElementById('root');
+if (!rootElement) throw new Error('Failed to find the root element');
+createRoot(rootElement).render(
   <StrictMode>
     <Providers>
       <App />
