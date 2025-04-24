@@ -83,7 +83,7 @@ const TrackCard = ({ track }: TrackCardProps) => {
 
           <div className="flex flex-wrap items-center justify-center gap-1 mt-2">
             {track.genres.map((genre, index) => (
-              <Badge key={index} variant="secondary" className="text-xs">
+              <Badge data-testid={`genre-${genre}`} key={index} variant="secondary" className="text-xs">
                 {genre}
               </Badge>
             ))}

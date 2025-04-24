@@ -170,6 +170,40 @@ test.describe('Tracks Page', () => {
         console.log('No tracks match the search term');
       }
     });
+
+    test('should filter tracks by genre', async ({ page }) => {
+      await page.getByTestId('loading-tracks').waitFor({ state: 'hidden' });
+
+      const genreFilter = page.getByTestId('filter-genre');
+      await genreFilter.click();
+
+      await page.waitForTimeout(300);
+
+      const genreOptions = await page.locator('div[role="dialog"] [role="option"]').all();
+      
+      if (genreOptions.length > 1) {
+        const selectedGenre = await genreOptions[1].textContent();
+        const trimmedGenre = selectedGenre?.trim();
+        await genreOptions[1].click();
+        
+        await page.waitForTimeout(1000);
+        
+        const noTracksMessage = page.getByText('No tracks found');
+        const isNoTracksVisible = await noTracksMessage.isVisible();
+        
+        if (isNoTracksVisible) {
+          console.log(`No tracks found for genre: ${trimmedGenre}`);
+          return;
+        }
+
+        const trackItems = await page.getByTestId(/^track-item-/);
+        
+        const genreElement = await trackItems.getByTestId(`genre-${trimmedGenre}`).count();
+        expect(genreElement).toBeGreaterThan(0);
+      } else {
+        console.log('No genre options available for testing');
+      }
+    });
   });
 
   test.describe('Tracks operations', () => {

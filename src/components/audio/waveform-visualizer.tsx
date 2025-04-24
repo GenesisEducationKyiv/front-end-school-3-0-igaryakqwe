@@ -38,11 +38,9 @@ const WaveformVisualizer = ({
         const audioContext = new (window.AudioContext ||
           (window as any).webkitAudioContext)();
 
-        // Decode the audio data
         const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
         const channelData = audioBuffer.getChannelData(0); // Get the first channel
 
-        // Downsample the data to a reasonable number of points
         const points = 100;
         const blockSize = Math.floor(channelData.length / points);
         const downsampled = [];
@@ -56,7 +54,6 @@ const WaveformVisualizer = ({
           downsampled.push(sum / blockSize);
         }
 
-        // Normalize the data to values between 0 and 1
         const maxValue = Math.max(...downsampled);
         const normalized = downsampled.map((val) => val / maxValue);
 
