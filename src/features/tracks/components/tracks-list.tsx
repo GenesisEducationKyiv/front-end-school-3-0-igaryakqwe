@@ -30,7 +30,10 @@ const TracksList = () => {
   }
 
   return (
-    <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-3 sm:grid-cols-2">
+    <div
+      data-testid="tracks-list"
+      className="grid w-full grid-cols-1 gap-4 lg:grid-cols-3 sm:grid-cols-2"
+    >
       {tracks?.map((track) => <TrackCard track={track} key={track.id} />)}
     </div>
   );
