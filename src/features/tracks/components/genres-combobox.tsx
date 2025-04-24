@@ -64,7 +64,7 @@ const GenresCombobox = () => {
             <CommandGroup>
               <CommandItem
                 value=""
-                className={cn(genre === '' && 'font-semibold bg-gray-100')}
+                className={cn(genre === '' && 'font-semibold bg-gray-100 dark:bg-neutral-800')}
                 onSelect={async (currentValue) => {
                   await setGenre(currentValue);
                   setOpen(false);
@@ -77,7 +77,7 @@ const GenresCombobox = () => {
                   key={genreItem}
                   value={genreItem}
                   className={cn(
-                    genre === genreItem && 'font-semibold bg-gray-100'
+                    genre === genreItem && 'font-semibold bg-gray-100 dark:bg-neutral-800'
                   )}
                   onSelect={async (currentValue) =>
                     await handleSelectGenre(currentValue)

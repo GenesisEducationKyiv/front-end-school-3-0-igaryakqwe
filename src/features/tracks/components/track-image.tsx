@@ -22,7 +22,7 @@ const TrackImage = ({ image, alt, className }: TrackImage) => {
           className="object-cover w-full h-full rounded-lg"
         />
         <AvatarFallback>
-          <div className="w-full h-full grid place-items-center bg-gray-100 rounded-lg">
+          <div className="w-full h-full grid place-items-center bg-gray-100 dark:bg-neutral-800 rounded-lg">
             <img
               src={MUSIC_ICON}
               alt={alt}

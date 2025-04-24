@@ -1,8 +1,8 @@
 import { AlertCircle, CheckCircle2, Info, XCircle } from 'lucide-react';
-import { useTheme } from 'next-themes';
 import { Toaster as Sonner, ToasterProps } from 'sonner';
 
 import { cn } from '@/lib/utils';
+import { useTheme } from '@/providers/theme-provider';
 
 const Toaster = ({ ...props }: ToasterProps) => {
   const { theme = 'system' } = useTheme();

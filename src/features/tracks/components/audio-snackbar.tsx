@@ -63,7 +63,7 @@ const AudioSnackbar = () => {
         {visible && (
           <motion.div
             data-testid={`audio-player-${currentStoreTrack?.id}`}
-            className="sticky max-w-5xl mx-auto bottom-5 mt-5 left-0 w-full bg-white z-50 rounded-lg shadow-lg p-3 border border-slate-200"
+            className="sticky max-w-5xl mx-auto bottom-5 mt-5 left-0 w-full z-50 rounded-lg shadow-lg p-3 bg-accent border border-slate-200 dark:border-neutral-600 dark:bg-neutral-900"
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}

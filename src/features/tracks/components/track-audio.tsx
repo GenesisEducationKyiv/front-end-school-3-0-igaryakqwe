@@ -96,7 +96,7 @@ const TrackAudio = ({ track }: TrackAudioProps) => {
   };
 
   return (
-    <Card className="w-full bg-slate-50 dark:bg-slate-900 p-0 shadow-md">
+    <Card className="w-full p-0 bg-accent/20 shadow-md">
       <CardContent className="p-4">
         <div className="space-y-2">
           <div className="flex items-center justify-center relative">

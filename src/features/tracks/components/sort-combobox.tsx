@@ -54,7 +54,7 @@ const SortCombobox = () => {
           <CommandList>
             <CommandGroup>
               <CommandItem
-                className={cn(!sort && 'font-semibold bg-gray-100')}
+                className={cn(!sort && 'font-semibold bg-gray-100 dark:bg-neutral-800')}
                 onSelect={() => handleSelect()}
               >
                 <span className="text-sm">No sorting</span>
@@ -64,7 +64,7 @@ const SortCombobox = () => {
                   key={sortValue}
                   value={sortValue}
                   className={cn(
-                    sort === sortValue && 'font-semibold bg-gray-100'
+                    sort === sortValue && 'font-semibold bg-gray-100 dark:neutral-800',
                   )}
                   onSelect={() => handleSelect(sortValue)}
                 >
