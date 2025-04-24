@@ -2,11 +2,11 @@ export interface Track {
   id: string;
   title: string;
   artist: string;
-  album: string;
+  album?: string;
   genres: string[];
   slug: string;
-  coverImage: string;
-  audioFile: string;
+  coverImage?: string | null;
+  audioFile?: string;
   createdAt: string;
   updatedAt: string;
 }

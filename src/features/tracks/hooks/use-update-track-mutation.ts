@@ -1,15 +1,16 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-
-import { uploadTrackFile } from '@/api/tracks.api.ts';
+import { CreateTrackDto } from '@/api/dto/tracks.dto.ts';
+import { updateTrack } from '@/api/tracks.api.ts';
 import { toast } from '@/lib/toast';
 import { Track } from '@/types/entities/track.ts';
 
-const useTrackUploadMutation = (id: string) => {
+const useUpdateTrackMutation = () => {
   const queryClient = useQueryClient();
 
-  const { mutate, isPending, error } = useMutation({
-    mutationFn: (formData: FormData) => uploadTrackFile(id, formData),
-    onMutate: async () => {
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: CreateTrackDto }) => 
+      updateTrack(id, data),
+    onMutate: async ({ id, data }) => {
       await queryClient.cancelQueries({ queryKey: ['tracks'] });
       
       const previousTracks = queryClient.getQueryData<Track[]>(['tracks']);
@@ -19,7 +20,7 @@ const useTrackUploadMutation = (id: string) => {
           track.id === id 
             ? { 
                 ...track, 
-                fileStatus: 'uploading',
+                ...data, 
                 updatedAt: new Date().toISOString() 
               } 
             : track
@@ -31,36 +32,18 @@ const useTrackUploadMutation = (id: string) => {
       return { previousTracks };
     },
     onSuccess: () => {
-      const tracks = queryClient.getQueryData<Track[]>(['tracks']);
-      
-      if (tracks) {
-        const updatedTracks = tracks.map(track => 
-          track.id === id 
-            ? { 
-                ...track, 
-                fileStatus: 'uploaded',
-                updatedAt: new Date().toISOString() 
-              } 
-            : track
-        );
-        
-        queryClient.setQueryData(['tracks'], updatedTracks);
-      }
-      
-      toast.success('Track file uploaded');
+      toast.success('Track updated');
     },
-    onError: (_, __, context) => {
+    onError: (error: Error, _, context) => {
       if (context?.previousTracks) {
         queryClient.setQueryData(['tracks'], context.previousTracks);
       }
-      toast.error('Failed to upload track file');
+      toast.error(error?.message || 'Failed to update track');
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['tracks'] });
     }
   });
-
-  return { uploadTrack: mutate, isUploading: isPending, error };
 };
 
-export default useTrackUploadMutation;
+export default useUpdateTrackMutation;

@@ -35,7 +35,7 @@ const TrackAudio = ({ track }: TrackAudioProps) => {
 
   const [localDuration, setLocalDuration] = useState(0);
 
-  const { removeTrack, isRemoving } = useRemoveTrackMutation();
+  const { removeTrackFile, isRemoving } = useRemoveTrackMutation();
 
   useEffect(() => {
     const tempAudio = new Audio(getAudioFile(track?.audioFile));
@@ -91,7 +91,7 @@ const TrackAudio = ({ track }: TrackAudioProps) => {
     if (currentTrackId === track.id) {
       next();
     }
-    removeTrack(track.id);
+    removeTrackFile(track.id);
     removeFromQueue(track.id);
   };
 

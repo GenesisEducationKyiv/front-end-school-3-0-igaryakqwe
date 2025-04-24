@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { deleteTrack } from '@/api/tracks.api';
 import { toast } from '@/lib/toast';
+import { Track } from '@/types/entities/track.ts';
 
 const useDeleteTrackMutation = () => {
   const queryClient = useQueryClient();
@@ -10,12 +11,29 @@ const useDeleteTrackMutation = () => {
     mutationFn: (trackId: string) => {
       return deleteTrack(trackId);
     },
-    onSuccess: async () => {
-      toast.success('Track deleted successfully');
-      await queryClient.invalidateQueries({ queryKey: ['tracks'] });
+    onMutate: async (trackId) => {
+      await queryClient.cancelQueries({ queryKey: ['tracks'] });
+      
+      const previousTracks = queryClient.getQueryData<Track[]>(['tracks']);
+      
+      if (previousTracks) {
+        const updatedTracks = previousTracks.filter(track => track.id !== trackId);
+        queryClient.setQueryData(['tracks'], updatedTracks);
+      }
+      
+      return { previousTracks };
     },
-    onError: () => {
+    onSuccess: () => {
+      toast.success('Track deleted successfully');
+    },
+    onError: (_, trackId, context) => {
+      if (context?.previousTracks) {
+        queryClient.setQueryData(['tracks'], context.previousTracks);
+      }
       toast.error('There was an error while deleting tracks');
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['tracks'] });
     },
   });
 

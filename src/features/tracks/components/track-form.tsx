@@ -1,17 +1,16 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 
 import { CreateTrackDto, createTrackDto } from '@/api/dto/tracks.dto.ts';
-import { createTrack, updateTrack } from '@/api/tracks.api.ts';
 import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import MultipleSelector, { Option } from '@/components/ui/multiselect.tsx';
 import TrackImage from '@/features/tracks/components/track-image.tsx';
 import useGenreQuery from '@/features/tracks/hooks/use-genre-query.ts';
+import useCreateTrackMutation from '@/features/tracks/hooks/use-create-track-mutation.ts';
+import useUpdateTrackMutation from '@/features/tracks/hooks/use-update-track-mutation.ts';
 import { mapGenre } from '@/features/tracks/lib/utils.ts';
-import { toast } from '@/lib/toast';
 import { Track } from '@/types/entities/track.ts';
 
 interface CreateTrackFormProps {
@@ -22,7 +21,9 @@ interface CreateTrackFormProps {
 
 const TrackForm = ({ onClose, isEdit, track }: CreateTrackFormProps) => {
   const { genres: genresData } = useGenreQuery();
-  const queryClient = useQueryClient();
+  const createTrackMutation = useCreateTrackMutation();
+  const updateTrackMutation = useUpdateTrackMutation();
+  
   const {
     register,
     handleSubmit,
@@ -52,21 +53,13 @@ const TrackForm = ({ onClose, isEdit, track }: CreateTrackFormProps) => {
     );
   };
 
-  const onSubmit = async (data: CreateTrackDto) => {
-    try {
+  const onSubmit = (data: CreateTrackDto) => {
       if (isEdit && track) {
-        await updateTrack(track?.id, data);
+        updateTrackMutation.mutate({ id: track.id, data });
       } else {
-        await createTrack(data);
+        createTrackMutation.mutate(data);
       }
-      await queryClient.invalidateQueries({ queryKey: ['tracks'] });
-      toast.success(isEdit ? 'Track updated' : 'Track created');
       onClose();
-    } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error?.message);
-      }
-    }
   };
 
   return (
