@@ -19,9 +19,7 @@ const WaveformVisualizer = ({
   duration,
 }: WaveformVisualizerProps) => {
   const currentTrack = useAudioStore((state) => state.getCurrentTrack());
-  const audioUrl = currentTrack
-    ? (getAudioFile(currentTrack.audioFile) as string)
-    : '';
+  const audioUrl = getAudioFile(currentTrack?.audioFile)
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [waveformData, setWaveformData] = useState<number[]>([]);
@@ -35,11 +33,10 @@ const WaveformVisualizer = ({
         setIsLoading(true);
         const response = await fetch(audioUrl);
         const arrayBuffer = await response.arrayBuffer();
-        const audioContext = new (window.AudioContext ||
-          (window as any).webkitAudioContext)();
+        const audioContext = new window.AudioContext();
 
         const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-        const channelData = audioBuffer.getChannelData(0); // Get the first channel
+        const channelData = audioBuffer.getChannelData(0);
 
         const points = 100;
         const blockSize = Math.floor(channelData.length / points);

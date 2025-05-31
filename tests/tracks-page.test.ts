@@ -395,7 +395,9 @@ test.describe('Tracks Page', () => {
         const audioBlob = new Blob(['dummy audio content'], { type: 'audio/mp3' });
         const file = new File([audioBlob], 'test-audio.mp3', { type: 'audio/mp3' });
         
-        (window as any).testAudioFile = file;
+        if ("testAudioFile" in window && window.testAudioFile instanceof File) {
+          window.testAudioFile = file;
+        }
       });
       
       const fileChooserPromise = page.waitForEvent('filechooser');
