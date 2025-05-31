@@ -20,6 +20,14 @@ const initialState: ThemeProviderState = {
 
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState)
 
+const getTheme = (storageKey: string, defaultTheme: Theme) => {
+  const storedTheme = localStorage.getItem(storageKey)
+  if (storedTheme === "dark" || storedTheme === "light" || storedTheme === "system") {
+    return storedTheme
+  }
+  return defaultTheme
+}
+
 export const ThemeProvider =({
   children,
   defaultTheme = "light",
@@ -27,7 +35,7 @@ export const ThemeProvider =({
   ...props
 }: ThemeProviderProps) => {
   const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
+    () => getTheme(storageKey, defaultTheme)
   )
 
   useEffect(() => {
