@@ -28,7 +28,7 @@ const AudioSnackbar = () => {
 
   const trackName = currentStoreTrack?.title || 'No track selected';
   const trackArtist = currentStoreTrack?.artist || 'Unknown artist';
-  const audioFile = getAudioFile(currentStoreTrack?.audioFile);
+  const audioFile = getAudioFile(currentStoreTrack?.audioFile)
 
   useEffect(() => {
     if (currentStoreTrack) {
