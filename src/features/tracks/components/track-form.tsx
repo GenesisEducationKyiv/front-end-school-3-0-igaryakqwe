@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
-import { CreateTrackDto, createTrackDto } from '@/api/dto/tracks.dto.ts';
+import { CreateTrackDto, createTrackDto } from '@/features/tracks/api/dto/tracks.dto';
 import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Label } from '@/components/ui/label.tsx';
