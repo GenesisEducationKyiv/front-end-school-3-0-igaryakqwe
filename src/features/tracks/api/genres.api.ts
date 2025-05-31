@@ -1,5 +1,6 @@
 import { API_URL } from '@/constants/global';
-import { APIError } from '@/types/api.ts';
+import { handleAPIResponse } from '@/utils/api.utils';
+import { z } from 'zod';
 
 export const getGenres = async () => {
   const res = await fetch(`${API_URL}/genres`, {
@@ -9,10 +10,5 @@ export const getGenres = async () => {
     },
   });
 
-  if (!res.ok) {
-    const { error } = (await res.json()) as APIError;
-    throw new Error(error || 'Failed to fetch genres');
-  }
-
-  return (await res.json()) as string[];
+  return handleAPIResponse(res, z.array(z.string()));
 };

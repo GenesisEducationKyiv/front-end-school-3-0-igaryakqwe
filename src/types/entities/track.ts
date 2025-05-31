@@ -13,6 +13,8 @@ export const TrackSchema = z.object({
   updatedAt: z.string(),
 })
 
+export const TracksSchema = z.array(TrackSchema);
+
 export type Track = z.infer<typeof TrackSchema>;
 
 export type SortValue = 'title' | 'artist' | 'album' | 'createdAt';
