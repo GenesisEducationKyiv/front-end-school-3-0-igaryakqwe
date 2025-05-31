@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { getTracks } from '@/api/tracks.api.ts';
+import { getTracks } from '@/features/tracks/api/tracks.api';
 import useTracksSearch from '@/features/tracks/hooks/use-tracks-search.ts';
 import { MAX_TRACKS_PER_PAGE } from '@/features/tracks/lib/constants.ts';
 import { filterTracks, serialize } from '@/features/tracks/lib/utils.ts';

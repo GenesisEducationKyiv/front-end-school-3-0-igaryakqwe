@@ -1,4 +1,4 @@
-import { CreateTrackDto } from '@/api/dto/tracks.dto.ts';
+import { CreateTrackDto } from '@/features/tracks/api/dto/tracks.dto';
 import { API_URL } from '@/constants/global';
 import { APIDeleteResponse, APIError, APIResponse } from '@/types/api.ts';
 import { Track } from '@/types/entities/track.ts';

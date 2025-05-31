@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { getGenres } from '@/api/genres.api.ts';
+import { getGenres } from '@/features/tracks/api/genres.api';
 
 const useGenreQuery = () => {
   const {

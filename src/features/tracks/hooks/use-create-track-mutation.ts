@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { CreateTrackDto } from '@/api/dto/tracks.dto.ts';
-import { createTrack } from '@/api/tracks.api.ts';
+import { CreateTrackDto } from '@/features/tracks/api/dto/tracks.dto';
+import { createTrack } from '@/features/tracks/api/tracks.api';
 import { toast } from '@/lib/toast';
 import { Track } from '@/types/entities/track.ts';
 import { createSlug } from '@/features/tracks/lib/utils';
