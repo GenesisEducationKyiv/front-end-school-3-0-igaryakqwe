@@ -26,7 +26,7 @@ const useDeleteTrackMutation = () => {
     onSuccess: () => {
       toast.success('Track deleted successfully');
     },
-    onError: (_, trackId, context) => {
+    onError: (_, __, context) => {
       if (context?.previousTracks) {
         queryClient.setQueryData(['tracks'], context.previousTracks);
       }

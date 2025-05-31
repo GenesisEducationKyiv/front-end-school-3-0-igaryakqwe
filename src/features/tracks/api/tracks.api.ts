@@ -1,7 +1,8 @@
 import { CreateTrackDto } from '@/features/tracks/api/dto/tracks.dto';
 import { API_URL } from '@/constants/global';
-import { APIDeleteResponse, APIError, APIResponse } from '@/types/api.ts';
-import { Track } from '@/types/entities/track.ts';
+import { APIDeleteResponseSchema, APIResponseSchema } from '@/types/api.ts';
+import { TrackSchema, TracksSchema } from '@/types/entities/track.ts';
+import { handleAPIResponse, handleErrorResponse } from '@/utils/api.utils';
 
 export const getTracks = async (params?: string) => {
   const response = await fetch(`${API_URL}/tracks${params}`, {
@@ -11,12 +12,7 @@ export const getTracks = async (params?: string) => {
     },
   });
 
-  if (!response.ok) {
-    const { error } = (await response.json()) as APIError;
-    throw new Error(error || 'Failed to fetch tracks');
-  }
-
-  return (await response.json()) as APIResponse<Track[]>;
+  return handleAPIResponse(response, APIResponseSchema(TracksSchema));
 };
 
 export const createTrack = async (track: CreateTrackDto) => {
@@ -28,12 +24,7 @@ export const createTrack = async (track: CreateTrackDto) => {
     body: JSON.stringify(track),
   });
 
-  if (!response.ok) {
-    const { error } = (await response.json()) as APIError;
-    throw new Error(error || 'Failed to create track');
-  }
-
-  return (await response.json()) as Track;
+  return handleAPIResponse(response, TrackSchema);
 };
 
 export const getTrackBySlug = async (slug: string) => {
@@ -44,12 +35,7 @@ export const getTrackBySlug = async (slug: string) => {
     },
   });
 
-  if (!response.ok) {
-    const { error } = (await response.json()) as APIError;
-    throw new Error(error || 'Failed to fetch track');
-  }
-
-  return (await response.json()) as Track;
+  return handleAPIResponse(response, TrackSchema);
 };
 
 export const updateTrack = async (id: string, track: CreateTrackDto) => {
@@ -61,12 +47,7 @@ export const updateTrack = async (id: string, track: CreateTrackDto) => {
     body: JSON.stringify(track),
   });
 
-  if (!response.ok) {
-    const { error } = (await response.json()) as APIError;
-    throw new Error(error || 'Failed to update track');
-  }
-
-  return (await response.json()) as APIResponse<Track>;
+  return handleAPIResponse(response, TrackSchema);
 };
 
 export const deleteTrack = async (id: string) => {
@@ -74,10 +55,7 @@ export const deleteTrack = async (id: string) => {
     method: 'DELETE',
   });
 
-  if (!response.ok) {
-    const { error } = (await response.json()) as APIError;
-    throw new Error(error || 'Failed to delete track');
-  }
+  if (!response.ok) await handleErrorResponse(response);
 };
 
 export const deleteTracks = async (ids: string[]) => {
@@ -89,12 +67,7 @@ export const deleteTracks = async (ids: string[]) => {
     body: JSON.stringify({ ids }),
   });
 
-  if (!response.ok) {
-    const { error } = (await response.json()) as APIError;
-    throw new Error(error || 'Failed to delete tracks');
-  }
-
-  return (await response.json()) as APIDeleteResponse;
+  return handleAPIResponse(response, APIDeleteResponseSchema);
 };
 
 export const uploadTrackFile = async (id: string, formData: FormData) => {
@@ -103,12 +76,7 @@ export const uploadTrackFile = async (id: string, formData: FormData) => {
     body: formData,
   });
 
-  if (!response.ok) {
-    const { error } = (await response.json()) as APIError;
-    throw new Error(error || 'Failed to upload track file');
-  }
-
-  return (await response.json()) as Track;
+  return handleAPIResponse(response, TrackSchema);
 };
 
 export const removeTrackFile = async (id: string) => {
@@ -116,8 +84,5 @@ export const removeTrackFile = async (id: string) => {
     method: 'DELETE',
   });
 
-  if (!response.ok) {
-    const { error } = (await response.json()) as APIError;
-    throw new Error(error || 'Failed to remove track file');
-  }
+  if (!response.ok) await handleErrorResponse(response);
 };
