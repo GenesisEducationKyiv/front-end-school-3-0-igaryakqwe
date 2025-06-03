@@ -6,7 +6,7 @@
 ## Decision
 
 - We decided to integrate `Sentry` for logging errors and warnings and integrate Slack for notifications.
-- We will add new workflows for building and previewing the project.
+- We will add new workflow for building project to avoid broken code(with ESlint, Typescript errors) to be pushed to production. Also, we will add previewing workflow which may help reviewers to check UI changes.
 
 ## Rationale
 
