@@ -21,7 +21,10 @@ import { cn } from '@/lib/utils';
 
 const GenresCombobox = () => {
   const [open, setOpen] = useState(false);
-  const { genre, setGenre } = useTracksSearch();
+  const {
+    state: { genre },
+    actions: { setGenre },
+  } = useTracksSearch();
 
   const { genres, isLoading } = useGenreQuery();
 
@@ -64,7 +67,10 @@ const GenresCombobox = () => {
             <CommandGroup>
               <CommandItem
                 value=""
-                className={cn(genre === '' && 'font-semibold bg-gray-100 dark:bg-neutral-800')}
+                className={cn(
+                  genre === '' &&
+                    'font-semibold bg-gray-100 dark:bg-neutral-800'
+                )}
                 onSelect={async (currentValue) => {
                   await setGenre(currentValue);
                   setOpen(false);
@@ -77,7 +83,8 @@ const GenresCombobox = () => {
                   key={genreItem}
                   value={genreItem}
                   className={cn(
-                    genre === genreItem && 'font-semibold bg-gray-100 dark:bg-neutral-800'
+                    genre === genreItem &&
+                      'font-semibold bg-gray-100 dark:bg-neutral-800'
                   )}
                   onSelect={async (currentValue) =>
                     await handleSelectGenre(currentValue)
