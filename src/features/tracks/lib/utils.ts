@@ -22,8 +22,7 @@ export const mapGenre = (genres?: string[]): Option[] => {
   return genres?.map((genre) => ({ value: genre, label: genre })) ?? [];
 };
 
-export const getSortValue = (value?: SortValue) => {
-  if (!value) return 'No sorting';
+export const getSortValue = (value: SortValue) => {
   return SORT_OPTIONS_MAPPER[value];
 };
 
@@ -46,4 +45,4 @@ export const createSlug = (str: string) => {
     .replace(/[^\w\s-]/g, '')
     .replace(/[\s_-]+/g, '-')
     .replace(/^-+|-+$/g, '');
-}
+};

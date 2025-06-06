@@ -36,8 +36,6 @@ const SortCombobox = () => {
     setOpen(false);
   };
 
-  const currentSortValue = SORT_VALUES?.find((valueItem) => valueItem === sort);
-
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -48,7 +46,7 @@ const SortCombobox = () => {
           aria-expanded={open}
           className="w-full justify-between"
         >
-          {getSortValue(currentSortValue)}
+          {getSortValue(sort)}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -56,14 +54,6 @@ const SortCombobox = () => {
         <Command>
           <CommandList>
             <CommandGroup>
-              <CommandItem
-                className={cn(
-                  !sort && 'font-semibold bg-gray-100 dark:bg-neutral-800'
-                )}
-                onSelect={() => handleSelect()}
-              >
-                <span className="text-sm">No sorting</span>
-              </CommandItem>
               {SORT_VALUES?.map((sortValue: SortValue) => (
                 <CommandItem
                   key={sortValue}
