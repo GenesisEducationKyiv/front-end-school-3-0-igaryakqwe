@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { removeTrackFile } from '@/api/tracks.api.ts';
+import { removeTrackFile } from '@/features/tracks/api/tracks.api';
 import { toast } from '@/lib/toast';
 import { Track } from '@/types/entities/track.ts';
 

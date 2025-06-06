@@ -27,7 +27,7 @@ export const getSortValue = (value?: SortValue) => {
   return SORT_OPTIONS_MAPPER[value];
 };
 
-export const getAudioFile = (fileName?: string) => {
+export const getAudioFile = (fileName?: string | null) => {
   if (!fileName) return;
   return `${API_URL}/files/${fileName}`;
 };
