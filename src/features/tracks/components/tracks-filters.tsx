@@ -7,8 +7,10 @@ import SortCombobox from '@/features/tracks/components/sort-combobox.tsx';
 import useTracksSearch from '@/features/tracks/hooks/use-tracks-search.ts';
 
 const TracksFilters = () => {
-  const { search, setSearch, artist, setArtist, album, setAlbum } =
-    useTracksSearch();
+  const { state, actions } = useTracksSearch();
+
+  const { search, artist, album } = state;
+  const { setSearch, setArtist, setAlbum } = actions;
 
   const handleSearchChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     await setSearch(e.target.value);

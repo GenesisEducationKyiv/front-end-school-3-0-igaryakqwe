@@ -9,18 +9,17 @@ import { usePagination } from '@/hooks/use-pagination.ts';
 
 const useTracksQuery = () => {
   const {
-    searchParams: { album, ...searchParams },
+    state: { album, search, artist, searchParams },
   } = useTracksSearch();
 
-  const search = useDebounce(searchParams.search, 500);
-  const artist = useDebounce(searchParams.artist, 500);
+  const debouncedSearch = useDebounce(search, 500);
+  const debouncedArtist = useDebounce(artist, 500);
   const debouncedAlbum = useDebounce(album, 500);
 
   const params = serialize({
     ...searchParams,
-    search,
-    artist,
-    limit: MAX_TRACKS_PER_PAGE,
+    search: debouncedSearch,
+    artist: debouncedArtist,
   });
 
   const { data, isLoading, error } = useQuery({

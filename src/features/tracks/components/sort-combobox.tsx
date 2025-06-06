@@ -21,7 +21,10 @@ import { SortValue } from '@/types/entities/track.ts';
 
 const SortCombobox = () => {
   const [open, setOpen] = useState(false);
-  const { sort, setSort } = useTracksSearch();
+  const {
+    state: { sort },
+    actions: { setSort },
+  } = useTracksSearch();
 
   const handleSelect = async (value?: SortValue) => {
     if (!value) {
@@ -54,7 +57,9 @@ const SortCombobox = () => {
           <CommandList>
             <CommandGroup>
               <CommandItem
-                className={cn(!sort && 'font-semibold bg-gray-100 dark:bg-neutral-800')}
+                className={cn(
+                  !sort && 'font-semibold bg-gray-100 dark:bg-neutral-800'
+                )}
                 onSelect={() => handleSelect()}
               >
                 <span className="text-sm">No sorting</span>
@@ -64,7 +69,8 @@ const SortCombobox = () => {
                   key={sortValue}
                   value={sortValue}
                   className={cn(
-                    sort === sortValue && 'font-semibold bg-gray-100 dark:neutral-800',
+                    sort === sortValue &&
+                      'font-semibold bg-gray-100 dark:neutral-800'
                   )}
                   onSelect={() => handleSelect(sortValue)}
                 >

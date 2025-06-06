@@ -4,7 +4,10 @@ import { Button } from '@/components/ui/button.tsx';
 import useTracksSearch from '@/features/tracks/hooks/use-tracks-search.ts';
 
 const ChangeOrderButton = () => {
-  const { order, setOrder } = useTracksSearch();
+  const {
+    state: { order },
+    actions: { setOrder },
+  } = useTracksSearch();
 
   const handleChangeOrder = async () => {
     await setOrder(order === 'asc' ? 'desc' : 'asc');
