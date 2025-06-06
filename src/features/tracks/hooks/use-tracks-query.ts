@@ -9,7 +9,7 @@ import { usePagination } from '@/hooks/use-pagination.ts';
 
 const useTracksQuery = () => {
   const {
-    state: { album, search, artist, searchParams },
+    state: { album, search, artist, searchParams, limit },
   } = useTracksSearch();
 
   const debouncedSearch = useDebounce(search, 500);
@@ -20,11 +20,16 @@ const useTracksQuery = () => {
     ...searchParams,
     search: debouncedSearch,
     artist: debouncedArtist,
+    limit,
   });
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['tracks', params],
     queryFn: () => getTracks(params),
+    select: (data) => ({
+      data: filterTracks(data.data, debouncedAlbum),
+      meta: data.meta,
+    }),
   });
 
   const { currentPage, handlePageChange, totalPages } = usePagination({
@@ -32,10 +37,8 @@ const useTracksQuery = () => {
     itemsPerPage: MAX_TRACKS_PER_PAGE,
   });
 
-  const tracks = filterTracks(data?.data ?? [], debouncedAlbum) ?? [];
-
   return {
-    tracks,
+    tracks: data?.data ?? [],
     isLoading,
     error,
     currentPage,
