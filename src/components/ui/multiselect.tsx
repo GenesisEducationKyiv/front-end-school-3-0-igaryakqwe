@@ -118,7 +118,7 @@ function transToGroupOption(options: Option[], groupBy?: string) {
   options.forEach((option) => {
     const rawKey = option[groupBy];
     const key = typeof rawKey === 'string' ? rawKey : String(rawKey ?? '');
-    
+
     if (!groupOption[key]) {
       groupOption[key] = [];
     }
@@ -129,7 +129,7 @@ function transToGroupOption(options: Option[], groupBy?: string) {
 }
 
 function removePickedOption(groupOption: GroupOption, picked: Option[]) {
-  const cloneOption = { ...groupOption };
+  const cloneOption = structuredClone(groupOption);
 
   for (const [key, value] of Object.entries(cloneOption)) {
     cloneOption[key] = value.filter(
