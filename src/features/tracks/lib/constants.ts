@@ -21,7 +21,7 @@ export const SORT_OPTIONS_MAPPER: Record<SortValue, string> = {
 
 export const SEARCH_PARAMS_SCHEMA = {
   page: parseAsInteger.withDefault(1),
-  limit: parseAsInteger,
+  limit: parseAsInteger.withDefault(MAX_TRACKS_PER_PAGE),
   sort: parseAsStringLiteral(SORT_VALUES),
   order: parseAsStringLiteral(SORT_ORDER),
   search: parseAsString.withDefault(''),
