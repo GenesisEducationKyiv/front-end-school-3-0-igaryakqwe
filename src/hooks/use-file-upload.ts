@@ -155,7 +155,7 @@ export const useFileUpload = (
 
       const newState = {
         ...prev,
-        files: [] as FileWithPreview[],
+        files: [],
         errors: [],
       };
 
@@ -311,7 +311,10 @@ export const useFileUpload = (
     e.preventDefault();
     e.stopPropagation();
 
-    if (e.currentTarget.contains(e.relatedTarget as Node)) {
+    if (
+      e.relatedTarget instanceof Node &&
+      e.currentTarget.contains(e.relatedTarget)
+    ) {
       return;
     }
 

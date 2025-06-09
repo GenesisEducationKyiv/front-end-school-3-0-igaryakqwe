@@ -114,18 +114,22 @@ function transToGroupOption(options: Option[], groupBy?: string) {
   }
 
   const groupOption: GroupOption = {};
+
   options.forEach((option) => {
-    const key = (option[groupBy] as string) || '';
+    const rawKey = option[groupBy];
+    const key = typeof rawKey === 'string' ? rawKey : String(rawKey ?? '');
+
     if (!groupOption[key]) {
       groupOption[key] = [];
     }
     groupOption[key].push(option);
   });
+
   return groupOption;
 }
 
 function removePickedOption(groupOption: GroupOption, picked: Option[]) {
-  const cloneOption = JSON.parse(JSON.stringify(groupOption)) as GroupOption;
+  const cloneOption = structuredClone(groupOption);
 
   for (const [key, value] of Object.entries(cloneOption)) {
     cloneOption[key] = value.filter(
@@ -205,11 +209,13 @@ const MultipleSelector = ({
   const debouncedSearchTerm = useDebounce(inputValue, delay || 500);
 
   const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+    if (!(event.target instanceof Node)) return;
+
     if (
       dropdownRef.current &&
-      !dropdownRef.current.contains(event.target as Node) &&
+      !dropdownRef.current.contains(event.target) &&
       inputRef.current &&
-      !inputRef.current.contains(event.target as Node)
+      !inputRef.current.contains(event.target)
     ) {
       setOpen(false);
       inputRef.current.blur();

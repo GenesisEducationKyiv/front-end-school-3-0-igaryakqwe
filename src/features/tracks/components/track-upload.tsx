@@ -21,7 +21,11 @@ const TrackUpload = ({ trackId }: TrackUploadProps) => {
     accept: ALLOWED_AUDIO_TYPES.join(','),
     onFilesAdded: (files) => {
       if (files.length > 0) {
-        const file = files[0]?.file as File;
+        const file = files[0]?.file;
+        if (!(file instanceof File)) {
+          toast.error('Invalid file');
+          return;
+        }
 
         if (!ALLOWED_AUDIO_TYPES.includes(file.type)) {
           toast.error('Please upload only MP3 or WAV files');
@@ -34,7 +38,7 @@ const TrackUpload = ({ trackId }: TrackUploadProps) => {
         }
 
         const formData = new FormData();
-        formData.append('file', files[0]?.file as File);
+        formData.append('file', file);
         uploadTrack(formData);
       }
     },
