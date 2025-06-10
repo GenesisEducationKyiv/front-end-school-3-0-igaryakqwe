@@ -24,31 +24,44 @@ const TracksFilters = () => {
     await setAlbum(e.target.value);
   };
 
+  const inputConfigs = [
+    {
+      label: 'Search',
+      value: search,
+      placeholder: 'Enter title...',
+      onChange: handleSearchChange,
+      testId: 'search-input',
+    },
+    {
+      label: 'Artist',
+      value: artist,
+      placeholder: 'Enter artist...',
+      onChange: handleArtistChange,
+      testId: 'filter-artist',
+    },
+    {
+      label: 'Album',
+      value: album,
+      placeholder: 'Enter album...',
+      onChange: handleAlbumChange,
+      testId: 'filter-album',
+    },
+  ];
+
   return (
     <Card className="w-full lg:w-1/3 p-5 h-fit">
       <CardTitle className="text-2xl">Filters</CardTitle>
       <CardContent className="p-0 space-y-2">
-        <Input
-          data-testid="search-input"
-          label="Search"
-          value={search}
-          placeholder="Enter title..."
-          onChange={handleSearchChange}
-        />
-        <Input
-          data-testid="filter-artist"
-          label="Artist"
-          value={artist}
-          placeholder="Enter artist..."
-          onChange={handleArtistChange}
-        />
-        <Input
-          data-testid="filter-album"
-          label="Album"
-          value={album}
-          placeholder="Enter album..."
-          onChange={handleAlbumChange}
-        />
+        {inputConfigs.map((config) => (
+          <Input
+            key={config.label}
+            label={config.label}
+            value={config.value}
+            placeholder={config.placeholder}
+            onChange={config.onChange}
+            data-testId={config.testId}
+          />
+        ))}
         <div>
           <Label className="text-sm font-medium">Select Genre</Label>
           <GenresCombobox />

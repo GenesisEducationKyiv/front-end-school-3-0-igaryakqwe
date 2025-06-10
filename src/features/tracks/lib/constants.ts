@@ -37,3 +37,5 @@ export const ALLOWED_AUDIO_TYPES = [
   'audio/x-wav',
 ];
 export const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+
+export const INPUT_TRACK_FILTERS = [];
