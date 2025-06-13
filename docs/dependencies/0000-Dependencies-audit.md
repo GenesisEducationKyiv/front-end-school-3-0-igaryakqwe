@@ -166,7 +166,7 @@ I've made checking using `Snyk CLI` and it found no zero-day vulnerabilities.
 After the audit, I have decided to upgrade the following packages:
 
 - `vite` to `^6.3.4`
-- `brace-expansion` to `^2.0.2`
+- `brace-expansion` to `^2.0.2` as internal dependency of `@typescript-eslint/eslint-plugin`
 
 ## Reason
 
