@@ -1,12 +1,12 @@
 import { useQueryStates } from 'nuqs';
 import * as Belt from '@mobily/ts-belt';
-import { pipe } from '@mobily/ts-belt';
 
 import {
   MAX_TRACKS_PER_PAGE,
   SEARCH_PARAMS_SCHEMA,
 } from '@/features/tracks/lib/constants.ts';
 import { SortOrder, SortValue } from '@/types/entities/track.ts';
+import { pipeSearchParam } from '@/utils/search-params.utils';
 
 const useTracksSearch = () => {
   const [searchParams, setSearchParams] = useQueryStates(SEARCH_PARAMS_SCHEMA);
@@ -17,26 +17,10 @@ const useTracksSearch = () => {
   const limitOption = Belt.O.fromNullable(limit);
   const sortOption = Belt.O.fromNullable(sort);
   const orderOption = Belt.O.fromNullable(order);
-  const searchOption = pipe(
-    Belt.O.fromNullable(search),
-    Belt.O.map((s) => s.trim()),
-    Belt.O.flatMap((s) => (s.length > 0 ? Belt.O.Some(s) : Belt.O.None))
-  );
-  const genreOption = pipe(
-    Belt.O.fromNullable(genre),
-    Belt.O.map((g) => g.trim()),
-    Belt.O.flatMap((g) => (g.length > 0 ? Belt.O.Some(g) : Belt.O.None))
-  );
-  const artistOption = pipe(
-    Belt.O.fromNullable(artist),
-    Belt.O.map((a) => a.trim()),
-    Belt.O.flatMap((a) => (a.length > 0 ? Belt.O.Some(a) : Belt.O.None))
-  );
-  const albumOption = pipe(
-    Belt.O.fromNullable(album),
-    Belt.O.map((a) => a.trim()),
-    Belt.O.flatMap((a) => (a.length > 0 ? Belt.O.Some(a) : Belt.O.None))
-  );
+  const searchOption = pipeSearchParam(search);
+  const genreOption = pipeSearchParam(genre);
+  const artistOption = pipeSearchParam(artist);
+  const albumOption = pipeSearchParam(album);
 
   const setSearch = async (value: string) => {
     await setSearchParams({ search: value, page: 1 });
