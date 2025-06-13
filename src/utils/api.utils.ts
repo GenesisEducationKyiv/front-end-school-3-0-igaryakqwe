@@ -25,11 +25,10 @@ export const handleAPIResponse = async <T>(
   }
 
   const result = schema.safeParse(raw);
-
   if (!result.success) {
     console.error('Zod validation error:', result.error.format());
     throw new Error('Invalid API response format');
   }
 
   return result.data;
-};
+}

@@ -9,23 +9,27 @@ import { usePagination } from '@/hooks/use-pagination.ts';
 
 const useTracksQuery = () => {
   const {
-    searchParams: { album, ...searchParams },
+    state: { album, search, artist, searchParams, limit },
   } = useTracksSearch();
 
-  const search = useDebounce(searchParams.search, 500);
-  const artist = useDebounce(searchParams.artist, 500);
+  const debouncedSearch = useDebounce(search, 500);
+  const debouncedArtist = useDebounce(artist, 500);
   const debouncedAlbum = useDebounce(album, 500);
 
   const params = serialize({
     ...searchParams,
-    search,
-    artist,
-    limit: MAX_TRACKS_PER_PAGE,
+    search: debouncedSearch,
+    artist: debouncedArtist,
+    limit,
   });
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['tracks', params],
     queryFn: () => getTracks(params),
+    select: (data) => ({
+      data: filterTracks(data.data, debouncedAlbum),
+      meta: data.meta,
+    }),
   });
 
   const { currentPage, handlePageChange, totalPages } = usePagination({
@@ -33,10 +37,8 @@ const useTracksQuery = () => {
     itemsPerPage: MAX_TRACKS_PER_PAGE,
   });
 
-  const tracks = filterTracks(data?.data ?? [], debouncedAlbum) ?? [];
-
   return {
-    tracks,
+    tracks: data?.data ?? [],
     isLoading,
     error,
     currentPage,
