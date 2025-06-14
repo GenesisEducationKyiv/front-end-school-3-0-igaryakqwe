@@ -15,7 +15,9 @@ I've decided to use `classnames` instead of `clsx` which works the same way but 
 
 2. Checked `classnames` on `Snyk Advisor` and it showed 84/100 package health score.
 
-3. Checked `classnames` on `Github`:
+3. Checked `classnames` on `socket.dev` and it showed perfect characteristics.
+
+4. Checked `classnames` on `Github`:
    - last update was 2 moths ago which is better than `clsx`, but maybe it will be the reason to find another alternative
    - there's `Dependabot` in CI which minimizes the risk of security issues.
    - more active community (45 contributors), 17.7k stars, more than 500 forks which is much better than `clsx`
