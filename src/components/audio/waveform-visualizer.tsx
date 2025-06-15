@@ -19,7 +19,7 @@ const WaveformVisualizer = ({
   duration,
 }: WaveformVisualizerProps) => {
   const currentTrack = useAudioStore((state) => state.getCurrentTrack());
-  const audioUrl = getAudioFile(currentTrack?.audioFile)
+  const audioUrl = getAudioFile(currentTrack?.audioFile);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [waveformData, setWaveformData] = useState<number[]>([]);

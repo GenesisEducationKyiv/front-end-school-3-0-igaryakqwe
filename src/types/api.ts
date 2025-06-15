@@ -23,6 +23,8 @@ export const APIDeleteResponseSchema = z.object({
 });
 
 export type APIMeta = z.infer<typeof APIMetaSchema>;
-export type APIResponse<T> = z.infer<ReturnType<typeof APIResponseSchema<z.ZodType<T>>>>;
+export type APIResponse<T> = z.infer<
+  ReturnType<typeof APIResponseSchema<z.ZodType<T>>>
+>;
 export type APIError = z.infer<typeof APIErrorSchema>;
 export type APIDeleteResponse = z.infer<typeof APIDeleteResponseSchema>;

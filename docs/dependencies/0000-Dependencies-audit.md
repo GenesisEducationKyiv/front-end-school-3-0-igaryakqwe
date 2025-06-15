@@ -1,5 +1,7 @@
 # 0000-Dependencies audit
 
+Date: 15-06-2025
+
 ## Results
 
 ```bash
@@ -160,6 +162,8 @@ I've made checking using `Snyk CLI` and it found no zero-day vulnerabilities.
 ```bash
 ✔ Tested 30 dependencies for known issues, no vulnerable paths found.
 ```
+
+Currently, there are no zero-day vulnerabilities on 15-06-2025.
 
 ## Decision
 
