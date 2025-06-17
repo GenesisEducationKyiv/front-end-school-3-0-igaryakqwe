@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { formatTime } from '@/features/tracks/lib/utils.ts';
+import { formatTime } from '@/utils/date.utils';
 
 interface TimeDisplayProps {
   time: number;
