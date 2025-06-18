@@ -5,7 +5,10 @@ export default mergeConfig(
   viteConfig,
   defineConfig({
     test: {
-      include: ['**/unit/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+      include: [
+        '**/{unit,integration}/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
+      ],
+      setupFiles: ['./vitest.setup.ts'],
     },
   })
 );
