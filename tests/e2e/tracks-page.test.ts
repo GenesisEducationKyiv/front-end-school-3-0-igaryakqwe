@@ -1,27 +1,5 @@
-import { test, expect } from '@playwright/test';
-
-async function createTrack(page, track) {
-  const createTrackButton = page.getByTestId('create-track-button');
-  await createTrackButton.click();
-
-  const trackForm = page.getByTestId('track-form');
-  await expect(trackForm).toBeVisible();
-
-  await trackForm.getByTestId('input-title').fill(track.title);
-  await trackForm.getByTestId('input-artist').fill(track.artist);
-  await trackForm.getByTestId('input-album').fill(track.album);
-  await trackForm.getByTestId('input-cover-image').fill(track.coverImage);
-
-  await trackForm.getByTestId('genre-selector').click();
-  const input = trackForm.getByTestId('genre-selector').locator('input');
-  await input.fill(track.genre);
-  await page.getByRole('option', { name: track.genre }).click();
-  await trackForm.click({ position: { x: 10, y: 10 } });
-  await page.waitForTimeout(300);
-
-  await trackForm.getByTestId('submit-button').click();
-  await page.waitForTimeout(500);
-}
+import { expect } from '@playwright/test';
+import { test } from '../fixtures/test-tracks-fixture';
 
 test.describe('Tracks Page', () => {
   test.beforeEach(async ({ page }) => {
@@ -211,15 +189,6 @@ test.describe('Tracks Page', () => {
   });
 
   test.describe('Tracks operations', () => {
-    const testTrack = {
-      title: 'Test Track',
-      artist: 'New Artist',
-      album: 'New Album',
-      coverImage:
-        'https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg',
-      genre: 'Pop',
-    };
-
     const updatedTrack = {
       title: 'Updated Track',
       artist: 'Updated Artist',
@@ -229,8 +198,55 @@ test.describe('Tracks Page', () => {
       genre: 'Rock',
     };
 
-    test('should allow to create, edit, and delete track', async ({ page }) => {
-      await createTrack(page, testTrack);
+    test('should allow to create track', async ({
+      page,
+      deleteTrack,
+      getFullTrack,
+    }) => {
+      const track = getFullTrack();
+      const createTrackButton = page.getByTestId('create-track-button');
+      await createTrackButton.click();
+
+      const trackForm = page.getByTestId('track-form');
+      await expect(trackForm).toBeVisible();
+
+      await trackForm.getByTestId('input-title').fill(track.title);
+      await trackForm.getByTestId('input-artist').fill(track.artist);
+      await trackForm.getByTestId('input-album').fill(track.album as string);
+      await trackForm
+        .getByTestId('input-cover-image')
+        .fill(track.coverImage as string);
+
+      await trackForm.getByTestId('genre-selector').click();
+      const input = trackForm.getByTestId('genre-selector').locator('input');
+      await input.fill(track.genres[0]);
+      await page.getByRole('option', { name: track.genres[0] }).click();
+      await trackForm.click({ position: { x: 10, y: 10 } });
+      await page.waitForTimeout(300);
+
+      await trackForm.getByTestId('submit-button').click();
+      await page.waitForTimeout(500);
+
+      const trackItem = await page.getByTestId(/^track-item-/).first();
+      await expect(trackItem).toBeVisible();
+
+      const titleElement = await trackItem.getByTestId(/title$/);
+      await expect(titleElement).toBeVisible();
+      await expect(titleElement).toHaveText(track.title);
+
+      const testId = await trackItem.getAttribute('data-testid');
+      const trackId = testId?.split('-').at(-1);
+
+      await deleteTrack(trackId as string);
+    });
+
+    test('should allow to edit track', async ({
+      page,
+      createTrack,
+      deleteTrack,
+      getTrack,
+    }) => {
+      const data = await createTrack(getTrack());
 
       const tracksList = page.getByTestId('tracks-list');
       await expect(tracksList).toBeVisible();
@@ -267,153 +283,108 @@ test.describe('Tracks Page', () => {
       await expect(updatedTrackTitle).toBeVisible();
       await expect(updatedTrackTitle).toHaveText(updatedTrack.title);
 
-      const updatedTrackItem = page
-        .getByTestId(/^track-item-/)
-        .filter({ has: updatedTrackTitle });
-      const deleteButton = updatedTrackItem.getByTestId(/delete/).first();
+      await deleteTrack(data.id);
+    });
+
+    test('should allow to delete track', async ({
+      page,
+      createTrack,
+      getTrack,
+    }) => {
+      await createTrack(getTrack());
+
+      const tracksList = page.getByTestId('tracks-list');
+      await expect(tracksList).toBeVisible();
+
+      const trackItem = await page.getByTestId(/^track-item-/).first();
+      const deleteButton = trackItem.getByTestId(/delete/).first();
       await deleteButton.click();
 
       const confirmButton = page.getByTestId('confirm-delete');
       await confirmButton.click();
 
       await page.waitForTimeout(500);
-      const trackItem = await page.getByTestId(/^track-item-/).first();
-      const updatedTitleElement = trackItem.getByTestId(/title$/);
-      const titleText = await updatedTitleElement.textContent();
+      const titleElement = trackItem.getByTestId(/title$/);
+      const titleText = await titleElement.textContent();
       expect(titleText).not.toBe(updatedTrack.title);
     });
 
-    test.describe('Multiple tracks operations', () => {
-      const testTrack1 = {
-        title: 'Test Track 1',
-        artist: 'New Artist 1',
-        album: 'New Album 1',
-        coverImage:
-          'https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg',
-        genre: 'Pop',
-      };
+    test('should allow to delete multiple tracks', async ({
+      page,
+      createTrack,
+      getTrack,
+      getUpdatedTrack,
+    }) => {
+      const testTrack1 = getTrack();
+      const testTrack2 = getUpdatedTrack();
 
-      const testTrack2 = {
-        title: 'Test Track 2',
-        artist: 'New Artist 2',
-        album: 'New Album 2',
-        coverImage:
-          'https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg',
-        genre: 'Rock',
-      };
+      const [data1, data2] = await Promise.all([
+        createTrack(testTrack1),
+        createTrack(testTrack2),
+      ]);
 
-      test.beforeEach(async ({ page }) => {
-        await page.goto('/');
+      await page.getByTestId('loading-tracks').waitFor({ state: 'hidden' });
 
-        await page.waitForLoadState('networkidle');
+      const trackItems = await page.getByTestId(/^track-item-/).all();
+      expect(trackItems.length).toBeGreaterThanOrEqual(2);
 
-        await createTrackWithForce(page, testTrack1);
+      const selectMode = page.getByTestId('select-mode-toggle');
+      await selectMode.click();
 
-        await createTrackWithForce(page, testTrack2);
-      });
+      await page.waitForTimeout(500);
 
-      async function createTrackWithForce(page, track) {
-        const createTrackButton = page.getByTestId('create-track-button');
-        await createTrackButton.click({ force: true });
+      const track1 = page.getByTestId(`track-item-${data1.id}-title`);
+      const track2 = page.getByTestId(`track-item-${data2.id}-title`);
 
-        const trackForm = page.getByTestId('track-form');
-        await expect(trackForm).toBeVisible();
+      await expect(track1).toBeVisible();
+      await expect(track2).toBeVisible();
 
-        await trackForm.getByTestId('input-title').fill(track.title);
-        await trackForm.getByTestId('input-artist').fill(track.artist);
-        await trackForm.getByTestId('input-album').fill(track.album);
-        await trackForm.getByTestId('input-cover-image').fill(track.coverImage);
+      const trackItem1 = page.getByTestId(`track-item-${data1.id}`);
+      const trackItem2 = page.getByTestId(`track-item-${data2.id}`);
 
-        await trackForm.getByTestId('genre-selector').click({ force: true });
-        const input = trackForm.getByTestId('genre-selector').locator('input');
-        await input.fill(track.genre);
-        await page
-          .getByRole('option', { name: track.genre })
-          .click({ force: true });
-        await trackForm.click({ position: { x: 10, y: 10 }, force: true });
-        await page.waitForTimeout(300);
+      const firstTrackCheckbox = trackItem1.getByTestId(
+        `track-checkbox-${data1.id}`
+      );
+      const secondTrackCheckbox = trackItem2.getByTestId(
+        `track-checkbox-${data2.id}`
+      );
+      await firstTrackCheckbox.check({ force: true });
+      await secondTrackCheckbox.check({ force: true });
 
-        await trackForm.getByTestId('submit-button').click({ force: true });
-        await page.waitForTimeout(1000);
-      }
+      const deleteButton = page.getByTestId('bulk-delete-button');
+      await deleteButton.click();
 
-      test.afterAll(async ({ browser }) => {});
+      const confirmButton = page.getByTestId('confirm-delete');
+      await confirmButton.click();
 
-      test('should allow to delete multiple tracks', async ({ page }) => {
-        await page.getByTestId('loading-tracks').waitFor({ state: 'hidden' });
+      await page.waitForTimeout(1000);
 
-        const trackItems = await page.getByTestId(/^track-item-/).all();
-        expect(trackItems.length).toBeGreaterThanOrEqual(2);
+      const notification = page.getByText('Tracks deleted successfully');
+      await expect(notification).toBeVisible();
 
-        const selectMode = page.getByTestId('select-mode-toggle');
-        await selectMode.click();
+      await expect(track1).not.toBeVisible({ timeout: 5000 });
+      await expect(track2).not.toBeVisible({ timeout: 5000 });
 
-        await page.waitForTimeout(500);
+      const track1Count = await page
+        .getByTestId(/title$/)
+        .filter({ hasText: testTrack1.title })
+        .count();
+      const track2Count = await page
+        .getByTestId(/title$/)
+        .filter({ hasText: testTrack2.title })
+        .count();
 
-        const track1 = page
-          .getByTestId(/title$/)
-          .filter({ hasText: testTrack1.title });
-        const track2 = page
-          .getByTestId(/title$/)
-          .filter({ hasText: testTrack2.title });
-
-        await expect(track1).toBeVisible();
-        await expect(track2).toBeVisible();
-
-        const trackItem1 = page
-          .getByTestId(/^track-item-/)
-          .filter({ has: track1 });
-        const trackItem2 = page
-          .getByTestId(/^track-item-/)
-          .filter({ has: track2 });
-
-        const firstTrackCheckbox = trackItem1.getByTestId(/^track-checkbox-/);
-        const secondTrackCheckbox = trackItem2.getByTestId(/^track-checkbox-/);
-
-        await firstTrackCheckbox.check({ force: true });
-        await secondTrackCheckbox.check({ force: true });
-
-        const deleteButton = page.getByTestId('bulk-delete-button');
-        await deleteButton.click();
-
-        const confirmButton = page.getByTestId('confirm-delete');
-        await confirmButton.click();
-
-        await page.waitForTimeout(1000);
-
-        const notification = page.getByText('Tracks deleted successfully');
-        await expect(notification).toBeVisible();
-
-        await expect(track1).not.toBeVisible({ timeout: 5000 });
-        await expect(track2).not.toBeVisible({ timeout: 5000 });
-
-        const track1Count = await page
-          .getByTestId(/title$/)
-          .filter({ hasText: testTrack1.title })
-          .count();
-        const track2Count = await page
-          .getByTestId(/title$/)
-          .filter({ hasText: testTrack2.title })
-          .count();
-
-        expect(track1Count).toBe(0);
-        expect(track2Count).toBe(0);
-      });
+      expect(track1Count).toBe(0);
+      expect(track2Count).toBe(0);
     });
 
     test('should allow to upload and play audio for a track', async ({
       page,
+      createTrack,
+      getTrack,
     }) => {
-      const audioTestTrack = {
-        title: 'Audio Test Track',
-        artist: 'Test Artist',
-        album: 'Test Album',
-        coverImage:
-          'https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg',
-        genre: 'Rock',
-      };
-
-      await createTrack(page, audioTestTrack);
+      const audioTestTrack = getTrack();
+      await createTrack(audioTestTrack);
 
       const trackTitle = page
         .getByTestId(/title$/)
