@@ -3,10 +3,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 import React from 'react';
 
-// Import the hook
 import useTracksQuery from '../../src/features/tracks/hooks/use-tracks-query';
 
-// Mock all dependencies before importing them
 vi.mock('@/hooks/use-debounce.ts', () => ({
   default: vi.fn((value) => value),
 }));
@@ -35,7 +33,6 @@ import {
   serialize,
 } from '../../src/features/tracks/lib/utils.ts';
 import { getTracks } from '../../src/features/tracks/api/tracks.api';
-import { Options } from 'nuqs';
 
 const mockUseTracksSearch = vi.mocked(useTracksSearch);
 const mockUsePagination = vi.mocked(usePagination);
@@ -43,7 +40,6 @@ const mockFilterTracks = vi.mocked(filterTracks);
 const mockSerialize = vi.mocked(serialize);
 const mockGetTracks = vi.mocked(getTracks);
 
-// Setup providers
 const createWrapper = () => {
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -276,7 +272,7 @@ describe('useTracksQuery Integration Tests', () => {
 
     expect(mockUsePagination).toHaveBeenCalledWith({
       totalItems: 50,
-      itemsPerPage: expect.any(Number), // MAX_TRACKS_PER_PAGE
+      itemsPerPage: expect.any(Number),
     });
 
     expect(result.current.currentPage).toBe(2);
