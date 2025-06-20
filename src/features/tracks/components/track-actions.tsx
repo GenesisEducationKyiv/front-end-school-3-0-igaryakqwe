@@ -3,7 +3,7 @@ import { Track } from '@/types/entities/track';
 import { Button } from '@/components/ui/button';
 import ConfirmationDialog from '@/components/confirmation-dialog';
 import { EditIcon, Trash2Icon } from 'lucide-react';
-import useDeleteTrackMutation from '@/features/tracks/hooks/use-delete-track-mutation';
+import useDeleteTrackMutation from '@/features/tracks/hooks/mutations/use-delete-track-mutation';
 import { memo } from 'react';
 
 interface TrackActionsProps {

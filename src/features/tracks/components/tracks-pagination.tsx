@@ -1,5 +1,5 @@
 import PaginationControls from '@/components/pagination-controls.tsx';
-import useTracksQuery from '@/features/tracks/hooks/use-tracks-query.ts';
+import useTracksQuery from '@/features/tracks/hooks/queries/use-tracks-query';
 
 const TracksPagination = () => {
   const { currentPage, totalPages, handlePageChange } = useTracksQuery();
