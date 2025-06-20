@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const TrackSchema = z.object({
   id: z.string(),
@@ -11,7 +11,7 @@ export const TrackSchema = z.object({
   audioFile: z.string().optional().nullable(),
   createdAt: z.string(),
   updatedAt: z.string(),
-})
+});
 
 export const TracksSchema = z.array(TrackSchema);
 
