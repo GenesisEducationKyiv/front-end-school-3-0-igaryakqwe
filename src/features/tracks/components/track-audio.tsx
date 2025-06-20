@@ -11,6 +11,7 @@ import useRemoveTrackMutation from '@/features/tracks/hooks/use-remove-track-mut
 import { getAudioFile } from '@/features/tracks/lib/utils.ts';
 import useAudioStore from '@/store/use-audio-store';
 import type { Track } from '@/types/entities/track.ts';
+import useTrackAudio from '@/features/tracks/hooks/use-track-audio';
 
 interface TrackAudioProps {
   track: Track;
@@ -18,10 +19,11 @@ interface TrackAudioProps {
 
 const TrackAudio = ({ track }: TrackAudioProps) => {
   const {
-    globalAudioRef,
     currentTrackId,
     isPlaying,
     currentTime,
+    globalAudioRef,
+    isThisPlaying,
     setCurrentTrackId,
     setCurrentTime,
     togglePlay,
@@ -29,12 +31,9 @@ const TrackAudio = ({ track }: TrackAudioProps) => {
     removeFromQueue,
     previous,
     next,
-  } = useAudioStore();
-
-  const isThisPlaying = isPlaying && currentTrackId === track.id;
+  } = useTrackAudio({ trackId: track.id });
 
   const [localDuration, setLocalDuration] = useState(0);
-
   const { removeTrackFile, isRemoving } = useRemoveTrackMutation();
 
   useEffect(() => {
@@ -60,7 +59,7 @@ const TrackAudio = ({ track }: TrackAudioProps) => {
       tempAudio.removeEventListener('loadedmetadata', handleLoadedMetadata);
       tempAudio.src = '';
     };
-  }, [track.audioFile, globalAudioRef, currentTrackId]);
+  }, [track.audioFile, globalAudioRef, currentTrackId, track.id]);
 
   useEffect(() => {
     const trackInQueue = useAudioStore
@@ -124,7 +123,7 @@ const TrackAudio = ({ track }: TrackAudioProps) => {
           </div>
 
           <TimeScrubber
-            currentTime={currentTrackId === track.id ? currentTime : 0}
+            currentTime={currentTime}
             duration={localDuration}
             onTimeChange={handleTimeChange}
           />
