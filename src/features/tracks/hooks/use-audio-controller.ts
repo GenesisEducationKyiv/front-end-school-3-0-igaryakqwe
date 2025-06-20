@@ -8,20 +8,19 @@ const useAudioController = () => {
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const {
-    setGlobalAudioRef,
-    isPlaying,
-    togglePlay,
-    previous,
-    next,
-    setCurrentTime,
-    currentTime,
-    volume,
-    setVolume,
-    isMuted,
-    toggleMute,
-    getCurrentTrack,
-  } = useAudioStore();
+  const currentTime = useAudioStore((state) => state.currentTime);
+  const volume = useAudioStore((state) => state.volume);
+  const isMuted = useAudioStore((state) => state.isMuted);
+  const isPlaying = useAudioStore((state) => state.isPlaying);
+
+  const setGlobalAudioRef = useAudioStore((state) => state.setGlobalAudioRef);
+  const togglePlay = useAudioStore((state) => state.togglePlay);
+  const previous = useAudioStore((state) => state.previous);
+  const next = useAudioStore((state) => state.next);
+  const setCurrentTime = useAudioStore((state) => state.setCurrentTime);
+  const setVolume = useAudioStore((state) => state.setVolume);
+  const toggleMute = useAudioStore((state) => state.toggleMute);
+  const getCurrentTrack = useAudioStore((state) => state.getCurrentTrack);
 
   const currentStoreTrack = getCurrentTrack();
   const audioFile = getAudioFile(currentStoreTrack?.audioFile);

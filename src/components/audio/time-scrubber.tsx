@@ -39,7 +39,7 @@ const TimeScrubber = memo(
             max={duration || 100}
             step={0.1}
             onValueChange={onTimeChange}
-            className="absolute h-full cursor-pointer relative z-10"
+            className="h-full cursor-pointer relative z-10"
             trackClassName={showWaveform ? 'opacity-0' : ''}
           />
         </div>

@@ -15,7 +15,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import useGenreQuery from '@/features/tracks/hooks/use-genre-query.ts';
+import useGenreQuery from '@/features/tracks/hooks/queries/use-genre-query';
 import useTracksSearch from '@/features/tracks/hooks/use-tracks-search.ts';
 import { cn } from '@/lib/utils';
 
