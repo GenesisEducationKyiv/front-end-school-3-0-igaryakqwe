@@ -29,7 +29,7 @@ const trackWithMultipleGenres: Track = {
   genres: ['Rock', 'Pop', 'Electronic', 'Alternative', 'Indie'],
 };
 
-test.only('renders track information correctly', async ({ mount }) => {
+test('renders track information correctly', async ({ mount }) => {
   const component = await mount(<TrackCard track={mockTrack} />);
 
   await expect(component).toContainText('Test Song');

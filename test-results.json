@@ -105,19 +105,19 @@
         {
           "title": "Tracks Page",
           "file": "e2e/tracks-page.test.ts",
-          "line": 5,
+          "line": 4,
           "column": 6,
           "specs": [],
           "suites": [
             {
-              "title": "Tracks operations",
+              "title": "Tracks filters",
               "file": "e2e/tracks-page.test.ts",
-              "line": 192,
+              "line": 45,
               "column": 8,
               "specs": [
                 {
-                  "title": "should allow to upload and play audio for a track",
-                  "ok": true,
+                  "title": "should filter tracks by artist",
+                  "ok": false,
                   "tags": [],
                   "tests": [
                     {
@@ -128,31 +128,65 @@
                       "projectName": "e2e",
                       "results": [
                         {
-                          "workerIndex": 0,
+                          "workerIndex": 2,
                           "parallelIndex": 0,
-                          "status": "passed",
-                          "duration": 6097,
-                          "errors": [],
+                          "status": "failed",
+                          "duration": 13483,
+                          "error": {
+                            "message": "TimeoutError: page.waitForFunction: Timeout 10000ms exceeded.",
+                            "stack": "TimeoutError: page.waitForFunction: Timeout 10000ms exceeded.\n    at C:\\Users\\lenov\\WebstormProjects\\music-platform\\tests\\e2e\\tracks-page.test.ts:79:18",
+                            "location": {
+                              "file": "C:\\Users\\lenov\\WebstormProjects\\music-platform\\tests\\e2e\\tracks-page.test.ts",
+                              "column": 18,
+                              "line": 79
+                            },
+                            "snippet": "\u001b[0m \u001b[90m 77 |\u001b[39m       \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByTestId(\u001b[32m'loading-tracks'\u001b[39m)\u001b[33m.\u001b[39mwaitFor({ state\u001b[33m:\u001b[39m \u001b[32m'hidden'\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 78 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 79 |\u001b[39m       \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForFunction(() \u001b[33m=>\u001b[39m {\n \u001b[90m    |\u001b[39m                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 80 |\u001b[39m         \u001b[36mconst\u001b[39m artistInput \u001b[33m=\u001b[39m document\u001b[33m.\u001b[39mquerySelector(\n \u001b[90m 81 |\u001b[39m           \u001b[32m'[data-testid=\"filter-artist\"]'\u001b[39m\n \u001b[90m 82 |\u001b[39m         ) \u001b[36mas\u001b[39m \u001b[33mHTMLInputElement\u001b[39m\u001b[33m;\u001b[39m\u001b[0m"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "C:\\Users\\lenov\\WebstormProjects\\music-platform\\tests\\e2e\\tracks-page.test.ts",
+                                "column": 18,
+                                "line": 79
+                              },
+                              "message": "TimeoutError: page.waitForFunction: Timeout 10000ms exceeded.\n\n\u001b[0m \u001b[90m 77 |\u001b[39m       \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mgetByTestId(\u001b[32m'loading-tracks'\u001b[39m)\u001b[33m.\u001b[39mwaitFor({ state\u001b[33m:\u001b[39m \u001b[32m'hidden'\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 78 |\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 79 |\u001b[39m       \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mwaitForFunction(() \u001b[33m=>\u001b[39m {\n \u001b[90m    |\u001b[39m                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 80 |\u001b[39m         \u001b[36mconst\u001b[39m artistInput \u001b[33m=\u001b[39m document\u001b[33m.\u001b[39mquerySelector(\n \u001b[90m 81 |\u001b[39m           \u001b[32m'[data-testid=\"filter-artist\"]'\u001b[39m\n \u001b[90m 82 |\u001b[39m         ) \u001b[36mas\u001b[39m \u001b[33mHTMLInputElement\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n\u001b[2m    at C:\\Users\\lenov\\WebstormProjects\\music-platform\\tests\\e2e\\tracks-page.test.ts:79:18\u001b[22m"
+                            }
+                          ],
                           "stdout": [],
                           "stderr": [],
                           "retry": 0,
-                          "startTime": "2025-06-19T23:18:45.114Z",
+                          "startTime": "2025-06-22T17:14:27.869Z",
                           "annotations": [],
                           "attachments": [
                             {
+                              "name": "screenshot",
+                              "contentType": "image/png",
+                              "path": "C:\\Users\\lenov\\WebstormProjects\\music-platform\\test-results\\e2e-tracks-page-Tracks-Pag-709db-uld-filter-tracks-by-artist-e2e\\test-failed-1.png"
+                            },
+                            {
+                              "name": "video",
+                              "contentType": "video/webm",
+                              "path": "C:\\Users\\lenov\\WebstormProjects\\music-platform\\test-results\\e2e-tracks-page-Tracks-Pag-709db-uld-filter-tracks-by-artist-e2e\\video.webm"
+                            },
+                            {
                               "name": "trace",
                               "contentType": "application/zip",
-                              "path": "C:\\Users\\lenov\\WebstormProjects\\music-platform\\test-results\\e2e-tracks-page-Tracks-Pag-f79e1--and-play-audio-for-a-track-e2e\\trace.zip"
+                              "path": "C:\\Users\\lenov\\WebstormProjects\\music-platform\\test-results\\e2e-tracks-page-Tracks-Pag-709db-uld-filter-tracks-by-artist-e2e\\trace.zip"
                             }
-                          ]
+                          ],
+                          "errorLocation": {
+                            "file": "C:\\Users\\lenov\\WebstormProjects\\music-platform\\tests\\e2e\\tracks-page.test.ts",
+                            "column": 18,
+                            "line": 79
+                          }
                         }
                       ],
-                      "status": "expected"
+                      "status": "unexpected"
                     }
                   ],
-                  "id": "b014d9110c6527085a62-a68f03ae194c77fc917b",
+                  "id": "b014d9110c6527085a62-c8229c8bfcf4a4d903c9",
                   "file": "e2e/tracks-page.test.ts",
-                  "line": 382,
+                  "line": 76,
                   "column": 5
                 }
               ]
@@ -164,11 +198,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-06-19T23:18:41.200Z",
-    "duration": 11303.258,
-    "expected": 1,
+    "startTime": "2025-06-22T17:14:24.966Z",
+    "duration": 17245.239,
+    "expected": 0,
     "skipped": 0,
-    "unexpected": 0,
+    "unexpected": 1,
     "flaky": 0
   }
 }
