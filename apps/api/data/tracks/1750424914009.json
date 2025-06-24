@@ -1,0 +1,15 @@
+{
+  "title": "Imagine",
+  "artist": "Bad Bunny",
+  "album": "SOS",
+  "genres": [
+    "Electronic",
+    "Blues",
+    "Rock"
+  ],
+  "slug": "imagine",
+  "coverImage": "https://picsum.photos/seed/Imagine/300/300",
+  "id": "1750424914009",
+  "createdAt": "2025-06-20T13:08:34.009Z",
+  "updatedAt": "2025-06-20T13:08:34.009Z"
+}
