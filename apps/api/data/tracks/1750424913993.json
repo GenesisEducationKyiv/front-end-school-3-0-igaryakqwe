@@ -1,0 +1,13 @@
+{
+  "title": "Uptown Funk",
+  "artist": "Post Malone",
+  "genres": [
+    "Hip Hop",
+    "Rock"
+  ],
+  "slug": "uptown-funk",
+  "coverImage": "https://picsum.photos/seed/Uptown%20Funk/300/300",
+  "id": "1750424913993",
+  "createdAt": "2025-06-20T13:08:33.993Z",
+  "updatedAt": "2025-06-20T13:08:33.993Z"
+}
