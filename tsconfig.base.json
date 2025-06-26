@@ -1,23 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "allowImportingTsExtensions": true,
-    "isolatedModules": true,
-    "useDefineForClassFields": true,
-    "strict": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true,
-    "noUncheckedSideEffectImports": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "jsx": "react-jsx",
+    "lib": ["ES2023"],
     "baseUrl": ".",
     "paths": {
+      "@grpc-generated/*": ["packages/grpc-client/src/generated/*"],
       "@/*": ["apps/web/src/*"]
-    }
+    },
+    "strict": true,
+    "esModuleInterop": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true
   }
 }

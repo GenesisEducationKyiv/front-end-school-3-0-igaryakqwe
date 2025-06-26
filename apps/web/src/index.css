@@ -1,8 +1,8 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "@fontsource/inter";
-@import "@fontsource/inter/500.css";
-@import "@fontsource/inter/600.css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import '@fontsource/inter';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
 
 body {
   font-family: Inter, 'sans-serif';
@@ -127,4 +127,3 @@ body {
     @apply bg-background text-foreground;
   }
 }
-
