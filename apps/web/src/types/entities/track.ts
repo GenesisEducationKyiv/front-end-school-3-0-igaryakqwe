@@ -10,7 +10,7 @@ export const TrackSchema = z.object({
   coverImage: z.string().optional().nullable(),
   audioFile: z.string().optional().nullable(),
   createdAt: z.string(),
-  updatedAt: z.string(),
+  updatedAt: z.string().optional(),
 });
 
 export const TracksSchema = z.array(TrackSchema);

@@ -1,3 +1,4 @@
+import { SortOrder, SortValue } from '@/types/entities/track';
 import { z } from 'zod';
 
 export const createTrackDto = z.object({
@@ -11,8 +12,18 @@ export const createTrackDto = z.object({
   coverImage: z
     .string()
     .url({ message: 'Invalid URL' })
-    .nullish()
+    .optional()
     .or(z.literal('')),
 });
 
 export type CreateTrackDto = z.infer<typeof createTrackDto>;
+
+export interface GetTracksQueryParams {
+  page?: number;
+  limit?: number;
+  sort?: SortValue;
+  order?: SortOrder;
+  search?: string;
+  genre?: string;
+  artist?: string;
+}

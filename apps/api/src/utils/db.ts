@@ -41,15 +41,26 @@ export const initializeDb = async (): Promise<void> => {
   try {
     await fs.mkdir(TRACKS_DIR, { recursive: true });
     await fs.mkdir(UPLOADS_DIR, { recursive: true });
-    
+
     // Create genres file if it doesn't exist
     try {
       await fs.access(GENRES_FILE);
     } catch {
       // Default genres
       const defaultGenres = [
-        'Rock', 'Pop', 'Hip Hop', 'Jazz', 'Classical', 'Electronic',
-        'R&B', 'Country', 'Folk', 'Reggae', 'Metal', 'Blues', 'Indie'
+        'Rock',
+        'Pop',
+        'Hip Hop',
+        'Jazz',
+        'Classical',
+        'Electronic',
+        'R&B',
+        'Country',
+        'Folk',
+        'Reggae',
+        'Metal',
+        'Blues',
+        'Indie',
       ];
       await fs.writeFile(GENRES_FILE, JSON.stringify(defaultGenres, null, 2));
     }
@@ -78,71 +89,81 @@ export const getGenres = async (): Promise<string[]> => {
  * @param params Query parameters for filtering, sorting, and pagination
  * @returns Object containing tracks array and total count
  */
-export const getTracks = async (params: QueryParams = {}): Promise<GetTracksResult> => {
+export const getTracks = async (
+  params: QueryParams = {}
+): Promise<GetTracksResult> => {
   try {
     const files = await fs.readdir(TRACKS_DIR);
-    
+
     let tracks: Track[] = [];
-    
+
     for (const file of files) {
       if (file.endsWith('.json')) {
         const content = await fs.readFile(path.join(TRACKS_DIR, file), 'utf-8');
         tracks.push(JSON.parse(content));
       }
     }
-    
+
     // Apply filtering
     if (params.search) {
       const searchLower = params.search.toLowerCase();
-      tracks = tracks.filter(track => 
-        track.title.toLowerCase().includes(searchLower) ||
-        track.artist.toLowerCase().includes(searchLower) ||
-        (track.album && track.album.toLowerCase().includes(searchLower))
+      tracks = tracks.filter(
+        (track) =>
+          track.title.toLowerCase().includes(searchLower) ||
+          track.artist.toLowerCase().includes(searchLower) ||
+          (track.album && track.album.toLowerCase().includes(searchLower))
       );
     }
-    
+
     if (params.genre) {
-      tracks = tracks.filter(track => track.genres.includes(params.genre as string));
+      tracks = tracks.filter((track) =>
+        track.genres.includes(params.genre as string)
+      );
     }
-    
+
     if (params.artist) {
       const artistLower = params.artist.toLowerCase();
-      tracks = tracks.filter(track => track.artist.toLowerCase().includes(artistLower));
+      tracks = tracks.filter((track) =>
+        track.artist.toLowerCase().includes(artistLower)
+      );
     }
-    
+
     // Apply sorting
     if (params.sort) {
       const sortField = params.sort;
       const sortOrder = params.order || 'asc';
-      
+
       tracks.sort((a, b) => {
         const valueA = a[sortField] || '';
         const valueB = b[sortField] || '';
-        
+
         if (typeof valueA === 'string' && typeof valueB === 'string') {
-          return sortOrder === 'asc' 
+          return sortOrder === 'asc'
             ? valueA.localeCompare(valueB)
             : valueB.localeCompare(valueA);
         }
-        
+
         return 0;
       });
     } else {
       // Default sort by createdAt
-      tracks.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      tracks.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
     }
-    
+
     const total = tracks.length;
-    
+
     // Apply pagination
     const page = params.page || 1;
     const limit = params.limit || 10;
     const start = (page - 1) * limit;
     const end = start + limit;
-    
+
     return {
       tracks: tracks.slice(start, end),
-      total
+      total,
     };
   } catch (error) {
     console.error('Failed to read tracks:', error);
@@ -158,18 +179,18 @@ export const getTracks = async (params: QueryParams = {}): Promise<GetTracksResu
 export const getTrackBySlug = async (slug: string): Promise<Track | null> => {
   try {
     const files = await fs.readdir(TRACKS_DIR);
-    
+
     for (const file of files) {
       if (file.endsWith('.json')) {
         const content = await fs.readFile(path.join(TRACKS_DIR, file), 'utf-8');
         const track: Track = JSON.parse(content);
-        
+
         if (track.slug === slug) {
           return track;
         }
       }
     }
-    
+
     return null;
   } catch (error) {
     console.error(`Failed to get track by slug ${slug}:`, error);
@@ -182,13 +203,13 @@ export const getTrackBySlug = async (slug: string): Promise<Track | null> => {
  * @param id Unique identifier of the track
  * @returns Track object if found, null otherwise
  */
-export const getTrackById = async (id: string): Promise<Track | null> => {
+export const getTrackById = async (id: string): Promise<Track | undefined> => {
   try {
     const filePath = path.join(TRACKS_DIR, `${id}.json`);
     const content = await fs.readFile(filePath, 'utf-8');
     return JSON.parse(content) as Track;
   } catch (error) {
-    return null;
+    return;
   }
 };
 
@@ -202,19 +223,19 @@ export const createTrack = async (
 ): Promise<Track> => {
   const id = Date.now().toString();
   const now = new Date().toISOString();
-  
+
   const newTrack: Track = {
     ...track,
     id,
     createdAt: now,
-    updatedAt: now
+    updatedAt: now,
   };
-  
+
   await fs.writeFile(
     path.join(TRACKS_DIR, `${id}.json`),
     JSON.stringify(newTrack, null, 2)
   );
-  
+
   return newTrack;
 };
 
@@ -225,31 +246,31 @@ export const createTrack = async (
  * @returns Updated track object or null if track not found
  */
 export const updateTrack = async (
-  id: string, 
+  id: string,
   updates: Partial<Track>
-): Promise<Track | null> => {
+): Promise<Track | undefined> => {
   try {
     const track = await getTrackById(id);
-    
+
     if (!track) {
-      return null;
+      return;
     }
-    
+
     const updatedTrack: Track = {
       ...track,
       ...updates,
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
-    
+
     await fs.writeFile(
       path.join(TRACKS_DIR, `${id}.json`),
       JSON.stringify(updatedTrack, null, 2)
     );
-    
+
     return updatedTrack;
   } catch (error) {
     console.error(`Failed to update track ${id}:`, error);
-    return null;
+    return;
   }
 };
 
@@ -261,14 +282,14 @@ export const updateTrack = async (
 export const deleteTrack = async (id: string): Promise<boolean> => {
   try {
     const track = await getTrackById(id);
-    
+
     if (!track) {
       return false;
     }
-    
+
     // Delete track file
     await fs.unlink(path.join(TRACKS_DIR, `${id}.json`));
-    
+
     // Delete associated audio file if it exists
     if (track.audioFile) {
       try {
@@ -277,7 +298,7 @@ export const deleteTrack = async (id: string): Promise<boolean> => {
         console.error(`Failed to delete audio file for track ${id}:`, error);
       }
     }
-    
+
     return true;
   } catch (error) {
     console.error(`Failed to delete track ${id}:`, error);
@@ -290,22 +311,24 @@ export const deleteTrack = async (id: string): Promise<boolean> => {
  * @param ids Array of track IDs to delete
  * @returns Object containing arrays of successful and failed deletions
  */
-export const deleteMultipleTracks = async (ids: string[]): Promise<BatchDeleteResponse> => {
+export const deleteMultipleTracks = async (
+  ids: string[]
+): Promise<BatchDeleteResponse> => {
   const results: BatchDeleteResponse = {
     success: [],
-    failed: []
+    failed: [],
   };
-  
+
   for (const id of ids) {
     const success = await deleteTrack(id);
-    
+
     if (success) {
       results.success.push(id);
     } else {
       results.failed.push(id);
     }
   }
-  
+
   return results;
 };
 
@@ -317,16 +340,16 @@ export const deleteMultipleTracks = async (ids: string[]): Promise<BatchDeleteRe
  * @returns Generated filename of the saved file
  */
 export const saveAudioFile = async (
-  id: string, 
-  fileName: string, 
-  buffer: Buffer
+  id: string,
+  fileName: string,
+  buffer: Uint8Array
 ): Promise<string> => {
   const fileExt = path.extname(fileName);
   const safeFileName = `${id}${fileExt}`;
   const filePath = path.join(UPLOADS_DIR, safeFileName);
-  
+
   await fs.writeFile(filePath, buffer);
-  
+
   return safeFileName;
 };
 
@@ -338,16 +361,16 @@ export const saveAudioFile = async (
 export const deleteAudioFile = async (id: string): Promise<boolean> => {
   try {
     const track = await getTrackById(id);
-    
+
     if (!track || !track.audioFile) {
       return false;
     }
-    
+
     await fs.unlink(path.join(UPLOADS_DIR, track.audioFile));
-    
+
     // Update track to remove audioFile reference
     await updateTrack(id, { audioFile: undefined });
-    
+
     return true;
   } catch (error) {
     console.error(`Failed to delete audio file for track ${id}:`, error);

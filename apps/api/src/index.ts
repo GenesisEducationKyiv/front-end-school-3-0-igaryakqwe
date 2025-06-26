@@ -10,8 +10,10 @@ import config from './config';
 import routes from './routes';
 import { initializeDb } from './utils/db';
 
-import { genresService } from './services/genres.service';
 import { GenresService } from '@grpc-generated/proto/genres_pb.ts';
+import { genresService } from './services/genres.service';
+import { TracksService } from '@grpc-generated/proto/tracks_pb';
+import { tracksService } from './services/tracks.service';
 
 async function start() {
   try {
@@ -78,6 +80,7 @@ async function start() {
       prefix: '/api',
       routes(router) {
         router.service(GenresService, genresService);
+        router.service(TracksService, tracksService);
       },
     });
 

@@ -1,0 +1,14 @@
+{
+  "title": "Billie Jean",
+  "artist": "Kendrick Lamar",
+  "album": "Harry's House",
+  "genres": [
+    "Blues",
+    "Jazz"
+  ],
+  "slug": "billie-jean",
+  "coverImage": "https://picsum.photos/seed/Billie%20Jean/300/300",
+  "id": "1750937449304",
+  "createdAt": "2025-06-26T11:30:49.304Z",
+  "updatedAt": "2025-06-26T11:30:49.304Z"
+}

@@ -11,8 +11,7 @@ export const handleErrorResponse = async (response: Response) => {
 
   console.error('API error format is invalid:', errorResult.error.format());
   throw new Error('API request failed with unknown error');
-}
-
+};
 
 export const handleAPIResponse = async <T>(
   response: Response,
@@ -31,4 +30,23 @@ export const handleAPIResponse = async <T>(
   }
 
   return result.data;
-}
+};
+
+export const handleGrpcResponse = <T>(
+  response: unknown,
+  schema: ZodSchema<T>
+): T => {
+  const result = schema.safeParse(response);
+  if (!result.success) {
+    console.error('Zod validation error (gRPC):', result.error.format());
+    throw new Error('Invalid gRPC response format');
+  }
+  return result.data;
+};
+
+export const handleGrpcError = (error: unknown): never => {
+  if (error instanceof Error) {
+    throw new Error(error.message || 'gRPC request failed');
+  }
+  throw new Error('gRPC request failed with unknown error');
+};

@@ -37,9 +37,7 @@ const TrackUpload = ({ trackId }: TrackUploadProps) => {
           return;
         }
 
-        const formData = new FormData();
-        formData.append('file', file);
-        uploadTrack(formData);
+        uploadTrack(file);
       }
     },
   });
