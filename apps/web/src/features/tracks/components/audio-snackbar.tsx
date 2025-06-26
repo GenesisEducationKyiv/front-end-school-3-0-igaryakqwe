@@ -7,7 +7,6 @@ import VolumeControl from '@/components/audio/volume-control.tsx';
 import useAudioController from '@/features/tracks/hooks/use-audio-controller.ts';
 import { getAudioFile } from '@/features/tracks/lib/utils.ts';
 import { useActiveTrackStream } from '@/features/tracks/hooks/use-active-track.stream';
-import useTrackStore from '../store/use-track.store';
 
 const AudioSnackbar = () => {
   const [visible, setVisible] = useState(false);

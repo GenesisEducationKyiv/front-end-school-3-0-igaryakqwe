@@ -16,8 +16,8 @@ import TrackImage from '@/features/tracks/components/track-image';
 import TrackUpload from '@/features/tracks/components/track-upload';
 import useDeleteTrackMutation from '@/features/tracks/hooks/use-delete-track-mutation';
 import useTracksStore from '@/features/tracks/store/use-tracks.store';
+import useTrackStore from '@/features/tracks/store/use-track.store';
 import { Track } from '@/types/entities/track';
-import useTrackStore from '../store/use-track.store';
 
 interface TrackCardProps {
   track: Track;
