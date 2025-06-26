@@ -6,10 +6,11 @@ import TimeScrubber from '@/components/audio/time-scrubber.tsx';
 import VolumeControl from '@/components/audio/volume-control.tsx';
 import useAudioController from '@/features/tracks/hooks/use-audio-controller.ts';
 import { getAudioFile } from '@/features/tracks/lib/utils.ts';
+import { useActiveTrackStream } from '@/features/tracks/hooks/use-active-track.stream';
+import useTrackStore from '../store/use-track.store';
 
 const AudioSnackbar = () => {
   const [visible, setVisible] = useState(false);
-
   const {
     audioRef,
     currentStoreTrack,
@@ -26,8 +27,11 @@ const AudioSnackbar = () => {
     toggleMute,
   } = useAudioController();
 
-  const trackName = currentStoreTrack?.title || 'No track selected';
-  const trackArtist = currentStoreTrack?.artist || 'Unknown artist';
+  const activeTrack = useActiveTrackStream(isPlaying, currentStoreTrack?.id);
+
+  const trackName =
+    activeTrack?.title ?? currentStoreTrack?.title ?? 'No track selected';
+  const trackArtist = currentStoreTrack?.artist ?? 'Unknown artist';
   const audioFile = getAudioFile(currentStoreTrack?.audioFile);
 
   useEffect(() => {

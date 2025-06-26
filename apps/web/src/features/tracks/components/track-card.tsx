@@ -1,19 +1,26 @@
-import { memo } from 'react';
-
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/card';
 import TrackAudio from '@/features/tracks/components/track-audio';
 import TrackImage from '@/features/tracks/components/track-image';
 import TrackUpload from '@/features/tracks/components/track-upload';
-import TrackInfo from '@/features/tracks/components/track-info';
 import TrackActions from '@/features/tracks/components/track-actions';
 import { Track } from '@/types/entities/track';
 import TrackSelector from '@/features/tracks/components/track-selector';
+import useTrackStore from '@/features/tracks/store/use-track.store';
+import { Badge } from '@/components/ui/badge';
+import { memo } from 'react';
 
 interface TrackCardProps {
   track: Track;
 }
 
 const TrackCard = memo(({ track }: TrackCardProps) => {
+  const activeTrack = useTrackStore((state) => state.activeTrack);
+
+  const trackTitle =
+    activeTrack?.id === track.id
+      ? (activeTrack.title ?? track.title)
+      : track.title;
+
   return (
     <Card
       data-testid={`track-item-${track.id}`}
@@ -28,7 +35,41 @@ const TrackCard = memo(({ track }: TrackCardProps) => {
       />
 
       <CardContent className="pb-6 h-full flex flex-col justify-between">
-        <TrackInfo track={track} />
+        <div className="mb-4">
+          <CardTitle
+            data-testid={`track-item-${track.id}-title`}
+            className="text-xl truncate text-center"
+          >
+            {trackTitle}
+          </CardTitle>
+          <CardDescription className="text-center text-muted-foreground">
+            <p
+              data-testid={`track-item-${track.id}-album`}
+              className="truncate"
+            >
+              {track.album}
+            </p>
+            <p
+              data-testid={`track-item-${track.id}-artist`}
+              className="truncate"
+            >
+              By {track.artist}
+            </p>
+          </CardDescription>
+
+          <div className="flex flex-wrap items-center justify-center gap-1 mt-2">
+            {track.genres.map((genre, index) => (
+              <Badge
+                data-testid={`genre-${genre}`}
+                key={index}
+                variant="secondary"
+                className="text-xs"
+              >
+                {genre}
+              </Badge>
+            ))}
+          </div>
+        </div>
 
         {track?.audioFile ? (
           <TrackAudio track={track} />
