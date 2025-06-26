@@ -2,12 +2,9 @@ import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import multipart from '@fastify/multipart';
 import fastifyStatic from '@fastify/static';
-import swagger from '@fastify/swagger';
-import swaggerUi from '@fastify/swagger-ui';
 import { fastifyConnectPlugin } from '@connectrpc/connect-fastify';
 
 import config from './config';
-import routes from './routes';
 import { initializeDb } from './utils/db';
 
 import { GenresService } from '@grpc-generated/proto/genres_pb.ts';
@@ -58,24 +55,6 @@ async function start() {
       decorateReply: false,
     });
 
-    await fastify.register(swagger, {
-      openapi: {
-        info: {
-          title: 'Music Tracks API',
-          description: 'API for managing music tracks',
-          version: '1.0.0',
-        },
-      },
-    });
-
-    await fastify.register(swaggerUi, {
-      routePrefix: '/documentation',
-      uiConfig: {
-        docExpansion: 'list',
-        deepLinking: true,
-      },
-    });
-
     await fastify.register(fastifyConnectPlugin, {
       prefix: '/api',
       routes(router) {
@@ -83,8 +62,6 @@ async function start() {
         router.service(TracksService, tracksService);
       },
     });
-
-    await fastify.register(routes);
 
     await fastify.listen({
       port: config.server.port,
