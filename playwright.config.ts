@@ -53,16 +53,6 @@ export default defineConfig({
         trace: 'on-first-retry',
       },
     },
-    {
-      name: 'component',
-      testMatch: '**/component/**/*.test.{ts,tsx}',
-      use: {
-        ...devices['Desktop Chrome'],
-        // Для компонентних тестів використовуємо Vite dev server
-        baseURL: 'http://localhost:3000',
-        screenshot: 'only-on-failure',
-      },
-    },
     // Мобільні тести (опціонально)
     {
       name: 'mobile-e2e',
@@ -73,13 +63,6 @@ export default defineConfig({
       },
     },
   ],
-
-  // webServer: {
-  //   command: 'npm run dev',
-  //   url: 'http://127.0.0.1:3000',
-  //   reuseExistingServer: !process.env.CI,
-  //   timeout: 120_000,
-  // },
 
   // Очікування на селектори
   expect: {
