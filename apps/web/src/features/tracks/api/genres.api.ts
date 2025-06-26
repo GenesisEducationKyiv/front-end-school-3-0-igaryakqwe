@@ -1,11 +1,12 @@
 import { genresClient } from '@/lib/grpc-client';
+import { handleGrpcError, handleGrpcResponse } from '@/utils/api.utils';
+import { z } from 'zod';
 
 export const getGenres = async () => {
   try {
     const res = await genresClient.getGenres({});
-    return res.genres;
+    return handleGrpcResponse(res.genres, z.array(z.string()));
   } catch (error) {
-    console.error(error);
-    throw new Error('Failed to get genres');
+    handleGrpcError(error);
   }
 };

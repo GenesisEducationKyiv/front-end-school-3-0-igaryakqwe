@@ -1,0 +1,13 @@
+{
+  "title": "Heroes",
+  "artist": "Adele",
+  "album": "Positions",
+  "genres": [
+    "Hip Hop"
+  ],
+  "slug": "heroes",
+  "coverImage": "https://picsum.photos/seed/Heroes/300/300",
+  "id": "1750937449298",
+  "createdAt": "2025-06-26T11:30:49.298Z",
+  "updatedAt": "2025-06-26T11:30:49.298Z"
+}

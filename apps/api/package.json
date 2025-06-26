@@ -15,7 +15,7 @@
     "test:coverage": "vitest run --coverage",
     "test:ci": "vitest run --reporter=verbose",
     "bd:reset": "rm -rf ./data && cp -r ./data-initial ./data",
-    "seed": "ts-node src/seed.ts",
+    "seed": "tsx src/seed.ts",
     "seed:prod": "node dist/seed.js"
   },
   "keywords": [],
