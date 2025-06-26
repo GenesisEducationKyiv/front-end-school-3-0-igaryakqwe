@@ -94,7 +94,10 @@ const TrackAudio = ({ track }: TrackAudioProps) => {
   };
 
   return (
-    <Card className="w-full p-0 bg-accent/20 shadow-md">
+    <Card
+      data-testid={`track-audio-${track.id}`}
+      className="w-full p-0 bg-accent/20 shadow-md"
+    >
       <CardContent className="p-4">
         <div className="space-y-2">
           <div className="flex items-center justify-center relative">

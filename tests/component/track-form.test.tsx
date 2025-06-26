@@ -56,9 +56,7 @@ test('displays track image with correct alt text', async ({ mount }) => {
 test('shows audio component when track has audio file', async ({ mount }) => {
   const component = await mount(<TrackCard track={mockTrack} />);
 
-  const cardContent = component.locator(
-    '.card-content, [class*="CardContent"]'
-  );
+  const cardContent = component.getByTestId(`track-audio-${mockTrack.id}`);
   await expect(cardContent).toBeVisible();
 });
 
@@ -67,8 +65,8 @@ test('shows upload component when track has no audio file', async ({
 }) => {
   const component = await mount(<TrackCard track={trackWithoutAudio} />);
 
-  const cardContent = component.locator(
-    '.card-content, [class*="CardContent"]'
+  const cardContent = component.getByTestId(
+    `track-upload-${trackWithoutAudio.id}`
   );
   await expect(cardContent).toBeVisible();
 });
@@ -87,12 +85,10 @@ test('displays edit and delete buttons', async ({ mount }) => {
 test('displays multiple genres correctly', async ({ mount }) => {
   const component = await mount(<TrackCard track={trackWithMultipleGenres} />);
 
-  // Check that all genres are displayed
   for (const genre of trackWithMultipleGenres.genres) {
     await expect(component.getByTestId(`genre-${genre}`)).toBeVisible();
   }
 
-  // Check that genres are in a flex container
   const genreContainer = component
     .locator('div')
     .filter({ hasText: 'Rock' })

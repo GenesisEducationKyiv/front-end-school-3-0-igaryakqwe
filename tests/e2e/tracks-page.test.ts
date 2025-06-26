@@ -8,7 +8,7 @@ test.describe('Tracks Page', () => {
 
   test('should have title and icon', async ({ page }) => {
     await expect(page).toHaveTitle('Music Platform');
-    const icon = page.locator('link[rel="icon"]');
+    const icon = page.getByTestId('logo-link');
     await expect(icon).toHaveAttribute('href', '/favicon.svg');
   });
 
@@ -157,9 +157,7 @@ test.describe('Tracks Page', () => {
 
       await page.waitForTimeout(300);
 
-      const genreOptions = await page
-        .locator('div[role="dialog"] [role="option"]')
-        .all();
+      const genreOptions = await page.getByTestId(/^multiselect-option-/).all();
 
       if (genreOptions.length > 1) {
         const selectedGenre = await genreOptions[1].textContent();
