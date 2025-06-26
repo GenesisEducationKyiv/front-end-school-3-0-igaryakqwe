@@ -1,5 +1,3 @@
-'use client';
-
 import { EditIcon, Trash2Icon } from 'lucide-react';
 
 import ConfirmationDialog from '@/components/confirmation-dialog';
@@ -83,7 +81,12 @@ const TrackCard = ({ track }: TrackCardProps) => {
 
           <div className="flex flex-wrap items-center justify-center gap-1 mt-2">
             {track.genres.map((genre, index) => (
-              <Badge data-testid={`genre-${genre}`} key={index} variant="secondary" className="text-xs">
+              <Badge
+                data-testid={`genre-${genre}`}
+                key={index}
+                variant="secondary"
+                className="text-xs"
+              >
                 {genre}
               </Badge>
             ))}
