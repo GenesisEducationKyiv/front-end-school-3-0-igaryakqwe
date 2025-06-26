@@ -14,6 +14,21 @@ importers:
 
   apps/api:
     dependencies:
+      '@bufbuild/buf':
+        specifier: ^1.55.1
+        version: 1.55.1
+      '@bufbuild/protobuf':
+        specifier: ^2.5.2
+        version: 2.5.2
+      '@connectrpc/connect':
+        specifier: ^2.0.2
+        version: 2.0.2(@bufbuild/protobuf@2.5.2)
+      '@connectrpc/connect-fastify':
+        specifier: ^2.0.2
+        version: 2.0.2(@bufbuild/protobuf@2.5.2)(@connectrpc/connect-node@2.0.2(@bufbuild/protobuf@2.5.2)(@connectrpc/connect@2.0.2(@bufbuild/protobuf@2.5.2)))(@connectrpc/connect@2.0.2(@bufbuild/protobuf@2.5.2))(fastify@5.4.0)
+      '@connectrpc/connect-node':
+        specifier: ^2.0.2
+        version: 2.0.2(@bufbuild/protobuf@2.5.2)(@connectrpc/connect@2.0.2(@bufbuild/protobuf@2.5.2))
       '@fastify/cors':
         specifier: ^11.0.0
         version: 11.0.1
@@ -57,21 +72,39 @@ importers:
         specifier: ^3.24.2
         version: 3.25.67
     devDependencies:
+      '@bufbuild/protoc-gen-es':
+        specifier: ^2.5.2
+        version: 2.5.2(@bufbuild/protobuf@2.5.2)
+      '@connectrpc/protoc-gen-connect-es':
+        specifier: ^1.6.1
+        version: 1.6.1(@bufbuild/protoc-gen-es@2.5.2(@bufbuild/protobuf@2.5.2))(@connectrpc/connect@2.0.2(@bufbuild/protobuf@2.5.2))
       '@types/supertest':
         specifier: ^6.0.2
         version: 6.0.3
       '@vitest/coverage-v8':
         specifier: ^3.0.7
-        version: 3.2.4(vitest@3.2.4(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0))
+        version: 3.2.4(vitest@3.2.4(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))
       supertest:
         specifier: ^7.0.0
         version: 7.1.1
+      tsx:
+        specifier: ^4.20.3
+        version: 4.20.3
       vitest:
         specifier: ^3.0.7
-        version: 3.2.4(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0)
+        version: 3.2.4(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)
 
   apps/web:
     dependencies:
+      '@bufbuild/protobuf':
+        specifier: ^2.5.2
+        version: 2.5.2
+      '@connectrpc/connect':
+        specifier: ^2.0.2
+        version: 2.0.2(@bufbuild/protobuf@2.5.2)
+      '@connectrpc/connect-web':
+        specifier: ^2.0.2
+        version: 2.0.2(@bufbuild/protobuf@2.5.2)(@connectrpc/connect@2.0.2(@bufbuild/protobuf@2.5.2))
       '@fontsource/inter':
         specifier: ^5.2.5
         version: 5.2.6
@@ -113,7 +146,7 @@ importers:
         version: 1.2.3(@types/react@19.1.8)(react@19.1.0)
       '@tailwindcss/vite':
         specifier: ^4.1.4
-        version: 4.1.10(vite@6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0))
+        version: 4.1.10(vite@6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))
       '@tanstack/react-query':
         specifier: ^5.74.4
         version: 5.81.2(react@19.1.0)
@@ -163,6 +196,12 @@ importers:
         specifier: ^5.0.3
         version: 5.0.5(@types/react@19.1.8)(react@19.1.0)(use-sync-external-store@1.5.0(react@19.1.0))
     devDependencies:
+      '@bufbuild/protoc-gen-es':
+        specifier: ^2.5.2
+        version: 2.5.2(@bufbuild/protobuf@2.5.2)
+      '@connectrpc/protoc-gen-connect-es':
+        specifier: ^1.6.1
+        version: 1.6.1(@bufbuild/protoc-gen-es@2.5.2(@bufbuild/protobuf@2.5.2))(@connectrpc/connect@2.0.2(@bufbuild/protobuf@2.5.2))
       '@eslint/js':
         specifier: ^9.22.0
         version: 9.29.0
@@ -183,7 +222,7 @@ importers:
         version: 8.35.0(@typescript-eslint/parser@8.35.0(eslint@9.29.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.29.0(jiti@2.4.2))(typescript@5.7.3)
       '@vitejs/plugin-react-swc':
         specifier: ^3.8.0
-        version: 3.10.2(vite@6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0))
+        version: 3.10.2(vite@6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))
       eslint:
         specifier: ^9.22.0
         version: 9.29.0(jiti@2.4.2)
@@ -216,7 +255,26 @@ importers:
         version: 8.35.0(eslint@9.29.0(jiti@2.4.2))(typescript@5.7.3)
       vite:
         specifier: ^6.3.5
-        version: 6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0)
+        version: 6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)
+
+  packages/grpc-client:
+    dependencies:
+      '@bufbuild/buf':
+        specifier: ^1.55.1
+        version: 1.55.1
+      '@bufbuild/protobuf':
+        specifier: ^2.5.2
+        version: 2.5.2
+    devDependencies:
+      '@bufbuild/protoc-gen-es':
+        specifier: ^2.5.2
+        version: 2.5.2(@bufbuild/protobuf@2.5.2)
+      '@connectrpc/protoc-gen-connect-es':
+        specifier: ^1.6.1
+        version: 1.6.1(@bufbuild/protoc-gen-es@2.5.2(@bufbuild/protobuf@2.5.2))(@connectrpc/connect@1.6.1(@bufbuild/protobuf@2.5.2))
+      typescript:
+        specifier: ^5.0.0
+        version: 5.8.3
 
 packages:
 
@@ -244,6 +302,120 @@ packages:
   '@bcoe/v8-coverage@1.0.2':
     resolution: {integrity: sha512-6zABk/ECA/QYSCQ1NGiVwwbQerUCZ+TQbp64Q3AgmfNvurHH0j8TtXa1qbShXA6qqkpAj4V5W8pP6mLe1mcMqA==}
     engines: {node: '>=18'}
+
+  '@bufbuild/buf-darwin-arm64@1.55.1':
+    resolution: {integrity: sha512-g76yEF2ALyjj+R8KVoIjPPS7zaPy6VDWg2b5PCCK04fKTbe5jyzOdYdvNyuM5hO8xpRPBjBrqO6LUAfS+0aRCQ==}
+    engines: {node: '>=12'}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@bufbuild/buf-darwin-x64@1.55.1':
+    resolution: {integrity: sha512-hCkatzlV7DwHWEyzzcpsZgLtxABidT/EYBmLTy6oSCHimOJzR1c5ezKe75tX7myDAfV0HZExIM7+cSsWg3dTPg==}
+    engines: {node: '>=12'}
+    cpu: [x64]
+    os: [darwin]
+
+  '@bufbuild/buf-linux-aarch64@1.55.1':
+    resolution: {integrity: sha512-hA4jGPZ2N+FUZt03w+hPt6YsbhAdOh2gNKBQnuysj8kdTqZ4mw1wCOUoRg9h7eqOr/2XCcOibWYO36H2eS2OYQ==}
+    engines: {node: '>=12'}
+    cpu: [arm64]
+    os: [linux]
+
+  '@bufbuild/buf-linux-armv7@1.55.1':
+    resolution: {integrity: sha512-npnzJSAZRUdh8+fmgsbXt+dogA+iU/i/qWh+3XhdLXW220nWpd1jAXcpquaVfer8EwMEcYjqVf8FA7IXOgjGXw==}
+    engines: {node: '>=12'}
+    cpu: [arm]
+    os: [linux]
+
+  '@bufbuild/buf-linux-x64@1.55.1':
+    resolution: {integrity: sha512-/48IjSA1kh/8kZl1bcDkikgH+9BMnPhhVqad+R7+3ttYOFqifet3n+hf2ipA26NtTpTfvOSRXj1tdx/80x0I1g==}
+    engines: {node: '>=12'}
+    cpu: [x64]
+    os: [linux]
+
+  '@bufbuild/buf-win32-arm64@1.55.1':
+    resolution: {integrity: sha512-CE+jAN1ikRTIdny6Q/geccKsLhy4QEXzUaJUfAiUXqjSW2u/Et7+p9Wh6xUgXcSuIoz1aw8MVuCESrNMBt6LBg==}
+    engines: {node: '>=12'}
+    cpu: [arm64]
+    os: [win32]
+
+  '@bufbuild/buf-win32-x64@1.55.1':
+    resolution: {integrity: sha512-C4VYS96YBJkLhIKH6yh8BqHgIjqGe+G6yuAOOKxWsYdx3QbT5LYOr38AP1bzkFm0Gz9jOOr5n0pmAFwsOLYjiw==}
+    engines: {node: '>=12'}
+    cpu: [x64]
+    os: [win32]
+
+  '@bufbuild/buf@1.55.1':
+    resolution: {integrity: sha512-V9tpe2XlRVyq33cct2lNz9nDDQG95WbPKlxQkMKt5i7tPsfqE3vzbGiEC96K0QJWhIU28OkjYD8+1SyYKBWVYg==}
+    engines: {node: '>=12'}
+    hasBin: true
+
+  '@bufbuild/protobuf@1.10.1':
+    resolution: {integrity: sha512-wJ8ReQbHxsAfXhrf9ixl0aYbZorRuOWpBNzm8pL8ftmSxQx/wnJD5Eg861NwJU/czy2VXFIebCeZnZrI9rktIQ==}
+
+  '@bufbuild/protobuf@2.5.2':
+    resolution: {integrity: sha512-foZ7qr0IsUBjzWIq+SuBLfdQCpJ1j8cTuNNT4owngTHoN5KsJb8L9t65fzz7SCeSWzescoOil/0ldqiL041ABg==}
+
+  '@bufbuild/protoc-gen-es@2.5.2':
+    resolution: {integrity: sha512-G9rvJ3CH1MXxUTppBJLdhc+wS2m6LR1Tvi0sGoDDChmiqJVkOhIeYrqtGMqqLqiE44I7uJGDaYcn1PG3aIGJUg==}
+    engines: {node: '>=14'}
+    hasBin: true
+    peerDependencies:
+      '@bufbuild/protobuf': 2.5.2
+    peerDependenciesMeta:
+      '@bufbuild/protobuf':
+        optional: true
+
+  '@bufbuild/protoplugin@1.10.1':
+    resolution: {integrity: sha512-LaSbfwabAFIvbVnbn8jWwElRoffCIxhVraO8arliVwWupWezHLXgqPHEYLXZY/SsAR+/YsFBQJa8tAGtNPJyaQ==}
+
+  '@bufbuild/protoplugin@2.5.2':
+    resolution: {integrity: sha512-7d/NUae/ugs/qgHEYOwkVWGDE3Bf/xjuGviVFs38+MLRdwiHNTiuvzPVwuIPo/1wuZCZn3Nax1cg1owLuY72xw==}
+
+  '@connectrpc/connect-fastify@2.0.2':
+    resolution: {integrity: sha512-rOobWfWc09+Ws4x+tfZFd12UBezMInq+V5chqbgGuGgajZXyEPRfu8ePo0IiKltWptOq7oPAyaEbadpgcZsnBg==}
+    engines: {node: '>=18.14.1'}
+    peerDependencies:
+      '@bufbuild/protobuf': ^2.2.0
+      '@connectrpc/connect': 2.0.2
+      '@connectrpc/connect-node': 2.0.2
+      fastify: ^4.22.1 || ^5.1.0
+
+  '@connectrpc/connect-node@2.0.2':
+    resolution: {integrity: sha512-33Ut3SRkb6SugpwVCtXXRvUrOdtiyG6z6d5+eijBOLOI75sw1tDCwcs0o/9WL3rUj1M08dLUrPmJB47fjpv6EA==}
+    engines: {node: '>=18.14.1'}
+    peerDependencies:
+      '@bufbuild/protobuf': ^2.2.0
+      '@connectrpc/connect': 2.0.2
+
+  '@connectrpc/connect-web@2.0.2':
+    resolution: {integrity: sha512-QANMFPiL2o66BdBEctg4TsQLe5ozsBLqcle3dCBp7BwGlNGTY6NnNnqmt+YRnpeMW88GgomJwWNMGCrRD9pRKA==}
+    peerDependencies:
+      '@bufbuild/protobuf': ^2.2.0
+      '@connectrpc/connect': 2.0.2
+
+  '@connectrpc/connect@1.6.1':
+    resolution: {integrity: sha512-KchMDNtU4CDTdkyf0qG7ugJ6qHTOR/aI7XebYn3OTCNagaDYWiZUVKgRgwH79yeMkpNgvEUaXSK7wKjaBK9b/Q==}
+    peerDependencies:
+      '@bufbuild/protobuf': ^1.10.0
+
+  '@connectrpc/connect@2.0.2':
+    resolution: {integrity: sha512-xZuylIUNvNlH52e/4eQsZvY4QZyDJRtEFEDnn/yBrv5Xi5ZZI/p8X+GAHH35ucVaBvv9u7OzHZo8+tEh1EFTxA==}
+    peerDependencies:
+      '@bufbuild/protobuf': ^2.2.0
+
+  '@connectrpc/protoc-gen-connect-es@1.6.1':
+    resolution: {integrity: sha512-0fHcaADd+GKM0I/koIQpmKg7b+QL18bXlggTUYEAlMFzsd4zN/ApG3235hdUcRyhrAOAItTXxh8ZAV/nNd43Gg==}
+    engines: {node: '>=16.0.0'}
+    hasBin: true
+    peerDependencies:
+      '@bufbuild/protoc-gen-es': ^1.10.0
+      '@connectrpc/connect': 1.6.1
+    peerDependenciesMeta:
+      '@bufbuild/protoc-gen-es':
+        optional: true
+      '@connectrpc/connect':
+        optional: true
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -1388,6 +1560,11 @@ packages:
     resolution: {integrity: sha512-zTh2+1Y8ZpmeQaQVIc/ZZxsx8UzgKJyNg1PTvjzC7WMhPSVS8bfDX34k1SrwOf016qd5RU3az2UxUNue3IfQ5g==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
+  '@typescript/vfs@1.6.1':
+    resolution: {integrity: sha512-JwoxboBh7Oz1v38tPbkrZ62ZXNHAk9bJ7c9x0eI5zBfBnBYGhURdbnh7Z4smN/MV48Y5OCcZb58n972UtbazsA==}
+    peerDependencies:
+      typescript: '*'
+
   '@vitejs/plugin-react-swc@3.10.2':
     resolution: {integrity: sha512-xD3Rdvrt5LgANug7WekBn1KhcvLn1H3jNBfJRL3reeOIua/WnZOEV5qi5qIBq5T8R0jUDmRtxuvk4bPhzGHDWw==}
     peerDependencies:
@@ -2051,6 +2228,9 @@ packages:
   get-symbol-description@1.1.0:
     resolution: {integrity: sha512-w9UMqWwJxHNOvoNzSJ2oPF5wvYcvP7jUvYzhp67yEhTi17ZDBBC1z9pTdGuzjD+EFIqLSYRweZjqfiPzQ06Ebg==}
     engines: {node: '>= 0.4'}
+
+  get-tsconfig@4.10.1:
+    resolution: {integrity: sha512-auHyJ4AgMz7vgS8Hp3N6HXSmlMdUyhSUrfBF16w153rxtLIEOE+HGqaBppczZvnHLqQJfiHotCYpNhl0lUROFQ==}
 
   glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
@@ -2784,6 +2964,9 @@ packages:
     resolution: {integrity: sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==}
     engines: {node: '>=4'}
 
+  resolve-pkg-maps@1.0.0:
+    resolution: {integrity: sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw==}
+
   resolve@1.22.10:
     resolution: {integrity: sha512-NPRy+/ncIMeDlTAsuqwKIiferiawhefFJtkNSW0qZJEqMEb+qBt/77B/jGeeek+F0uOeN05CDa6HXbbIgtVX4w==}
     engines: {node: '>= 0.4'}
@@ -3079,6 +3262,11 @@ packages:
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
+  tsx@4.20.3:
+    resolution: {integrity: sha512-qjbnuR9Tr+FJOMBqJCW5ehvIo/buZq7vH7qD7JziU98h6l3qGy0a/yPFjwO+y0/T7GFpNgNAvEcPPVfyT8rrPQ==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
+
   turbo-darwin-64@1.13.4:
     resolution: {integrity: sha512-A0eKd73R7CGnRinTiS7txkMElg+R5rKFp9HV7baDiEL4xTG1FIg/56Vm7A5RVgg8UNgG2qNnrfatJtb+dRmNdw==}
     cpu: [x64]
@@ -3142,6 +3330,16 @@ packages:
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
       typescript: '>=4.8.4 <5.9.0'
+
+  typescript@4.5.2:
+    resolution: {integrity: sha512-5BlMof9H1yGt0P8/WF+wPNw6GfctgGjXp5hkblpyT+8rkASSmkUKMXrxR0Xg8ThVCi/JnHQiKXeBaEwCeQwMFw==}
+    engines: {node: '>=4.2.0'}
+    hasBin: true
+
+  typescript@5.4.5:
+    resolution: {integrity: sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
 
   typescript@5.7.3:
     resolution: {integrity: sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw==}
@@ -3367,6 +3565,111 @@ snapshots:
       '@babel/helper-validator-identifier': 7.27.1
 
   '@bcoe/v8-coverage@1.0.2': {}
+
+  '@bufbuild/buf-darwin-arm64@1.55.1':
+    optional: true
+
+  '@bufbuild/buf-darwin-x64@1.55.1':
+    optional: true
+
+  '@bufbuild/buf-linux-aarch64@1.55.1':
+    optional: true
+
+  '@bufbuild/buf-linux-armv7@1.55.1':
+    optional: true
+
+  '@bufbuild/buf-linux-x64@1.55.1':
+    optional: true
+
+  '@bufbuild/buf-win32-arm64@1.55.1':
+    optional: true
+
+  '@bufbuild/buf-win32-x64@1.55.1':
+    optional: true
+
+  '@bufbuild/buf@1.55.1':
+    optionalDependencies:
+      '@bufbuild/buf-darwin-arm64': 1.55.1
+      '@bufbuild/buf-darwin-x64': 1.55.1
+      '@bufbuild/buf-linux-aarch64': 1.55.1
+      '@bufbuild/buf-linux-armv7': 1.55.1
+      '@bufbuild/buf-linux-x64': 1.55.1
+      '@bufbuild/buf-win32-arm64': 1.55.1
+      '@bufbuild/buf-win32-x64': 1.55.1
+
+  '@bufbuild/protobuf@1.10.1': {}
+
+  '@bufbuild/protobuf@2.5.2': {}
+
+  '@bufbuild/protoc-gen-es@2.5.2(@bufbuild/protobuf@2.5.2)':
+    dependencies:
+      '@bufbuild/protoplugin': 2.5.2
+    optionalDependencies:
+      '@bufbuild/protobuf': 2.5.2
+    transitivePeerDependencies:
+      - supports-color
+
+  '@bufbuild/protoplugin@1.10.1':
+    dependencies:
+      '@bufbuild/protobuf': 1.10.1
+      '@typescript/vfs': 1.6.1(typescript@4.5.2)
+      typescript: 4.5.2
+    transitivePeerDependencies:
+      - supports-color
+
+  '@bufbuild/protoplugin@2.5.2':
+    dependencies:
+      '@bufbuild/protobuf': 2.5.2
+      '@typescript/vfs': 1.6.1(typescript@5.4.5)
+      typescript: 5.4.5
+    transitivePeerDependencies:
+      - supports-color
+
+  '@connectrpc/connect-fastify@2.0.2(@bufbuild/protobuf@2.5.2)(@connectrpc/connect-node@2.0.2(@bufbuild/protobuf@2.5.2)(@connectrpc/connect@2.0.2(@bufbuild/protobuf@2.5.2)))(@connectrpc/connect@2.0.2(@bufbuild/protobuf@2.5.2))(fastify@5.4.0)':
+    dependencies:
+      '@bufbuild/protobuf': 2.5.2
+      '@connectrpc/connect': 2.0.2(@bufbuild/protobuf@2.5.2)
+      '@connectrpc/connect-node': 2.0.2(@bufbuild/protobuf@2.5.2)(@connectrpc/connect@2.0.2(@bufbuild/protobuf@2.5.2))
+      fastify: 5.4.0
+
+  '@connectrpc/connect-node@2.0.2(@bufbuild/protobuf@2.5.2)(@connectrpc/connect@2.0.2(@bufbuild/protobuf@2.5.2))':
+    dependencies:
+      '@bufbuild/protobuf': 2.5.2
+      '@connectrpc/connect': 2.0.2(@bufbuild/protobuf@2.5.2)
+
+  '@connectrpc/connect-web@2.0.2(@bufbuild/protobuf@2.5.2)(@connectrpc/connect@2.0.2(@bufbuild/protobuf@2.5.2))':
+    dependencies:
+      '@bufbuild/protobuf': 2.5.2
+      '@connectrpc/connect': 2.0.2(@bufbuild/protobuf@2.5.2)
+
+  '@connectrpc/connect@1.6.1(@bufbuild/protobuf@2.5.2)':
+    dependencies:
+      '@bufbuild/protobuf': 2.5.2
+    optional: true
+
+  '@connectrpc/connect@2.0.2(@bufbuild/protobuf@2.5.2)':
+    dependencies:
+      '@bufbuild/protobuf': 2.5.2
+
+  '@connectrpc/protoc-gen-connect-es@1.6.1(@bufbuild/protoc-gen-es@2.5.2(@bufbuild/protobuf@2.5.2))(@connectrpc/connect@1.6.1(@bufbuild/protobuf@2.5.2))':
+    dependencies:
+      '@bufbuild/protobuf': 1.10.1
+      '@bufbuild/protoplugin': 1.10.1
+    optionalDependencies:
+      '@bufbuild/protoc-gen-es': 2.5.2(@bufbuild/protobuf@2.5.2)
+      '@connectrpc/connect': 1.6.1(@bufbuild/protobuf@2.5.2)
+    transitivePeerDependencies:
+      - supports-color
+
+  '@connectrpc/protoc-gen-connect-es@1.6.1(@bufbuild/protoc-gen-es@2.5.2(@bufbuild/protobuf@2.5.2))(@connectrpc/connect@2.0.2(@bufbuild/protobuf@2.5.2))':
+    dependencies:
+      '@bufbuild/protobuf': 1.10.1
+      '@bufbuild/protoplugin': 1.10.1
+    optionalDependencies:
+      '@bufbuild/protoc-gen-es': 2.5.2(@bufbuild/protobuf@2.5.2)
+      '@connectrpc/connect': 2.0.2(@bufbuild/protobuf@2.5.2)
+    transitivePeerDependencies:
+      - supports-color
 
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
@@ -4251,12 +4554,12 @@ snapshots:
       '@tailwindcss/oxide-win32-arm64-msvc': 4.1.10
       '@tailwindcss/oxide-win32-x64-msvc': 4.1.10
 
-  '@tailwindcss/vite@4.1.10(vite@6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0))':
+  '@tailwindcss/vite@4.1.10(vite@6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))':
     dependencies:
       '@tailwindcss/node': 4.1.10
       '@tailwindcss/oxide': 4.1.10
       tailwindcss: 4.1.10
-      vite: 6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0)
+      vite: 6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)
 
   '@tanstack/query-core@5.81.2': {}
 
@@ -4405,15 +4708,29 @@ snapshots:
       '@typescript-eslint/types': 8.35.0
       eslint-visitor-keys: 4.2.1
 
-  '@vitejs/plugin-react-swc@3.10.2(vite@6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0))':
+  '@typescript/vfs@1.6.1(typescript@4.5.2)':
+    dependencies:
+      debug: 4.4.1(supports-color@5.5.0)
+      typescript: 4.5.2
+    transitivePeerDependencies:
+      - supports-color
+
+  '@typescript/vfs@1.6.1(typescript@5.4.5)':
+    dependencies:
+      debug: 4.4.1(supports-color@5.5.0)
+      typescript: 5.4.5
+    transitivePeerDependencies:
+      - supports-color
+
+  '@vitejs/plugin-react-swc@3.10.2(vite@6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))':
     dependencies:
       '@rolldown/pluginutils': 1.0.0-beta.11
       '@swc/core': 1.12.6
-      vite: 6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0)
+      vite: 6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)
     transitivePeerDependencies:
       - '@swc/helpers'
 
-  '@vitest/coverage-v8@3.2.4(vitest@3.2.4(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0))':
+  '@vitest/coverage-v8@3.2.4(vitest@3.2.4(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 1.0.2
@@ -4428,7 +4745,7 @@ snapshots:
       std-env: 3.9.0
       test-exclude: 7.0.1
       tinyrainbow: 2.0.0
-      vitest: 3.2.4(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0)
+      vitest: 3.2.4(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -4440,13 +4757,13 @@ snapshots:
       chai: 5.2.0
       tinyrainbow: 2.0.0
 
-  '@vitest/mocker@3.2.4(vite@6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0))':
+  '@vitest/mocker@3.2.4(vite@6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))':
     dependencies:
       '@vitest/spy': 3.2.4
       estree-walker: 3.0.3
       magic-string: 0.30.17
     optionalDependencies:
-      vite: 6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0)
+      vite: 6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)
 
   '@vitest/pretty-format@3.2.4':
     dependencies:
@@ -5239,6 +5556,10 @@ snapshots:
       es-errors: 1.3.0
       get-intrinsic: 1.3.0
 
+  get-tsconfig@4.10.1:
+    dependencies:
+      resolve-pkg-maps: 1.0.0
+
   glob-parent@5.1.2:
     dependencies:
       is-glob: 4.0.3
@@ -5931,6 +6252,8 @@ snapshots:
 
   resolve-from@4.0.0: {}
 
+  resolve-pkg-maps@1.0.0: {}
+
   resolve@1.22.10:
     dependencies:
       is-core-module: 2.16.1
@@ -6269,6 +6592,13 @@ snapshots:
 
   tslib@2.8.1: {}
 
+  tsx@4.20.3:
+    dependencies:
+      esbuild: 0.25.5
+      get-tsconfig: 4.10.1
+    optionalDependencies:
+      fsevents: 2.3.3
+
   turbo-darwin-64@1.13.4:
     optional: true
 
@@ -6345,6 +6675,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  typescript@4.5.2: {}
+
+  typescript@5.4.5: {}
+
   typescript@5.7.3: {}
 
   typescript@5.8.3: {}
@@ -6385,13 +6719,13 @@ snapshots:
 
   v8-compile-cache-lib@3.0.1: {}
 
-  vite-node@3.2.4(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0):
+  vite-node@3.2.4(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0):
     dependencies:
       cac: 6.7.14
       debug: 4.4.1(supports-color@5.5.0)
       es-module-lexer: 1.7.0
       pathe: 2.0.3
-      vite: 6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0)
+      vite: 6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)
     transitivePeerDependencies:
       - '@types/node'
       - jiti
@@ -6406,7 +6740,7 @@ snapshots:
       - tsx
       - yaml
 
-  vite@6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0):
+  vite@6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0):
     dependencies:
       esbuild: 0.25.5
       fdir: 6.4.6(picomatch@4.0.2)
@@ -6419,13 +6753,14 @@ snapshots:
       fsevents: 2.3.3
       jiti: 2.4.2
       lightningcss: 1.30.1
+      tsx: 4.20.3
       yaml: 2.8.0
 
-  vitest@3.2.4(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0):
+  vitest@3.2.4(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0):
     dependencies:
       '@types/chai': 5.2.2
       '@vitest/expect': 3.2.4
-      '@vitest/mocker': 3.2.4(vite@6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0))
+      '@vitest/mocker': 3.2.4(vite@6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0))
       '@vitest/pretty-format': 3.2.4
       '@vitest/runner': 3.2.4
       '@vitest/snapshot': 3.2.4
@@ -6443,8 +6778,8 @@ snapshots:
       tinyglobby: 0.2.14
       tinypool: 1.1.1
       tinyrainbow: 2.0.0
-      vite: 6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0)
-      vite-node: 3.2.4(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0)
+      vite: 6.3.5(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)
+      vite-node: 3.2.4(@types/node@22.15.33)(jiti@2.4.2)(lightningcss@1.30.1)(tsx@4.20.3)(yaml@2.8.0)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 22.15.33
