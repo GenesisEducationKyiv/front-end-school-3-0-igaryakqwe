@@ -1,9 +1,9 @@
-import '@/index.css';
+import '@/app/index.css';
 
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
-import App from '@/App.tsx';
+import App from '@/app/app';
 import { Toaster } from '@/components/ui/sonner.tsx';
 import Providers from '@/providers';
 
