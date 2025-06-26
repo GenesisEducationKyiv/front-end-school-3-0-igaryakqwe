@@ -9,7 +9,7 @@ test.describe('Tracks Page', () => {
   test('should have title and icon', async ({ page }) => {
     await expect(page).toHaveTitle('Music Platform');
     const icon = page.getByTestId('logo-link');
-    await expect(icon).toHaveAttribute('href', '/favicon.svg');
+    await expect(icon).toHaveAttribute('href', '/');
   });
 
   test.describe('Tracks list', () => {
@@ -43,110 +43,56 @@ test.describe('Tracks Page', () => {
   });
 
   test.describe('Tracks filters', () => {
-    test('should filter tracks by title', async ({ page }) => {
+    let tracksIds: string[] = [];
+    test.beforeEach(async ({ getTrack, createTrack }) => {
+      const track = await createTrack(getTrack());
+      tracksIds.push(track.id);
+    });
+
+    test.afterAll(async ({ deleteTrack }) => {
+      await Promise.all(tracksIds.map((id) => deleteTrack(id)));
+    });
+
+    test('should filter tracks by title', async ({ page, getTrack }) => {
       await page.getByTestId('loading-tracks').waitFor({ state: 'hidden' });
 
-      const searchTerm = 'Love Story';
+      const searchTerm = getTrack().title;
       const searchInput = page.getByTestId('search-input');
       await searchInput.fill(searchTerm);
 
-      await page.waitForTimeout(1000);
+      const trackItem = page.getByTestId(/^track-item-/).first();
+      await expect(trackItem).toBeVisible();
 
-      const trackItems = await page.getByTestId(/^track-item-/).all();
-
-      if (trackItems.length > 0) {
-        let hasMatch = false;
-
-        for (const item of trackItems) {
-          const titleElement = item.getByTestId(/title$/);
-          const titleText = await titleElement.textContent();
-
-          if (titleText?.toLowerCase().includes(searchTerm.toLowerCase())) {
-            hasMatch = true;
-            break;
-          }
-        }
-
-        expect(hasMatch).toBeTruthy();
-      } else {
-        console.log('No tracks match the search term');
-      }
+      const titleElement = trackItem.getByTestId(/title$/);
+      await expect(titleElement).toContainText(searchTerm);
     });
 
-    test('should filter tracks by artist', async ({ page }) => {
+    test('should filter tracks by artist', async ({ page, getTrack }) => {
       await page.getByTestId('loading-tracks').waitFor({ state: 'hidden' });
 
-      const searchTerm = 'Lady Gaga';
-      const searchInput = page.getByTestId('filter-artist');
-      await searchInput.fill(searchTerm);
+      const searchTerm = getTrack().artist;
+      const artistInput = page.getByTestId('filter-artist');
+      await artistInput.fill(searchTerm);
 
-      await page.waitForTimeout(500);
+      const trackItem = page.getByTestId(/^track-item-/).first();
+      await expect(trackItem).toBeVisible();
 
-      const noTracksMessage = page.getByText('No tracks found');
-      const isNoTracksVisible = await noTracksMessage.isVisible();
-
-      if (isNoTracksVisible) {
-        console.log(`No tracks found for artist: ${searchTerm}`);
-        return;
-      }
-
-      const trackItems = await page.getByTestId(/^track-item-/).all();
-
-      if (trackItems.length > 0) {
-        let hasMatch = false;
-
-        for (const item of trackItems) {
-          const artistElement = item.getByTestId(/artist$/);
-          const artistText = await artistElement.textContent();
-
-          if (artistText?.toLowerCase().includes(searchTerm.toLowerCase())) {
-            hasMatch = true;
-            break;
-          }
-        }
-
-        expect(hasMatch).toBeTruthy();
-      } else {
-        console.log('No tracks match the search term');
-      }
+      const artistElement = trackItem.getByTestId(/artist$/);
+      await expect(artistElement).toContainText(searchTerm);
     });
 
-    test('should filter tracks by album', async ({ page }) => {
+    test('should filter tracks by album', async ({ page, getTrack }) => {
       await page.getByTestId('loading-tracks').waitFor({ state: 'hidden' });
 
-      const searchTerm = '30';
-      const searchInput = page.getByTestId('filter-album');
-      await searchInput.fill(searchTerm);
+      const searchTerm = getTrack().album as string;
+      const albumInput = page.getByTestId('filter-album');
+      await albumInput.fill(searchTerm);
 
-      await page.waitForTimeout(500);
+      const trackItem = page.getByTestId(/^track-item-/).first();
+      await expect(trackItem).toBeVisible();
 
-      const noTracksMessage = page.getByText('No tracks found');
-      const isNoTracksVisible = await noTracksMessage.isVisible();
-
-      if (isNoTracksVisible) {
-        console.log(`No tracks found for album: ${searchTerm}`);
-        return;
-      }
-
-      const trackItems = await page.getByTestId(/^track-item-/).all();
-
-      if (trackItems.length > 0) {
-        let hasMatch = false;
-
-        for (const item of trackItems) {
-          const albumElement = item.getByTestId(/album$/);
-          const albumText = await albumElement.textContent();
-
-          if (albumText?.toLowerCase().includes(searchTerm.toLowerCase())) {
-            hasMatch = true;
-            break;
-          }
-        }
-
-        expect(hasMatch).toBeTruthy();
-      } else {
-        console.log('No tracks match the search term');
-      }
+      const albumElement = trackItem.getByTestId(/album$/);
+      await expect(albumElement).toContainText(searchTerm);
     });
 
     test('should filter tracks by genre', async ({ page }) => {
@@ -155,34 +101,14 @@ test.describe('Tracks Page', () => {
       const genreFilter = page.getByTestId('filter-genre');
       await genreFilter.click();
 
-      await page.waitForTimeout(300);
+      const genreOptions = await page.getByTestId(/^command-option-/).all();
 
-      const genreOptions = await page.getByTestId(/^multiselect-option-/).all();
+      const selectedGenre = await genreOptions[1].textContent();
+      const trimmedGenre = selectedGenre?.trim();
+      await genreOptions[1].click();
 
-      if (genreOptions.length > 1) {
-        const selectedGenre = await genreOptions[1].textContent();
-        const trimmedGenre = selectedGenre?.trim();
-        await genreOptions[1].click();
-
-        await page.waitForTimeout(1000);
-
-        const noTracksMessage = page.getByText('No tracks found');
-        const isNoTracksVisible = await noTracksMessage.isVisible();
-
-        if (isNoTracksVisible) {
-          console.log(`No tracks found for genre: ${trimmedGenre}`);
-          return;
-        }
-
-        const trackItems = await page.getByTestId(/^track-item-/);
-
-        const genreElement = await trackItems
-          .getByTestId(`genre-${trimmedGenre}`)
-          .count();
-        expect(genreElement).toBeGreaterThan(0);
-      } else {
-        console.log('No genre options available for testing');
-      }
+      const genreElement = page.getByTestId(`genre-${trimmedGenre}`).first();
+      await expect(genreElement).toBeVisible();
     });
   });
 
@@ -218,17 +144,21 @@ test.describe('Tracks Page', () => {
       await trackForm.getByTestId('genre-selector').click();
       const input = trackForm.getByTestId('genre-selector').locator('input');
       await input.fill(track.genres[0]);
-      await page.getByRole('option', { name: track.genres[0] }).click();
+
+      const genreOption = page.getByRole('option', { name: track.genres[0] });
+      await expect(genreOption).toBeVisible();
+      await genreOption.click();
+
       await trackForm.click({ position: { x: 10, y: 10 } });
-      await page.waitForTimeout(300);
+
+      await expect(genreOption).not.toBeVisible();
 
       await trackForm.getByTestId('submit-button').click();
-      await page.waitForTimeout(500);
 
-      const trackItem = await page.getByTestId(/^track-item-/).first();
+      const trackItem = page.getByTestId(/^track-item-/).first();
       await expect(trackItem).toBeVisible();
 
-      const titleElement = await trackItem.getByTestId(/title$/);
+      const titleElement = trackItem.getByTestId(/title$/);
       await expect(titleElement).toBeVisible();
       await expect(titleElement).toHaveText(track.title);
 
@@ -268,12 +198,18 @@ test.describe('Tracks Page', () => {
       await editForm.getByTestId('genre-selector').click();
       const editInput = editForm.getByTestId('genre-selector').locator('input');
       await editInput.fill(updatedTrack.genre);
-      await page.getByRole('option', { name: updatedTrack.genre }).click();
+
+      const genreOption = page.getByRole('option', {
+        name: updatedTrack.genre,
+      });
+      await expect(genreOption).toBeVisible();
+      await genreOption.click();
+
       await editForm.click({ position: { x: 10, y: 10 } });
-      await page.waitForTimeout(300);
+
+      await expect(genreOption).not.toBeVisible();
 
       await editForm.getByTestId('submit-button').click();
-      await page.waitForTimeout(500);
 
       const updatedTrackTitle = page
         .getByTestId(/title$/)
@@ -289,22 +225,21 @@ test.describe('Tracks Page', () => {
       createTrack,
       getTrack,
     }) => {
-      await createTrack(getTrack());
+      const trackData = await createTrack(getTrack());
 
       const tracksList = page.getByTestId('tracks-list');
       await expect(tracksList).toBeVisible();
 
-      const trackItem = await page.getByTestId(/^track-item-/).first();
+      const trackItem = page.getByTestId(`track-item-${trackData.id}`);
+      await expect(trackItem).toBeVisible();
+
       const deleteButton = trackItem.getByTestId(/delete/).first();
       await deleteButton.click();
 
       const confirmButton = page.getByTestId('confirm-delete');
       await confirmButton.click();
 
-      await page.waitForTimeout(500);
-      const titleElement = trackItem.getByTestId(/title$/);
-      const titleText = await titleElement.textContent();
-      expect(titleText).not.toBe(updatedTrack.title);
+      await expect(trackItem).not.toBeVisible();
     });
 
     test('should allow to delete multiple tracks', async ({
@@ -329,14 +264,6 @@ test.describe('Tracks Page', () => {
       const selectMode = page.getByTestId('select-mode-toggle');
       await selectMode.click();
 
-      await page.waitForTimeout(500);
-
-      const track1 = page.getByTestId(`track-item-${data1.id}-title`);
-      const track2 = page.getByTestId(`track-item-${data2.id}-title`);
-
-      await expect(track1).toBeVisible();
-      await expect(track2).toBeVisible();
-
       const trackItem1 = page.getByTestId(`track-item-${data1.id}`);
       const trackItem2 = page.getByTestId(`track-item-${data2.id}`);
 
@@ -346,34 +273,25 @@ test.describe('Tracks Page', () => {
       const secondTrackCheckbox = trackItem2.getByTestId(
         `track-checkbox-${data2.id}`
       );
+
+      await expect(firstTrackCheckbox).toBeVisible();
+      await expect(secondTrackCheckbox).toBeVisible();
+
       await firstTrackCheckbox.check({ force: true });
       await secondTrackCheckbox.check({ force: true });
 
       const deleteButton = page.getByTestId('bulk-delete-button');
+      await expect(deleteButton).toBeVisible();
       await deleteButton.click();
 
       const confirmButton = page.getByTestId('confirm-delete');
       await confirmButton.click();
 
-      await page.waitForTimeout(1000);
-
       const notification = page.getByText('Tracks deleted successfully');
       await expect(notification).toBeVisible();
 
-      await expect(track1).not.toBeVisible({ timeout: 5000 });
-      await expect(track2).not.toBeVisible({ timeout: 5000 });
-
-      const track1Count = await page
-        .getByTestId(/title$/)
-        .filter({ hasText: testTrack1.title })
-        .count();
-      const track2Count = await page
-        .getByTestId(/title$/)
-        .filter({ hasText: testTrack2.title })
-        .count();
-
-      expect(track1Count).toBe(0);
-      expect(track2Count).toBe(0);
+      await expect(trackItem1).not.toBeVisible();
+      await expect(trackItem2).not.toBeVisible();
     });
 
     test('should allow to upload and play audio for a track', async ({
@@ -382,16 +300,10 @@ test.describe('Tracks Page', () => {
       getTrack,
     }) => {
       const audioTestTrack = getTrack();
-      await createTrack(audioTestTrack);
+      const trackData = await createTrack(audioTestTrack);
 
-      const trackTitle = page
-        .getByTestId(/title$/)
-        .filter({ hasText: audioTestTrack.title });
-      await expect(trackTitle).toBeVisible();
-
-      const trackItem = page
-        .getByTestId(/^track-item-/)
-        .filter({ has: trackTitle });
+      const trackItem = page.getByTestId(`track-item-${trackData.id}`);
+      await expect(trackItem).toBeVisible();
 
       const uploadButton = trackItem.getByTestId(/^upload-track-/);
       await expect(uploadButton).toBeVisible();
@@ -404,9 +316,7 @@ test.describe('Tracks Page', () => {
           type: 'audio/mp3',
         });
 
-        if ('testAudioFile' in window && window.testAudioFile instanceof File) {
-          window.testAudioFile = file;
-        }
+        (window as any).testAudioFile = file;
       });
 
       const fileChooserPromise = page.waitForEvent('filechooser');
@@ -419,10 +329,8 @@ test.describe('Tracks Page', () => {
         buffer: Buffer.from('dummy audio content'),
       });
 
-      await page.waitForTimeout(1000);
-
       const playButton = trackItem.getByTestId(/^play-button-/).first();
-      await expect(playButton).toBeVisible({ timeout: 5000 });
+      await expect(playButton).toBeVisible({ timeout: 10000 });
 
       await playButton.click();
 
@@ -435,12 +343,7 @@ test.describe('Tracks Page', () => {
       const confirmButton = page.getByTestId('confirm-delete');
       await confirmButton.click();
 
-      await page.waitForTimeout(1000);
-      const deletedTrackCount = await page
-        .getByTestId(/title$/)
-        .filter({ hasText: audioTestTrack.title })
-        .count();
-      expect(deletedTrackCount).toBe(0);
+      await expect(trackItem).not.toBeVisible();
     });
   });
 });

@@ -579,10 +579,8 @@ const MultipleSelector = ({
                     >
                       <>
                         {dropdowns.map((option) => {
-                          console.log(option);
                           return (
                             <CommandItem
-                              data-testid={`multiselect-option-${option.value}`}
                               key={option.value}
                               value={option.value}
                               disabled={option.disable}
