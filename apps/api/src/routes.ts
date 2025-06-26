@@ -1,13 +1,13 @@
 import { FastifyInstance } from 'fastify';
-import { 
-  addTrack, 
-  deleteTrackFile, 
-  getAllTracks, 
-  getTrack, 
-  removeTrack, 
-  removeTracks, 
-  updateTrackById, 
-  uploadTrackFile 
+import {
+  addTrack,
+  deleteTrackFile,
+  getAllTracks,
+  getTrack,
+  removeTrack,
+  removeTracks,
+  updateTrackById,
+  uploadTrackFile,
 } from './controllers/tracks.controller';
 import { getAllGenres } from './controllers/genres.controller';
 
@@ -20,25 +20,25 @@ export default async function routes(fastify: FastifyInstance) {
       title: { type: 'string' },
       artist: { type: 'string' },
       album: { type: 'string' },
-      genres: { 
+      genres: {
         type: 'array',
-        items: { type: 'string' }
+        items: { type: 'string' },
       },
       slug: { type: 'string' },
       coverImage: { type: 'string' },
       audioFile: { type: 'string' },
       createdAt: { type: 'string' },
-      updatedAt: { type: 'string' }
-    }
+      updatedAt: { type: 'string' },
+    },
   };
-  
+
   const errorSchema = {
     type: 'object',
     properties: {
-      error: { type: 'string' }
-    }
+      error: { type: 'string' },
+    },
   };
-  
+
   // Health check
   fastify.get('/health', {
     schema: {
@@ -48,32 +48,16 @@ export default async function routes(fastify: FastifyInstance) {
         200: {
           type: 'object',
           properties: {
-            status: { type: 'string' }
-          }
-        }
-      }
+            status: { type: 'string' },
+          },
+        },
+      },
     },
     handler: async (request, reply) => {
       return reply.code(200).send({ status: 'ok' });
-    }
-  });
-  
-  // Genres
-  fastify.get('/api/genres', {
-    schema: {
-      description: 'Get all genres',
-      tags: ['genres'],
-      response: {
-        200: {
-          type: 'array',
-          items: { type: 'string' }
-        },
-        500: errorSchema
-      }
     },
-    handler: getAllGenres
   });
-  
+
   // Tracks
   fastify.get('/api/tracks', {
     schema: {
@@ -84,12 +68,15 @@ export default async function routes(fastify: FastifyInstance) {
         properties: {
           page: { type: 'number' },
           limit: { type: 'number' },
-          sort: { type: 'string', enum: ['title', 'artist', 'album', 'createdAt'] },
+          sort: {
+            type: 'string',
+            enum: ['title', 'artist', 'album', 'createdAt'],
+          },
           order: { type: 'string', enum: ['asc', 'desc'] },
           search: { type: 'string' },
           genre: { type: 'string' },
-          artist: { type: 'string' }
-        }
+          artist: { type: 'string' },
+        },
       },
       response: {
         200: {
@@ -97,7 +84,7 @@ export default async function routes(fastify: FastifyInstance) {
           properties: {
             data: {
               type: 'array',
-              items: trackSchema
+              items: trackSchema,
             },
             meta: {
               type: 'object',
@@ -105,17 +92,17 @@ export default async function routes(fastify: FastifyInstance) {
                 total: { type: 'number' },
                 page: { type: 'number' },
                 limit: { type: 'number' },
-                totalPages: { type: 'number' }
-              }
-            }
-          }
+                totalPages: { type: 'number' },
+              },
+            },
+          },
         },
-        500: errorSchema
-      }
+        500: errorSchema,
+      },
     },
-    handler: getAllTracks
+    handler: getAllTracks,
   });
-  
+
   fastify.get('/api/tracks/:slug', {
     schema: {
       description: 'Get a track by slug',
@@ -124,18 +111,18 @@ export default async function routes(fastify: FastifyInstance) {
         type: 'object',
         required: ['slug'],
         properties: {
-          slug: { type: 'string' }
-        }
+          slug: { type: 'string' },
+        },
       },
       response: {
         200: trackSchema,
         404: errorSchema,
-        500: errorSchema
-      }
+        500: errorSchema,
+      },
     },
-    handler: getTrack
+    handler: getTrack,
   });
-  
+
   fastify.post('/api/tracks', {
     schema: {
       description: 'Create a new track',
@@ -147,23 +134,23 @@ export default async function routes(fastify: FastifyInstance) {
           title: { type: 'string' },
           artist: { type: 'string' },
           album: { type: 'string' },
-          genres: { 
+          genres: {
             type: 'array',
-            items: { type: 'string' }
+            items: { type: 'string' },
           },
-          coverImage: { type: 'string' }
-        }
+          coverImage: { type: 'string' },
+        },
       },
       response: {
         201: trackSchema,
         400: errorSchema,
         409: errorSchema,
-        500: errorSchema
-      }
+        500: errorSchema,
+      },
     },
-    handler: addTrack
+    handler: addTrack,
   });
-  
+
   fastify.put('/api/tracks/:id', {
     schema: {
       description: 'Update a track',
@@ -172,8 +159,8 @@ export default async function routes(fastify: FastifyInstance) {
         type: 'object',
         required: ['id'],
         properties: {
-          id: { type: 'string' }
-        }
+          id: { type: 'string' },
+        },
       },
       body: {
         type: 'object',
@@ -181,23 +168,23 @@ export default async function routes(fastify: FastifyInstance) {
           title: { type: 'string' },
           artist: { type: 'string' },
           album: { type: 'string' },
-          genres: { 
+          genres: {
             type: 'array',
-            items: { type: 'string' }
+            items: { type: 'string' },
           },
-          coverImage: { type: 'string' }
-        }
+          coverImage: { type: 'string' },
+        },
       },
       response: {
         200: trackSchema,
         404: errorSchema,
         409: errorSchema,
-        500: errorSchema
-      }
+        500: errorSchema,
+      },
     },
-    handler: updateTrackById
+    handler: updateTrackById,
   });
-  
+
   fastify.delete('/api/tracks/:id', {
     schema: {
       description: 'Delete a track',
@@ -206,21 +193,21 @@ export default async function routes(fastify: FastifyInstance) {
         type: 'object',
         required: ['id'],
         properties: {
-          id: { type: 'string' }
-        }
+          id: { type: 'string' },
+        },
       },
       response: {
         204: {
           type: 'null',
-          description: 'Track deleted successfully'
+          description: 'Track deleted successfully',
         },
         404: errorSchema,
-        500: errorSchema
-      }
+        500: errorSchema,
+      },
     },
-    handler: removeTrack
+    handler: removeTrack,
   });
-  
+
   fastify.post('/api/tracks/delete', {
     schema: {
       description: 'Delete multiple tracks',
@@ -231,9 +218,9 @@ export default async function routes(fastify: FastifyInstance) {
         properties: {
           ids: {
             type: 'array',
-            items: { type: 'string' }
-          }
-        }
+            items: { type: 'string' },
+          },
+        },
       },
       response: {
         200: {
@@ -241,21 +228,21 @@ export default async function routes(fastify: FastifyInstance) {
           properties: {
             success: {
               type: 'array',
-              items: { type: 'string' }
+              items: { type: 'string' },
             },
             failed: {
               type: 'array',
-              items: { type: 'string' }
-            }
-          }
+              items: { type: 'string' },
+            },
+          },
         },
         400: errorSchema,
-        500: errorSchema
-      }
+        500: errorSchema,
+      },
     },
-    handler: removeTracks
+    handler: removeTracks,
   });
-  
+
   // Track files
   fastify.post('/api/tracks/:id/upload', {
     schema: {
@@ -266,19 +253,19 @@ export default async function routes(fastify: FastifyInstance) {
         type: 'object',
         required: ['id'],
         properties: {
-          id: { type: 'string' }
-        }
+          id: { type: 'string' },
+        },
       },
       response: {
         200: trackSchema,
         400: errorSchema,
         404: errorSchema,
-        500: errorSchema
-      }
+        500: errorSchema,
+      },
     },
-    handler: uploadTrackFile
+    handler: uploadTrackFile,
   });
-  
+
   fastify.delete('/api/tracks/:id/file', {
     schema: {
       description: 'Delete an audio file from a track',
@@ -287,15 +274,15 @@ export default async function routes(fastify: FastifyInstance) {
         type: 'object',
         required: ['id'],
         properties: {
-          id: { type: 'string' }
-        }
+          id: { type: 'string' },
+        },
       },
       response: {
         200: trackSchema,
         404: errorSchema,
-        500: errorSchema
-      }
+        500: errorSchema,
+      },
     },
-    handler: deleteTrackFile
+    handler: deleteTrackFile,
   });
 }
