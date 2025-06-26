@@ -89,7 +89,7 @@ const albums = [
   'SOS',
 ];
 
-const trackTitles = [
+export const trackTitles = [
   'Love Story',
   'Shape of You',
   'Hello',

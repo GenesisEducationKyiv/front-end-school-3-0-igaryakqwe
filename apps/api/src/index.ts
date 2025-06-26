@@ -3,14 +3,15 @@ import cors from '@fastify/cors';
 import multipart from '@fastify/multipart';
 import fastifyStatic from '@fastify/static';
 import { fastifyConnectPlugin } from '@connectrpc/connect-fastify';
+import fastifySocketIO from 'fastify-socket.io';
 
 import config from './config';
 import { initializeDb } from './utils/db';
-
-import { GenresService } from '@grpc-generated/proto/genres_pb.ts';
+import { GenresService } from '@grpc-generated/proto/genres_pb';
 import { genresService } from './services/genres.service';
 import { TracksService } from '@grpc-generated/proto/tracks_pb';
 import { tracksService } from './services/tracks.service';
+import { ActiveTrackManager } from './services/active-track.service';
 
 async function start() {
   try {
@@ -63,6 +64,26 @@ async function start() {
       },
     });
 
+    await fastify.register(fastifySocketIO, {
+      cors: {
+        origin: config.cors.origin,
+        methods: ['GET', 'POST'],
+      },
+    });
+
+    fastify.ready().then(() => {
+      const activeTrackManager = new ActiveTrackManager(fastify.io);
+      activeTrackManager.start();
+    });
+
+    fastify.io.on('connection', (socket) => {
+      console.log('Client connected:', socket.id);
+
+      socket.on('disconnect', () => {
+        console.log('Client disconnected:', socket.id);
+      });
+    });
+
     await fastify.listen({
       port: config.server.port,
       host: config.server.host,
@@ -70,9 +91,6 @@ async function start() {
 
     console.log(
       `Server is running on http://${config.server.host}:${config.server.port}`
-    );
-    console.log(
-      `Swagger documentation available at http://${config.server.host}:${config.server.port}/documentation`
     );
   } catch (error) {
     console.error('Error starting server:', error);

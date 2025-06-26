@@ -1,0 +1,158 @@
+{
+  "config": {
+    "configFile": "C:\\Users\\lenov\\WebstormProjects\\music-platform\\playwright.config.ts",
+    "rootDir": "C:/Users/lenov/WebstormProjects/music-platform/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        {
+          "outputFolder": "playwright-report"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results.json"
+        }
+      ],
+      [
+        "list",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "C:/Users/lenov/WebstormProjects/music-platform/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "e2e",
+        "name": "e2e",
+        "testDir": "C:/Users/lenov/WebstormProjects/music-platform/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/e2e/**/*.test.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "C:/Users/lenov/WebstormProjects/music-platform/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile-e2e",
+        "name": "mobile-e2e",
+        "testDir": "C:/Users/lenov/WebstormProjects/music-platform/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/e2e/**/*.test.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.52.0",
+    "workers": 6,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "e2e\\tracks-page.test.ts",
+      "file": "e2e/tracks-page.test.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Tracks Page",
+          "file": "e2e/tracks-page.test.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [],
+          "suites": [
+            {
+              "title": "Tracks operations",
+              "file": "e2e/tracks-page.test.ts",
+              "line": 116,
+              "column": 8,
+              "specs": [
+                {
+                  "title": "should allow to upload and play audio for a track",
+                  "ok": true,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 30000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "e2e",
+                      "projectName": "e2e",
+                      "results": [
+                        {
+                          "workerIndex": 31,
+                          "parallelIndex": 0,
+                          "status": "passed",
+                          "duration": 4642,
+                          "errors": [],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2025-06-26T15:37:02.804Z",
+                          "annotations": [],
+                          "attachments": [
+                            {
+                              "name": "trace",
+                              "contentType": "application/zip",
+                              "path": "C:\\Users\\lenov\\WebstormProjects\\music-platform\\test-results\\e2e-tracks-page-Tracks-Pag-f79e1--and-play-audio-for-a-track-e2e\\trace.zip"
+                            }
+                          ]
+                        }
+                      ],
+                      "status": "expected"
+                    }
+                  ],
+                  "id": "b014d9110c6527085a62-a68f03ae194c77fc917b",
+                  "file": "e2e/tracks-page.test.ts",
+                  "line": 304,
+                  "column": 5
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-06-26T15:36:59.817Z",
+    "duration": 8626.67200000002,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

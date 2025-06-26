@@ -38,8 +38,6 @@ const useTracksQuery = () => {
     },
   });
 
-  console.log('123', error);
-
   const { currentPage, handlePageChange, totalPages } = usePagination({
     totalItems: data?.meta.total ?? 0,
     itemsPerPage: MAX_TRACKS_PER_PAGE,
