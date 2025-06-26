@@ -4,17 +4,18 @@ import multipart from '@fastify/multipart';
 import fastifyStatic from '@fastify/static';
 import swagger from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
-import path from 'path';
+import { fastifyConnectPlugin } from '@connectrpc/connect-fastify';
+
+import config from './config';
 import routes from './routes';
 import { initializeDb } from './utils/db';
-import config from './config';
+
+import { genresService } from './services/genres.service';
+import { GenresService } from '@grpc-generated/proto/genres_pb.ts';
 
 async function start() {
   try {
-    // Log configuration on startup
     console.log(`Starting server in ${config.server.env} mode`);
-
-    // Initialize database
     await initializeDb();
 
     const fastify = Fastify({
@@ -32,11 +33,15 @@ async function start() {
       },
     });
 
-    // Register plugins
     await fastify.register(cors, {
       origin: config.cors.origin,
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-      allowedHeaders: ['Content-Type', 'Authorization'],
+      allowedHeaders: [
+        'Content-Type',
+        'Authorization',
+        'Connect-Protocol-Version',
+        'Connect-Timeout-Ms',
+      ],
     });
 
     await fastify.register(multipart, {
@@ -45,14 +50,12 @@ async function start() {
       },
     });
 
-    // Serve static files (uploads)
     await fastify.register(fastifyStatic, {
       root: config.storage.uploadsDir,
       prefix: '/api/files/',
       decorateReply: false,
     });
 
-    // Register Swagger
     await fastify.register(swagger, {
       openapi: {
         info: {
@@ -63,7 +66,6 @@ async function start() {
       },
     });
 
-    // Register Swagger UI
     await fastify.register(swaggerUi, {
       routePrefix: '/documentation',
       uiConfig: {
@@ -72,10 +74,15 @@ async function start() {
       },
     });
 
-    // Register routes
+    await fastify.register(fastifyConnectPlugin, {
+      prefix: '/api',
+      routes(router) {
+        router.service(GenresService, genresService);
+      },
+    });
+
     await fastify.register(routes);
 
-    // Start server
     await fastify.listen({
       port: config.server.port,
       host: config.server.host,
@@ -85,7 +92,7 @@ async function start() {
       `Server is running on http://${config.server.host}:${config.server.port}`
     );
     console.log(
-      `Swagger documentation available on http://${config.server.host}:${config.server.port}/documentation`
+      `Swagger documentation available at http://${config.server.host}:${config.server.port}/documentation`
     );
   } catch (error) {
     console.error('Error starting server:', error);
