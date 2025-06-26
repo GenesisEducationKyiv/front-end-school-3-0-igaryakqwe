@@ -15,8 +15,9 @@ import TrackDialog from '@/features/tracks/components/track-dialog';
 import TrackImage from '@/features/tracks/components/track-image';
 import TrackUpload from '@/features/tracks/components/track-upload';
 import useDeleteTrackMutation from '@/features/tracks/hooks/use-delete-track-mutation';
-import useTracksStore from '@/features/tracks/store/use-tracks-store.tsx';
+import useTracksStore from '@/features/tracks/store/use-tracks.store';
 import { Track } from '@/types/entities/track';
+import useTrackStore from '../store/use-track.store';
 
 interface TrackCardProps {
   track: Track;
@@ -25,6 +26,13 @@ interface TrackCardProps {
 const TrackCard = ({ track }: TrackCardProps) => {
   const { isSelectMode, selectedTracksIds, selectTrack } = useTracksStore();
   const { deleteTrack, isDeleting } = useDeleteTrackMutation();
+
+  const activeTrack = useTrackStore((state) => state.activeTrack);
+
+  const trackTitle =
+    activeTrack?.id === track.id
+      ? (activeTrack.title ?? track.title)
+      : track.title;
 
   const isSelected = selectedTracksIds.includes(track.id);
 
@@ -62,7 +70,7 @@ const TrackCard = ({ track }: TrackCardProps) => {
             data-testid={`track-item-${track.id}-title`}
             className="text-xl truncate text-center"
           >
-            {track.title}
+            {trackTitle}
           </CardTitle>
           <CardDescription className="text-center text-muted-foreground">
             <p
