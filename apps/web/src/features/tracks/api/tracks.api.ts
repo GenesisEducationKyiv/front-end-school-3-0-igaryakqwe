@@ -1,88 +1,98 @@
-import { CreateTrackDto } from '@/features/tracks/api/dto/tracks.dto';
-import { API_URL } from '@/constants/global';
-import { APIDeleteResponseSchema, APIResponseSchema } from '@/types/api.ts';
-import { TrackSchema, TracksSchema } from '@/types/entities/track.ts';
-import { handleAPIResponse, handleErrorResponse } from '@/utils/api.utils';
+import {
+  CreateTrackDto,
+  GetTracksQueryParams,
+} from '@/features/tracks/api/dto/tracks.dto';
+import { APIDeleteResponseSchema, APIResponseSchema } from '@/types/api';
+import { TrackSchema, TracksSchema } from '@/types/entities/track';
+import { handleGrpcError, handleGrpcResponse } from '@/utils/api.utils';
+import { tracksClient } from '@/lib/grpc-client';
 
-export const getTracks = async (params: string = '') => {
-  const response = await fetch(`${API_URL}/tracks${params}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  return handleAPIResponse(response, APIResponseSchema(TracksSchema));
+export const getTracks = async (params: GetTracksQueryParams = {}) => {
+  try {
+    const { data, meta } = await tracksClient.listTracks(params);
+    return handleGrpcResponse({ data, meta }, APIResponseSchema(TracksSchema));
+  } catch (error) {
+    handleGrpcError(error);
+  }
 };
 
 export const createTrack = async (track: CreateTrackDto) => {
-  const response = await fetch(`${API_URL}/tracks`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(track),
-  });
-
-  return handleAPIResponse(response, TrackSchema);
+  try {
+    const { track: data } = await tracksClient.createTrack(track);
+    return handleGrpcResponse(data, TrackSchema);
+  } catch (error) {
+    handleGrpcError(error);
+  }
 };
 
 export const getTrackBySlug = async (slug: string) => {
-  const response = await fetch(`${API_URL}/tracks/${slug}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  return handleAPIResponse(response, TrackSchema);
+  try {
+    const { track } = await tracksClient.getTrack({
+      slug,
+    });
+    return handleGrpcResponse(track, TracksSchema);
+  } catch (error) {
+    handleGrpcError(error);
+  }
 };
 
 export const updateTrack = async (id: string, track: CreateTrackDto) => {
-  const response = await fetch(`${API_URL}/tracks/${id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(track),
-  });
-
-  return handleAPIResponse(response, TrackSchema);
+  try {
+    const { track: data } = await tracksClient.updateTrack({
+      id,
+      ...track,
+    });
+    return handleGrpcResponse(data, TrackSchema);
+  } catch (error) {
+    handleGrpcError(error);
+  }
 };
 
 export const deleteTrack = async (id: string) => {
-  const response = await fetch(`${API_URL}/tracks/${id}`, {
-    method: 'DELETE',
-  });
-
-  if (!response.ok) await handleErrorResponse(response);
+  try {
+    await tracksClient.deleteTrack({
+      id,
+    });
+  } catch (error) {
+    handleGrpcError(error);
+  }
 };
 
 export const deleteTracks = async (ids: string[]) => {
-  const response = await fetch(`${API_URL}/tracks/delete`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ ids }),
-  });
-
-  return handleAPIResponse(response, APIDeleteResponseSchema);
+  try {
+    const { success, failed } = await tracksClient.deleteTracks({
+      ids,
+    });
+    return handleGrpcResponse({ success, failed }, APIDeleteResponseSchema);
+  } catch (error) {
+    handleGrpcError(error);
+  }
 };
 
-export const uploadTrackFile = async (id: string, formData: FormData) => {
-  const response = await fetch(`${API_URL}/tracks/${id}/upload`, {
-    method: 'POST',
-    body: formData,
-  });
+export const uploadTrackFile = async (id: string, file: File) => {
+  try {
+    const arrayBuffer = await file.arrayBuffer();
+    const uint8Array = new Uint8Array(arrayBuffer);
 
-  return handleAPIResponse(response, TrackSchema);
+    const {} = await tracksClient.uploadTrackFile({
+      id,
+      filename: file.name,
+      mimetype: file.type,
+      file: uint8Array,
+    });
+  } catch (error) {
+    handleGrpcError(error);
+  }
 };
 
 export const removeTrackFile = async (id: string) => {
-  const response = await fetch(`${API_URL}/tracks/${id}/file`, {
-    method: 'DELETE',
-  });
+  try {
+    const { track } = await tracksClient.deleteTrackFile({
+      id,
+    });
 
-  return handleAPIResponse(response, TrackSchema);
+    return handleGrpcResponse(track, TrackSchema);
+  } catch (error) {
+    handleGrpcError(error);
+  }
 };

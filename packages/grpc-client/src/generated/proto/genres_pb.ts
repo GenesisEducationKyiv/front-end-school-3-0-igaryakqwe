@@ -2,44 +2,33 @@
 // @generated from file proto/genres.proto (package genres, syntax proto3)
 /* eslint-disable */
 
-import type {
-  GenFile,
-  GenMessage,
-  GenService,
-} from '@bufbuild/protobuf/codegenv2';
-import {
-  fileDesc,
-  messageDesc,
-  serviceDesc,
-} from '@bufbuild/protobuf/codegenv2';
-import type { Message } from '@bufbuild/protobuf';
+import type { GenFile, GenMessage, GenService } from "@bufbuild/protobuf/codegenv2";
+import { fileDesc, messageDesc, serviceDesc } from "@bufbuild/protobuf/codegenv2";
+import type { Message } from "@bufbuild/protobuf";
 
 /**
  * Describes the file proto/genres.proto.
  */
-export const file_proto_genres: GenFile =
-  /*@__PURE__*/
-  fileDesc(
-    'ChJwcm90by9nZW5yZXMucHJvdG8SBmdlbnJlcyISChBHZXRHZW5yZXNSZXF1ZXN0IiMKEUdldEdlbnJlc1Jlc3BvbnNlEg4KBmdlbnJlcxgBIAMoCTJTCg1HZW5yZXNTZXJ2aWNlEkIKCUdldEdlbnJlcxIYLmdlbnJlcy5HZXRHZW5yZXNSZXF1ZXN0GhkuZ2VucmVzLkdldEdlbnJlc1Jlc3BvbnNlIgBiBnByb3RvMw'
-  );
+export const file_proto_genres: GenFile = /*@__PURE__*/
+  fileDesc("ChJwcm90by9nZW5yZXMucHJvdG8SBmdlbnJlcyISChBHZXRHZW5yZXNSZXF1ZXN0IiMKEUdldEdlbnJlc1Jlc3BvbnNlEg4KBmdlbnJlcxgBIAMoCTJTCg1HZW5yZXNTZXJ2aWNlEkIKCUdldEdlbnJlcxIYLmdlbnJlcy5HZXRHZW5yZXNSZXF1ZXN0GhkuZ2VucmVzLkdldEdlbnJlc1Jlc3BvbnNlIgBiBnByb3RvMw");
 
 /**
  * @generated from message genres.GetGenresRequest
  */
-export type GetGenresRequest = Message<'genres.GetGenresRequest'> & {};
+export type GetGenresRequest = Message<"genres.GetGenresRequest"> & {
+};
 
 /**
  * Describes the message genres.GetGenresRequest.
  * Use `create(GetGenresRequestSchema)` to create a new message.
  */
-export const GetGenresRequestSchema: GenMessage<GetGenresRequest> =
-  /*@__PURE__*/
+export const GetGenresRequestSchema: GenMessage<GetGenresRequest> = /*@__PURE__*/
   messageDesc(file_proto_genres, 0);
 
 /**
  * @generated from message genres.GetGenresResponse
  */
-export type GetGenresResponse = Message<'genres.GetGenresResponse'> & {
+export type GetGenresResponse = Message<"genres.GetGenresResponse"> & {
   /**
    * @generated from field: repeated string genres = 1;
    */
@@ -50,8 +39,7 @@ export type GetGenresResponse = Message<'genres.GetGenresResponse'> & {
  * Describes the message genres.GetGenresResponse.
  * Use `create(GetGenresResponseSchema)` to create a new message.
  */
-export const GetGenresResponseSchema: GenMessage<GetGenresResponse> =
-  /*@__PURE__*/
+export const GetGenresResponseSchema: GenMessage<GetGenresResponse> = /*@__PURE__*/
   messageDesc(file_proto_genres, 1);
 
 /**
@@ -62,8 +50,10 @@ export const GenresService: GenService<{
    * @generated from rpc genres.GenresService.GetGenres
    */
   getGenres: {
-    methodKind: 'unary';
+    methodKind: "unary";
     input: typeof GetGenresRequestSchema;
     output: typeof GetGenresResponseSchema;
-  };
-}> = /*@__PURE__*/ serviceDesc(file_proto_genres, 0);
+  },
+}> = /*@__PURE__*/
+  serviceDesc(file_proto_genres, 0);
+

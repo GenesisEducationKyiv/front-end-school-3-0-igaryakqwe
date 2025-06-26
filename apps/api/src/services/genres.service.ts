@@ -1,4 +1,4 @@
-import { ServiceImpl } from '@connectrpc/connect';
+import { Code, ConnectError, ServiceImpl } from '@connectrpc/connect';
 import {
   GetGenresRequest,
   GetGenresResponse,
@@ -7,6 +7,7 @@ import {
 } from '@grpc-generated/proto/genres_pb';
 import { getGenres } from '../utils/db';
 import { create } from '@bufbuild/protobuf';
+import { getErrorMessage } from 'src/utils/error';
 
 export const genresService: ServiceImpl<typeof GenresService> = {
   async getGenres(req: GetGenresRequest): Promise<GetGenresResponse> {
@@ -15,7 +16,7 @@ export const genresService: ServiceImpl<typeof GenresService> = {
       const response = create(GetGenresResponseSchema, { genres });
       return response;
     } catch (error) {
-      throw new Error(`Failed to get genres: ${error}`);
+      throw new ConnectError(getErrorMessage(error), Code.Internal);
     }
   },
 };
