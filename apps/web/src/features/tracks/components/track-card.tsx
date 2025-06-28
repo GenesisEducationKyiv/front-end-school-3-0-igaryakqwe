@@ -9,15 +9,24 @@ import {
   CardDescription,
   CardTitle,
 } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox.tsx';
-import TrackAudio from '@/features/tracks/components/track-audio';
 import TrackDialog from '@/features/tracks/components/track-dialog';
 import TrackImage from '@/features/tracks/components/track-image';
-import TrackUpload from '@/features/tracks/components/track-upload';
 import useDeleteTrackMutation from '@/features/tracks/hooks/use-delete-track-mutation';
 import useTracksStore from '@/features/tracks/store/use-tracks.store';
 import useTrackStore from '@/features/tracks/store/use-track.store';
 import { Track } from '@/types/entities/track';
+
+const TrackAudio = lazy(
+  () => import('@/features/tracks/components/track-audio')
+);
+const TrackUpload = lazy(
+  () => import('@/features/tracks/components/track-upload')
+);
+const Checkbox = lazy(() =>
+  import('@/components/ui/checkbox').then((module) => ({
+    default: module.Checkbox,
+  }))
+);
 
 interface TrackCardProps {
   track: Track;

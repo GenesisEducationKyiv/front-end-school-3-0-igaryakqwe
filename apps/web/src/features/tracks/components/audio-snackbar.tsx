@@ -10,6 +10,7 @@ import { useActiveTrackStream } from '@/features/tracks/hooks/use-active-track.s
 
 const AudioSnackbar = () => {
   const [visible, setVisible] = useState(false);
+
   const {
     audioRef,
     currentStoreTrack,
