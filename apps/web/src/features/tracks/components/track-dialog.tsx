@@ -1,13 +1,14 @@
-import { PropsWithChildren, useState } from 'react';
+import { lazy, PropsWithChildren, useState } from 'react';
 
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog.tsx';
-import TrackForm from '@/features/tracks/components/track-form.tsx';
-import { Track } from '@/types/entities/track.ts';
+} from '@/components/ui/dialog';
+import { Track } from '@/types/entities/track';
+
+const TrackForm = lazy(() => import('@/features/tracks/components/track-form'));
 
 interface TaskDialogProps {
   isEdit?: boolean;
@@ -34,7 +35,9 @@ const TrackDialog = ({
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="w-[400px]">
         <DialogTitle>{isEdit ? 'Update track' : 'Create track'}</DialogTitle>
-        <TrackForm isEdit={isEdit} onClose={handleClose} track={track} />
+        {open && (
+          <TrackForm isEdit={isEdit} onClose={handleClose} track={track} />
+        )}
       </DialogContent>
     </Dialog>
   );

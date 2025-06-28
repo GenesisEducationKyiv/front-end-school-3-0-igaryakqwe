@@ -17,8 +17,6 @@ const DeleteManyTracksDialog = () => {
     resetSelectedTracksIds();
   };
 
-  if (!isSelectMode) return null;
-
   return (
     <ConfirmationDialog
       title="Delete tracks?"
