@@ -3,13 +3,18 @@ import { memo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Track } from '@/types/entities/track';
 
-import TrackAudio from '@/features/tracks/components/track-audio';
 import TrackImage from '@/features/tracks/components/track-image';
-import TrackUpload from '@/features/tracks/components/track-upload';
 import TrackActions from '@/features/tracks/components/track-actions';
 import TrackSelector from '@/features/tracks/components/track-selector';
 
 import TrackInfo from '@/features/tracks/components/track-info';
+
+const TrackAudio = lazy(
+  () => import('@/features/tracks/components/track-audio')
+);
+const TrackUpload = lazy(
+  () => import('@/features/tracks/components/track-upload')
+);
 
 interface TrackCardProps {
   track: Track;

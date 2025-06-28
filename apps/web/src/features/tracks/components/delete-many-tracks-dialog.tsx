@@ -6,7 +6,7 @@ import useDeleteTracksMutation from '@/features/tracks/hooks/mutations/use-delet
 import useTracksStore from '@/features/tracks/store/use-tracks.store';
 
 const DeleteManyTracksDialog = () => {
-  const { isSelectMode, selectedTracksIds, resetSelectedTracksIds } =
+  const { selectedTracksIds, resetSelectedTracksIds } =
     useTracksStore();
   const { deleteTracks, isDeleting } = useDeleteTracksMutation();
 

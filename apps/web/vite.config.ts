@@ -2,10 +2,11 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import tailwindcss from '@tailwindcss/vite';
 import { analyzer } from 'vite-bundle-analyzer';
+import { visualizer } from 'rollup-plugin-visualizer';
 import path from 'path';
 
 export default defineConfig({
-  plugins: [react(), tailwindcss(), analyzer()],
+  plugins: [react(), tailwindcss(), analyzer(), visualizer({ open: true })],
   build: {
     sourcemap: true,
   },
