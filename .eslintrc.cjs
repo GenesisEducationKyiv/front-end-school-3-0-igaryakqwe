@@ -16,6 +16,7 @@ module.exports = {
     'react-hooks',
     'react-refresh',
     'simple-import-sort',
+    'import',
   ],
   extends: [
     'eslint:recommended',
@@ -25,6 +26,13 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'prettier',
   ],
+  settings: {
+    'import/resolver': {
+      typescript: {
+        project: './tsconfig.eslint.json',
+      },
+    },
+  },
   rules: {
     'react-refresh/only-export-components': [
       'warn',
@@ -39,6 +47,7 @@ module.exports = {
     '@typescript-eslint/unbound-method': 'off',
     'simple-import-sort/imports': 'warn',
     'simple-import-sort/exports': 'warn',
+    'import/no-unresolved': 'warn',
   },
   globals: {
     React: 'readonly',
