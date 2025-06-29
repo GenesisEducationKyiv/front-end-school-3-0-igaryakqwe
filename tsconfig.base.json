@@ -7,8 +7,6 @@
       "@/*": ["apps/web/src/*"]
     },
     "strict": true,
-    "esModuleInterop": true,
-    "allowImportingTsExtensions": true,
-    "noEmit": true
+    "esModuleInterop": true
   }
 }
