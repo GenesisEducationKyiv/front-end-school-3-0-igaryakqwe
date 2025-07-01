@@ -5,9 +5,9 @@ import {
   GetGenresResponseSchema,
   GenresService,
 } from '@grpc-generated/proto/genres_pb';
-import { getGenres } from '../utils/db';
+import { getGenres } from '@/utils/db';
 import { create } from '@bufbuild/protobuf';
-import { getErrorMessage } from '../utils/error';
+import { getErrorMessage } from '@/utils/error';
 
 export const genresService: ServiceImpl<typeof GenresService> = {
   async getGenres(req: GetGenresRequest): Promise<GetGenresResponse> {
