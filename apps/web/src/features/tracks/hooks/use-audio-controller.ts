@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { getAudioFile } from '@/features/tracks/lib/utils.ts';
-import useAudioStore from '@/store/use-audio-store.ts';
+import { getAudioFile } from '@/features/tracks/lib/utils';
+import useAudioStore from '@/store/use-audio-store';
 
 const useAudioController = () => {
   const [duration, setDuration] = useState(0);

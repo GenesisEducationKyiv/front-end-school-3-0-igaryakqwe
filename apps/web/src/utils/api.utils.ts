@@ -1,5 +1,6 @@
-import { APIErrorSchema } from '@/types/api';
 import { ZodSchema } from 'zod';
+
+import { APIErrorSchema } from '@/types/api';
 
 export const handleErrorResponse = async (response: Response) => {
   const raw = await response.json();

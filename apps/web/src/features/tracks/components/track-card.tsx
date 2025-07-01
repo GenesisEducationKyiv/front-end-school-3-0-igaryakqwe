@@ -1,4 +1,5 @@
 import { EditIcon, Trash2Icon } from 'lucide-react';
+import { lazy } from 'react';
 
 import ConfirmationDialog from '@/components/confirmation-dialog';
 import { Badge } from '@/components/ui/badge';
@@ -12,8 +13,8 @@ import {
 import TrackDialog from '@/features/tracks/components/track-dialog';
 import TrackImage from '@/features/tracks/components/track-image';
 import useDeleteTrackMutation from '@/features/tracks/hooks/use-delete-track-mutation';
-import useTracksStore from '@/features/tracks/store/use-tracks.store';
 import useTrackStore from '@/features/tracks/store/use-track.store';
+import useTracksStore from '@/features/tracks/store/use-tracks.store';
 import { Track } from '@/types/entities/track';
 
 const TrackAudio = lazy(

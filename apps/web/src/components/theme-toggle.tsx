@@ -1,45 +1,45 @@
-import { LaptopMinimalIcon, Moon, MoonIcon, Sun, SunIcon } from "lucide-react"
+import { LaptopMinimalIcon, Moon, MoonIcon, Sun, SunIcon } from 'lucide-react';
 
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Theme, useTheme } from "@/providers/theme-provider"
-import { cn } from "@/lib/utils"
+} from '@/components/ui/dropdown-menu';
+import { cn } from '@/lib/utils';
+import { Theme, useTheme } from '@/providers/theme-provider';
 
-type ThemeItem = {
-  label: string
-  icon: React.ComponentType<React.ComponentProps<"svg">>
-  value: Theme 
+interface ThemeItem {
+  label: string;
+  icon: React.ComponentType<React.ComponentProps<'svg'>>;
+  value: Theme;
 }
 
 const THEME_ITEMS: ThemeItem[] = [
- {
-  label: "Light",
-  icon: SunIcon,
-  value: "light",
- },
- {
-  label: "Dark",
-  icon: MoonIcon,
-  value: "dark",
- },
- {
-  label: "System",
-  icon: LaptopMinimalIcon,
-  value: "system",
- }
-]
+  {
+    label: 'Light',
+    icon: SunIcon,
+    value: 'light',
+  },
+  {
+    label: 'Dark',
+    icon: MoonIcon,
+    value: 'dark',
+  },
+  {
+    label: 'System',
+    icon: LaptopMinimalIcon,
+    value: 'system',
+  },
+];
 
 interface ThemeToggleProps {
-  className?: string
+  className?: string;
 }
 
 export const ThemeToggle = ({ className }: ThemeToggleProps) => {
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme } = useTheme();
 
   return (
     <DropdownMenu>
@@ -55,8 +55,9 @@ export const ThemeToggle = ({ className }: ThemeToggleProps) => {
           <DropdownMenuItem
             key={item.value}
             className={cn(
-                "cursor-pointer",
-              item.value === theme && "font-semibold bg-gray-100 dark:bg-neutral-800",
+              'cursor-pointer',
+              item.value === theme &&
+                'font-semibold bg-gray-100 dark:bg-neutral-800'
             )}
             onSelect={() => setTheme(item.value)}
           >
@@ -66,5 +67,5 @@ export const ThemeToggle = ({ className }: ThemeToggleProps) => {
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
-  )
-}
+  );
+};

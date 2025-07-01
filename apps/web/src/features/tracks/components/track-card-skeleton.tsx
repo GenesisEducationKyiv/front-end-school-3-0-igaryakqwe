@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import TrackImage from '@/features/tracks/components/track-image.tsx';
+import TrackImage from '@/features/tracks/components/track-image';
 
 const TrackCardSkeleton = () => {
   return (

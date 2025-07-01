@@ -1,6 +1,7 @@
+import { z } from 'zod';
+
 import { genresClient } from '@/lib/grpc-client';
 import { handleGrpcError, handleGrpcResponse } from '@/utils/api.utils';
-import { z } from 'zod';
 
 export const getGenres = async () => {
   try {

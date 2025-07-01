@@ -1,46 +1,48 @@
-import { ServiceImpl, ConnectError, Code } from '@connectrpc/connect';
+import { create } from '@bufbuild/protobuf';
+import { Code, ConnectError, ServiceImpl } from '@connectrpc/connect';
 import {
-  GetTrackRequest,
-  GetTrackResponse,
-  ListTracksRequest,
-  ListTracksResponse,
   CreateTrackRequest,
   CreateTrackResponse,
-  UpdateTrackRequest,
-  UpdateTrackResponse,
-  DeleteTrackRequest,
-  DeleteTrackResponse,
-  UploadTrackFileRequest,
-  UploadTrackFileResponse,
+  CreateTrackResponseSchema,
   DeleteTrackFileRequest,
   DeleteTrackFileResponse,
-  TracksService,
-  GetTrackResponseSchema,
-  ListTracksResponseSchema,
-  CreateTrackResponseSchema,
-  UpdateTrackResponseSchema,
+  DeleteTrackFileResponseSchema,
+  DeleteTrackRequest,
+  DeleteTrackResponse,
   DeleteTrackResponseSchema,
   DeleteTracksRequest,
   DeleteTracksResponse,
   DeleteTracksResponseSchema,
+  GetTrackRequest,
+  GetTrackResponse,
+  GetTrackResponseSchema,
+  ListTracksRequest,
+  ListTracksResponse,
+  ListTracksResponseSchema,
+  TracksService,
+  UpdateTrackRequest,
+  UpdateTrackResponse,
+  UpdateTrackResponseSchema,
+  UploadTrackFileRequest,
+  UploadTrackFileResponse,
   UploadTrackFileResponseSchema,
-  DeleteTrackFileResponseSchema,
 } from '@grpc-generated/proto/tracks_pb';
+
+import { getErrorMessage } from '@/utils/error';
+import { parseTrackSearchParams } from '@/utils/query-params';
+
 import {
+  createTrack,
+  deleteAudioFile,
+  deleteMultipleTracks,
+  deleteTrack,
   getTrackById,
   getTrackBySlug,
   getTracks,
-  createTrack,
-  updateTrack,
-  deleteTrack,
-  deleteMultipleTracks,
   saveAudioFile,
-  deleteAudioFile,
+  updateTrack,
 } from '../utils/db';
 import { createSlug } from '../utils/slug';
-import { getErrorMessage } from '@/utils/error';
-import { create } from '@bufbuild/protobuf';
-import { parseTrackSearchParams } from '@/utils/query-params';
 
 export const tracksService: ServiceImpl<typeof TracksService> = {
   async getTrack(req: GetTrackRequest): Promise<GetTrackResponse> {
@@ -117,7 +119,7 @@ export const tracksService: ServiceImpl<typeof TracksService> = {
       if (!existingTrack) {
         throw new ConnectError('Track not found', Code.NotFound);
       }
-      let updates: any = { ...req };
+      const updates: UpdateTrackRequest & { slug?: string } = { ...req };
       if (req.title && req.title !== existingTrack.title) {
         const newSlug = createSlug(req.title);
         const trackWithSameSlug = await getTrackBySlug(newSlug);

@@ -1,4 +1,5 @@
 import { lazy } from 'react';
+
 import { Card, CardTitle } from '@/components/ui/card';
 import useTracksQuery from '@/features/tracks/hooks/use-tracks-query';
 import { MAX_TRACKS_PER_PAGE } from '@/features/tracks/lib/constants';

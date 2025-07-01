@@ -1,15 +1,16 @@
-import * as React from 'react';
-import { useEffect } from 'react';
 import { Command as CommandPrimitive, useCommandState } from 'cmdk';
 import { XIcon } from 'lucide-react';
+import * as React from 'react';
+import { useEffect } from 'react';
 
-import { cn } from '@/lib/utils';
 import {
   Command,
   CommandGroup,
   CommandItem,
   CommandList,
 } from '@/components/ui/command';
+import useDebounce from '@/hooks/use-debounce';
+import { cn } from '@/lib/utils';
 
 export interface Option {
   value: string;
@@ -20,9 +21,7 @@ export interface Option {
   /** Group the options by providing key. */
   [key: string]: string | boolean | undefined;
 }
-interface GroupOption {
-  [key: string]: Option[];
-}
+type GroupOption = Record<string, Option[]>;
 
 interface MultipleSelectorProps {
   label?: string;
@@ -87,20 +86,6 @@ export interface MultipleSelectorRef {
   input: HTMLInputElement;
   focus: () => void;
   reset: () => void;
-}
-
-export function useDebounce<T>(value: T, delay?: number): T {
-  const [debouncedValue, setDebouncedValue] = React.useState<T>(value);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setDebouncedValue(value), delay || 500);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [value, delay]);
-
-  return debouncedValue;
 }
 
 function transToGroupOption(options: Option[], groupBy?: string) {
@@ -275,7 +260,6 @@ const MultipleSelector = ({
   }, [value]);
 
   useEffect(() => {
-    /** If `onSearch` is provided, do not trigger options updated. */
     if (!arrayOptions || onSearch) {
       return;
     }
@@ -286,14 +270,12 @@ const MultipleSelector = ({
   }, [arrayDefaultOptions, arrayOptions, groupBy, onSearch, options]);
 
   useEffect(() => {
-    /** sync search */
-
     const doSearchSync = () => {
       const res = onSearchSync?.(debouncedSearchTerm);
       setOptions(transToGroupOption(res || [], groupBy));
     };
 
-    const exec = async () => {
+    const exec = () => {
       if (!onSearchSync || !open) return;
 
       if (triggerSearchOnFocus) {
@@ -306,7 +288,6 @@ const MultipleSelector = ({
     };
 
     void exec();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearchTerm, groupBy, open, triggerSearchOnFocus]);
 
   useEffect(() => {
@@ -332,7 +313,6 @@ const MultipleSelector = ({
     };
 
     void exec();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearchTerm, groupBy, open, triggerSearchOnFocus]);
 
   const CreatableItem = () => {

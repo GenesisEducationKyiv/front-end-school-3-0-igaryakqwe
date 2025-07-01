@@ -1,6 +1,7 @@
-import { test, expect } from '@playwright/experimental-ct-react';
-import { Track } from '../../src/types/entities/track';
+import { expect,test } from '@playwright/experimental-ct-react';
+
 import TrackCard from '../../src/features/tracks/components/track-card';
+import { Track } from '../../src/types/entities/track';
 
 const mockTrack: Track = {
   id: 'track-1',

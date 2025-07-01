@@ -1,7 +1,8 @@
-import { memo } from 'react';
-import { Button } from '@/components/ui/button.tsx';
 import { Volume2, VolumeX } from 'lucide-react';
-import { Slider } from '@/components/ui/slider.tsx';
+import { memo } from 'react';
+
+import { Button } from '@/components/ui/button';
+import { Slider } from '@/components/ui/slider';
 
 interface VolumeControlProps {
   volume: number;

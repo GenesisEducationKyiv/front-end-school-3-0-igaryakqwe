@@ -1,4 +1,5 @@
 import { expect } from '@playwright/test';
+
 import { test } from '../fixtures/test-tracks-fixture';
 
 test.describe('Tracks Page', () => {
@@ -43,7 +44,7 @@ test.describe('Tracks Page', () => {
   });
 
   test.describe('Tracks filters', () => {
-    let tracksIds: string[] = [];
+    const tracksIds: string[] = [];
     test.beforeEach(async ({ getTrack, createTrack }) => {
       const track = await createTrack(getTrack());
       tracksIds.push(track.id);
@@ -182,7 +183,7 @@ test.describe('Tracks Page', () => {
       const trackItems = await page.getByTestId(/^track-item-/).all();
       expect(trackItems.length).toBeGreaterThan(0);
 
-      const editButton = await trackItems[0].getByTestId(/edit/).first();
+      const editButton = trackItems[0].getByTestId(/edit/).first();
       await editButton.click();
 
       const editForm = page.getByTestId('track-form');
