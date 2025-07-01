@@ -1,0 +1,16 @@
+{
+  "title": "Papa's Got a Brand New Bag",
+  "artist": "Billie Eilish",
+  "album": "30",
+  "genres": [
+    "Hip Hop",
+    "Electronic",
+    "Jazz"
+  ],
+  "slug": "papas-got-a-brand-new-bag",
+  "coverImage": "https://picsum.photos/seed/Papa's%20Got%20a%20Brand%20New%20Bag/300/300",
+  "id": "1750937449310",
+  "createdAt": "2025-06-26T11:30:49.310Z",
+  "updatedAt": "2025-06-26T16:38:36.073Z",
+  "audioFile": "1750937449310.mp3"
+}

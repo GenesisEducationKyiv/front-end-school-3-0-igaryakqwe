@@ -1,0 +1,14 @@
+{
+  "title": "Thriller",
+  "artist": "Lady Gaga",
+  "album": "Future Nostalgia",
+  "genres": [
+    "Classical",
+    "Rock"
+  ],
+  "slug": "thriller",
+  "coverImage": "https://picsum.photos/seed/Thriller/300/300",
+  "id": "1750937449292",
+  "createdAt": "2025-06-26T11:30:49.293Z",
+  "updatedAt": "2025-06-26T11:30:49.293Z"
+}
