@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { removeTrackFile } from '@/features/tracks/api/tracks.api';
 import { toast } from '@/lib/toast';
-import { Track } from '@/types/entities/track.ts';
+import { Track } from '@/types/entities/track';
 
 const useRemoveTrackMutation = () => {
   const queryClient = useQueryClient();
@@ -11,43 +11,43 @@ const useRemoveTrackMutation = () => {
     mutationFn: (trackId: string) => removeTrackFile(trackId),
     onMutate: async (trackId) => {
       await queryClient.cancelQueries({ queryKey: ['tracks'] });
-      
+
       const previousTracks = queryClient.getQueryData<Track[]>(['tracks']);
-      
+
       if (previousTracks) {
-        const updatedTracks = previousTracks.map(track => 
-          track.id === trackId 
-            ? { 
-                ...track, 
+        const updatedTracks = previousTracks.map((track) =>
+          track.id === trackId
+            ? {
+                ...track,
                 fileStatus: 'removing',
-                updatedAt: new Date().toISOString() 
-              } 
+                updatedAt: new Date().toISOString(),
+              }
             : track
         );
-        
+
         queryClient.setQueryData(['tracks'], updatedTracks);
       }
-      
+
       return { previousTracks };
     },
     onSuccess: (_, trackId) => {
       const tracks = queryClient.getQueryData<Track[]>(['tracks']);
-      
+
       if (tracks) {
-        const updatedTracks = tracks.map(track => 
-          track.id === trackId 
-            ? { 
-                ...track, 
+        const updatedTracks = tracks.map((track) =>
+          track.id === trackId
+            ? {
+                ...track,
                 fileStatus: null,
                 audioUrl: null,
-                updatedAt: new Date().toISOString() 
-              } 
+                updatedAt: new Date().toISOString(),
+              }
             : track
         );
-        
+
         queryClient.setQueryData(['tracks'], updatedTracks);
       }
-      
+
       toast.success('Track file removed');
     },
     onError: (_, __, context) => {
@@ -58,7 +58,7 @@ const useRemoveTrackMutation = () => {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['tracks'] });
-    }
+    },
   });
 
   return { removeTrackFile: mutate, isRemoving: isPending, error };

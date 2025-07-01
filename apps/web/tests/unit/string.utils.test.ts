@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import { createSlug } from '../../src/utils/string.utils';
 
 describe('createSlug', () => {

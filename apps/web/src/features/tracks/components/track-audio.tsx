@@ -6,7 +6,7 @@ import TimeScrubber from '@/components/audio/time-scrubber';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import useRemoveTrackMutation from '@/features/tracks/hooks/mutations/use-remove-track-mutation';
-import { getAudioFile } from '@/features/tracks/lib/utils.ts';
+import { getAudioFile } from '@/features/tracks/lib/utils';
 import useAudioStore from '@/store/use-audio-store';
 import type { Track } from '@/types/entities/track.ts';
 import useTrackAudio from '@/features/tracks/hooks/use-track-audio';

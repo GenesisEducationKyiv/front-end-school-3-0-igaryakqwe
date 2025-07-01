@@ -1,9 +1,9 @@
-import { lazy } from 'react';
 import { PlusIcon } from 'lucide-react';
+import { lazy } from 'react';
 
 import { Button } from '@/components/ui/button';
-import TrackDialog from '@/features/tracks/components/track-dialog';
 import SelectAllTracksButton from '@/features/tracks/components/select-all-tracks-button';
+import TrackDialog from '@/features/tracks/components/track-dialog';
 import useTracksStore from '@/features/tracks/store/use-tracks.store';
 
 const DeleteManyTracksDialog = lazy(

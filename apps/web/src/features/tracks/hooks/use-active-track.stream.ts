@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
-import { socket } from '@/lib/socket';
+
 import useTrackStore, {
   ActiveTrackData,
 } from '@/features/tracks/store/use-track.store';
+import { socket } from '@/lib/socket';
 
 export interface ActiveTrackUpdateEvent {
   activeTrack: ActiveTrackData;
@@ -25,7 +26,7 @@ export const useActiveTrackStream = (isPlaying: boolean, id?: string) => {
     setActiveTrack({ id, title: trackData.title });
   };
 
-  const handleConnectError = (error: any) => {
+  const handleConnectError = (error: unknown) => {
     console.error('Socket connection error:', error);
   };
 

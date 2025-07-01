@@ -1,17 +1,17 @@
-import Fastify from 'fastify';
+import { fastifyConnectPlugin } from '@connectrpc/connect-fastify';
 import cors from '@fastify/cors';
 import multipart from '@fastify/multipart';
 import fastifyStatic from '@fastify/static';
-import { fastifyConnectPlugin } from '@connectrpc/connect-fastify';
+import { GenresService } from '@grpc-generated/proto/genres_pb';
+import { TracksService } from '@grpc-generated/proto/tracks_pb';
+import Fastify from 'fastify';
 import fastifySocketIO from 'fastify-socket.io';
 
 import config from './config';
-import { initializeDb } from './utils/db';
-import { GenresService } from '@grpc-generated/proto/genres_pb';
-import { genresService } from './services/genres.service';
-import { TracksService } from '@grpc-generated/proto/tracks_pb';
-import { tracksService } from './services/tracks.service';
 import { ActiveTrackManager } from './services/active-track.service';
+import { genresService } from './services/genres.service';
+import { tracksService } from './services/tracks.service';
+import { initializeDb } from './utils/db';
 
 async function start() {
   try {

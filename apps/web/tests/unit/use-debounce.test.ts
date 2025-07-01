@@ -1,5 +1,6 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { renderHook, act } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
 import useDebounce from '../../src/hooks/use-debounce';
 
 describe('useDebounce', () => {
@@ -253,7 +254,7 @@ describe('useDebounce', () => {
     });
 
     it('should cleanup on unmount', () => {
-      const { result, rerender, unmount } = renderHook(
+      const { rerender, unmount } = renderHook(
         ({ value, delay }) => useDebounce(value, delay),
         { initialProps: { value: 'initial', delay: 500 } }
       );

@@ -1,7 +1,8 @@
 import React from 'react';
-import { renderHook, waitFor } from '@testing-library/react';
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { renderHook, waitFor } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import useTracksQuery from '../../src/features/tracks/hooks/queries/use-tracks-query';
 import useTracksSearch from '../../src/features/tracks/hooks/use-tracks-search';
@@ -85,10 +86,10 @@ describe('useTracksQuery Integration Tests', () => {
       currentPage: 1,
       handlePageChange: vi.fn(),
       totalPages: 1,
-      setCurrentPage: function (page: number): Promise<URLSearchParams> {
+      setCurrentPage: function (): Promise<URLSearchParams> {
         throw new Error('Function not implemented.');
       },
-      currentItems: function <T>(items: T[]): T[] {
+      currentItems: function <T>(): T[] {
         throw new Error('Function not implemented.');
       },
     });
@@ -127,7 +128,7 @@ describe('useTracksQuery Integration Tests', () => {
     expect(result.current.error).toBeNull();
   });
 
-  it('should handle search parameters correctly', async () => {
+  it('should handle search parameters correctly', () => {
     const searchState = {
       album: 'Test Album',
       search: 'test search',
