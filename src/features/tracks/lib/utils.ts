@@ -30,19 +30,3 @@ export const getAudioFile = (fileName?: string | null) => {
   if (!fileName) return;
   return `${API_URL}/files/${fileName}`;
 };
-
-export const formatTime = (time: number) => {
-  if (isNaN(time)) return '0:00';
-
-  const minutes = Math.floor(time / 60);
-  const seconds = Math.floor(time % 60);
-  return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-};
-
-export const createSlug = (str: string) => {
-  return str
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/[\s_-]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-};

@@ -3,7 +3,7 @@ import { CreateTrackDto } from '@/features/tracks/api/dto/tracks.dto';
 import { createTrack } from '@/features/tracks/api/tracks.api';
 import { toast } from '@/lib/toast';
 import { Track } from '@/types/entities/track.ts';
-import { createSlug } from '@/features/tracks/lib/utils';
+import { createSlug } from '@/utils/string.utils';
 
 const useCreateTrackMutation = () => {
   const queryClient = useQueryClient();
@@ -12,9 +12,9 @@ const useCreateTrackMutation = () => {
     mutationFn: (data: CreateTrackDto) => createTrack(data),
     onMutate: async (newTrackData) => {
       await queryClient.cancelQueries({ queryKey: ['tracks'] });
-      
+
       const previousTracks = queryClient.getQueryData<Track[]>(['tracks']);
-      
+
       if (previousTracks) {
         const optimisticTrack: Track = {
           id: 'temp-id-' + Date.now(),
@@ -23,10 +23,13 @@ const useCreateTrackMutation = () => {
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
         };
-        
-        queryClient.setQueryData(['tracks'], [...previousTracks, optimisticTrack]);
+
+        queryClient.setQueryData(
+          ['tracks'],
+          [...previousTracks, optimisticTrack]
+        );
       }
-      
+
       return { previousTracks };
     },
     onSuccess: () => {
@@ -39,8 +42,8 @@ const useCreateTrackMutation = () => {
       toast.error(error?.message || 'Failed to create track');
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['tracks'] }); 
-    }
+      queryClient.invalidateQueries({ queryKey: ['tracks'] });
+    },
   });
 };
 

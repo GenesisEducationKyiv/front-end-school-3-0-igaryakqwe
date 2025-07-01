@@ -45,7 +45,10 @@ const TrackUpload = ({ trackId }: TrackUploadProps) => {
   });
 
   return (
-    <div className="flex flex-col w-full items-center gap-2">
+    <div
+      data-testid={`track-upload-${trackId}`}
+      className="flex flex-col w-full items-center gap-2"
+    >
       <div className="inline-flex w-full items-center gap-2 align-top">
         <div className="relative w-full inline-block">
           <Button

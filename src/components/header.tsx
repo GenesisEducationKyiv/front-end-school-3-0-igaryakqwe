@@ -12,6 +12,7 @@ const Header = () => {
         <div className="mx-auto max-w-7xl px-6">
           <div className="relative flex flex-wrap items-center justify-center gap-6 py-3 lg:gap-0 lg:py-4">
             <a
+              data-testid="logo-link"
               href="/"
               aria-label="home"
               className="flex items-center space-x-2"
@@ -20,7 +21,6 @@ const Header = () => {
             </a>
             <ThemeToggle className="absolute right-0" />
           </div>
-
         </div>
       </nav>
     </header>

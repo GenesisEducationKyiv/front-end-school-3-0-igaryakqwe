@@ -4,7 +4,7 @@ import { APIDeleteResponseSchema, APIResponseSchema } from '@/types/api.ts';
 import { TrackSchema, TracksSchema } from '@/types/entities/track.ts';
 import { handleAPIResponse, handleErrorResponse } from '@/utils/api.utils';
 
-export const getTracks = async (params?: string) => {
+export const getTracks = async (params: string = '') => {
   const response = await fetch(`${API_URL}/tracks${params}`, {
     method: 'GET',
     headers: {
@@ -84,5 +84,5 @@ export const removeTrackFile = async (id: string) => {
     method: 'DELETE',
   });
 
-  if (!response.ok) await handleErrorResponse(response);
+  return handleAPIResponse(response, TrackSchema);
 };
