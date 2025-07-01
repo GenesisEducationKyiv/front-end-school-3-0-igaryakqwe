@@ -9,9 +9,9 @@
     "turbo": "^1.10.0"
   },
   "scripts": {
+    "start": "turbo run start --filter=api --filter=web",
     "dev": "turbo run dev",
     "build": "turbo run build",
-    "preview": "pnpm --filter ./apps/api... start && pnpm --filter ./apps/web... preview",
     "lint": "turbo run lint",
     "test": "turbo run test",
     "proto:gen": "pnpm --filter @music-platform/grpc-client run proto:generate"
