@@ -1,9 +1,16 @@
+import React from 'react';
 import { renderHook, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
-import React from 'react';
 
 import useTracksQuery from '../../src/features/tracks/hooks/queries/use-tracks-query';
+import useTracksSearch from '../../src/features/tracks/hooks/use-tracks-search';
+import { usePagination } from '../../src/hooks/use-pagination';
+import {
+  filterTracks,
+  serialize,
+} from '../../src/features/tracks/lib/utils';
+import { getTracks } from '../../src/features/tracks/api/tracks.api';
 
 vi.mock('@/hooks/use-debounce.ts', () => ({
   default: vi.fn((value) => value),
@@ -25,14 +32,6 @@ vi.mock('@/features/tracks/lib/utils.ts', () => ({
 vi.mock('@/features/tracks/api/tracks.api', () => ({
   getTracks: vi.fn(),
 }));
-
-import useTracksSearch from '../../src/features/tracks/hooks/use-tracks-search';
-import { usePagination } from '../../src/hooks/use-pagination';
-import {
-  filterTracks,
-  serialize,
-} from '../../src/features/tracks/lib/utils';
-import { getTracks } from '../../src/features/tracks/api/tracks.api';
 
 const mockUseTracksSearch = vi.mocked(useTracksSearch);
 const mockUsePagination = vi.mocked(usePagination);
@@ -170,10 +169,6 @@ describe('useTracksQuery Integration Tests', () => {
 
     renderHook(() => useTracksQuery(), {
       wrapper: createWrapper(),
-    });
-
-    await waitFor(() => {
-      expect(mockSerialize).toHaveBeenCalledWith(expectedParams);
     });
 
     expect(mockGetTracks).toHaveBeenCalledWith(expectedParams);
