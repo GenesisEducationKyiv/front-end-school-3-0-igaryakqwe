@@ -201,10 +201,7 @@ export const seedDatabase = async (count = 50): Promise<void> => {
 };
 
 // If this script is run directly
-if (
-  import.meta.url === process.argv[1] ||
-  import.meta.url === `file://${process.argv[1]}`
-) {
+if (require.main === module) {
   const count = process.argv[2] ? parseInt(process.argv[2], 10) : 50;
   seedDatabase(count)
     .then(() => {
