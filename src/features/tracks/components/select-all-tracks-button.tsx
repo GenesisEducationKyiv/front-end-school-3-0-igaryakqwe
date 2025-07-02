@@ -1,17 +1,18 @@
 import { CheckCheckIcon, SquareCheckIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button.tsx';
-import useTracksQuery from '@/features/tracks/hooks/use-tracks-query.ts';
+import useTracksQuery from '@/features/tracks/hooks/queries/use-tracks-query';
 import useTracksStore from '@/features/tracks/store/use-tracks-store.tsx';
 
 const SelectAllTracksButton = () => {
   const { tracks } = useTracksQuery();
-  const {
-    isSelectMode,
-    toggleSelectMode,
-    selectedTracksIds,
-    setSelectedTracksIds,
-  } = useTracksStore();
+
+  const isSelectMode = useTracksStore((state) => state.isSelectMode);
+  const selectedTracksIds = useTracksStore((state) => state.selectedTracksIds);
+  const toggleSelectMode = useTracksStore((state) => state.toggleSelectMode);
+  const setSelectedTracksIds = useTracksStore(
+    (state) => state.setSelectedTracksIds
+  );
 
   const handleSelectAll = () => {
     const allTracksIds = tracks.map((track) => track.id);
