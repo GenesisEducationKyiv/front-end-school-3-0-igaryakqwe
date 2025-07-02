@@ -19,7 +19,10 @@ interface TestTracksFixture {
 export const test = base.extend<TestTracksFixture>({
   getTrack: async (_, use) => {
     const getTrack = () => {
-      return createTrackMock;
+      return {
+        track: createTrackMock.title + crypto.randomUUID(),
+        ...createTrackMock,
+      };
     };
     await use(getTrack);
   },
