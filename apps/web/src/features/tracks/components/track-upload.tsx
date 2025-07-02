@@ -1,6 +1,6 @@
 import { UploadIcon } from 'lucide-react';
 
-import { Button } from '@/components/ui/button.tsx';
+import { Button } from '@/components/ui/button';
 import useTrackUploadMutation from '@/features/tracks/hooks/mutations/use-track-upload-mutation';
 import {
   ALLOWED_AUDIO_TYPES,
