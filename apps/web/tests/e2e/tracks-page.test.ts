@@ -14,6 +14,8 @@ test.describe('Tracks Page', () => {
   });
 
   test.describe('Tracks list', () => {
+    test.describe.configure({ mode: 'serial' });
+
     test('should show loading state', async ({ page }) => {
       const loadingElement = page.getByTestId('loading-tracks');
       await expect(loadingElement).toBeVisible();
@@ -44,6 +46,8 @@ test.describe('Tracks Page', () => {
   });
 
   test.describe('Tracks filters', () => {
+    test.describe.configure({ mode: 'serial' });
+
     const tracksIds: string[] = [];
     test.beforeEach(async ({ getTrack, createTrack }) => {
       const track = await createTrack(getTrack());
@@ -114,6 +118,8 @@ test.describe('Tracks Page', () => {
   });
 
   test.describe('Tracks operations', () => {
+    test.describe.configure({ mode: 'serial' });
+
     const updatedTrack = {
       title: 'Updated Track',
       artist: 'Updated Artist',
