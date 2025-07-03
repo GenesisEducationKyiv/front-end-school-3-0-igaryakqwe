@@ -1,9 +1,9 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react-swc';
 import tailwindcss from '@tailwindcss/vite';
-import { analyzer } from 'vite-bundle-analyzer';
-import { visualizer } from 'rollup-plugin-visualizer';
+import react from '@vitejs/plugin-react-swc';
 import path from 'path';
+import { visualizer } from 'rollup-plugin-visualizer';
+import { defineConfig } from 'vite';
+import { analyzer } from 'vite-bundle-analyzer';
 
 const enableAnalyzer = process.env.VITE_ENABLE_ANALYZER === 'true';
 const enableVisualizer = process.env.VITE_ENABLE_VISUALIZER === 'true';

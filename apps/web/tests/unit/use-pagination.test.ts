@@ -1,5 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook, act } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import { usePagination } from '../../src/hooks/use-pagination';
 
 const mockSetCurrentPage = vi.fn();
@@ -13,8 +14,8 @@ vi.mock('nuqs', () => {
         defaultVal,
       })),
     },
-    useQueryState: vi.fn((key: string, parser: any) => {
-      mockSetCurrentPage.mockImplementation(async (page: number) => {
+    useQueryState: vi.fn((key: string) => {
+      mockSetCurrentPage.mockImplementation((page: number) => {
         currentPage = page;
         return new URLSearchParams({ [key]: String(page) });
       });

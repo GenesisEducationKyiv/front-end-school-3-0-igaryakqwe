@@ -1,6 +1,6 @@
 import Logo from '@/components/logo';
-import { cn } from '@/lib/utils';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { cn } from '@/lib/utils';
 
 const Header = () => {
   return (

@@ -1,6 +1,6 @@
 import { toast as dependencyToast } from 'sonner';
 
-import { Toast } from '@/components/ui/sonner.tsx';
+import { Toast } from '@/components/ui/sonner';
 
 export const toast = {
   success: (title: string) => {

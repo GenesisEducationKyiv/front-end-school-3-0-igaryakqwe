@@ -1,6 +1,7 @@
 import { Server as SocketIOServer } from 'socket.io';
-import { getTracks } from '../utils/db';
+
 import { Track } from '../types';
+import { getTracks } from '../utils/db';
 
 export class ActiveTrackManager {
   private io: SocketIOServer;

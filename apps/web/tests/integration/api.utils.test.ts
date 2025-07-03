@@ -1,9 +1,7 @@
-import { describe, it, expect, vi } from 'vitest';
-import {
-  handleAPIResponse,
-  handleErrorResponse,
-} from '../../src/utils/api.utils';
+import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
+
+import { handleAPIResponse } from '../../src/utils/api.utils';
 
 const DummySchema = z.object({
   id: z.string(),
@@ -17,7 +15,7 @@ const DummySchemaWithOptional = z.object({
 
 function createMockResponse(
   body: unknown,
-  status: number = 200,
+  status = 200,
   headers: Record<string, string> = { 'Content-Type': 'application/json' }
 ): Response {
   return new Response(JSON.stringify(body), { status, headers });
@@ -25,7 +23,7 @@ function createMockResponse(
 
 function createRawResponse(
   rawText: string,
-  status: number = 200,
+  status = 200,
   headers: Record<string, string> = { 'Content-Type': 'application/json' }
 ): Response {
   return new Response(rawText, { status, headers });

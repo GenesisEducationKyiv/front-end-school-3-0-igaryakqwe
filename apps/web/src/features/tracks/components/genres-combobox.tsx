@@ -15,8 +15,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import useGenreQuery from '@/features/tracks/hooks/use-genre-query.ts';
-import useTracksSearch from '@/features/tracks/hooks/use-tracks-search.ts';
+import useGenreQuery from '@/features/tracks/hooks/use-genre-query';
+import useTracksSearch from '@/features/tracks/hooks/use-tracks-search';
 import { cn } from '@/lib/utils';
 
 const GenresCombobox = () => {

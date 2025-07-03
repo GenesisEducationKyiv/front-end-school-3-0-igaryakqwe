@@ -1,13 +1,12 @@
 import { TrashIcon } from 'lucide-react';
 
-import ConfirmationDialog from '@/components/confirmation-dialog.tsx';
-import { Button } from '@/components/ui/button.tsx';
-import useDeleteTracksMutation from '@/features/tracks/hooks/use-delete-tracks-mutation.ts';
+import ConfirmationDialog from '@/components/confirmation-dialog';
+import { Button } from '@/components/ui/button';
+import useDeleteTracksMutation from '@/features/tracks/hooks/use-delete-tracks-mutation';
 import useTracksStore from '@/features/tracks/store/use-tracks.store';
 
 const DeleteManyTracksDialog = () => {
-  const { selectedTracksIds, resetSelectedTracksIds } =
-    useTracksStore();
+  const { selectedTracksIds, resetSelectedTracksIds } = useTracksStore();
   const { deleteTracks, isDeleting } = useDeleteTracksMutation();
 
   if (!selectedTracksIds.length) return null;

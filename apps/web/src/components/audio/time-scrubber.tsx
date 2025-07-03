@@ -1,8 +1,9 @@
 import { memo } from 'react';
-import { Slider } from '@/components/ui/slider';
+
 import TimeDisplay from '@/components/audio/time-display';
 import WaveformVisualizer from '@/components/audio/waveform-visualizer';
-import useAudioStore from '@/store/use-audio-store.ts';
+import { Slider } from '@/components/ui/slider';
+import useAudioStore from '@/store/use-audio-store';
 
 interface TimeScrubberProps {
   currentTime: number;

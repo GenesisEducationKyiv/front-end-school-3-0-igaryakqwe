@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { Track } from '@/types/entities/track.ts';
+import { Track } from '@/types/entities/track';
 
 interface AudioState {
   globalAudioRef: HTMLAudioElement | null;

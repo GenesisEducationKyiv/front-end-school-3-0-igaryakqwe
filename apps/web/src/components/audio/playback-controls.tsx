@@ -1,7 +1,8 @@
-import { memo } from 'react';
-import { Button } from '@/components/ui/button.tsx';
 import { Pause, Play, SkipBack, SkipForward } from 'lucide-react';
-import useAudioStore from '@/store/use-audio-store.ts';
+import { memo } from 'react';
+
+import { Button } from '@/components/ui/button';
+import useAudioStore from '@/store/use-audio-store';
 
 interface PlaybackControlProps {
   isPlaying: boolean;

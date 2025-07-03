@@ -44,7 +44,7 @@ export default defineConfig({
       testMatch: '**/e2e/**/*.test.ts',
       use: {
         ...devices['Desktop Chrome'],
-        baseURL: 'http://localhost:3000',
+        baseURL: 'http://localhost:4173',
         // Скріншоти лише при помилках
         screenshot: 'only-on-failure',
         // Відео для debugging
@@ -59,7 +59,7 @@ export default defineConfig({
       testMatch: '**/e2e/**/*.test.ts',
       use: {
         ...devices['iPhone 13'],
-        baseURL: 'http://localhost:3000',
+        baseURL: 'http://localhost:4173',
       },
     },
   ],
@@ -72,5 +72,14 @@ export default defineConfig({
     },
     // Таймаут для очікувань
     timeout: 10_000,
+  },
+
+  webServer: {
+    command: 'pnpm build && pnpm start',
+    port: 4173,
+    reuseExistingServer: !process.env.CI,
+    env: {
+      VITE_API_URL: process.env.VITE_API_URL ?? 'http://localhost:8000',
+    },
   },
 });

@@ -1,6 +1,6 @@
 import Header from '@/components/header';
-import TracksPage from '@/features/tracks/tracks.page';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import TracksPage from '@/features/tracks/tracks.page';
 
 const App = () => {
   return (

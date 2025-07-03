@@ -2,10 +2,10 @@ import {
   CreateTrackDto,
   GetTracksQueryParams,
 } from '@/features/tracks/api/dto/tracks.dto';
+import { tracksClient } from '@/lib/grpc-client';
 import { APIDeleteResponseSchema, APIResponseSchema } from '@/types/api';
 import { TrackSchema, TracksSchema } from '@/types/entities/track';
 import { handleGrpcError, handleGrpcResponse } from '@/utils/api.utils';
-import { tracksClient } from '@/lib/grpc-client';
 
 export const getTracks = async (params: GetTracksQueryParams = {}) => {
   try {
@@ -74,7 +74,7 @@ export const uploadTrackFile = async (id: string, file: File) => {
     const arrayBuffer = await file.arrayBuffer();
     const uint8Array = new Uint8Array(arrayBuffer);
 
-    const {} = await tracksClient.uploadTrackFile({
+    await tracksClient.uploadTrackFile({
       id,
       filename: file.name,
       mimetype: file.type,

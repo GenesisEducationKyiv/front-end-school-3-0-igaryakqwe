@@ -1,16 +1,8 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { Track, QueryParams, BatchDeleteResponse } from '../types';
-import config from '../config';
 
-/**
- * Database file paths
- */
-interface DbPaths {
-  tracksDir: string;
-  uploadsDir: string;
-  genresFile: string;
-}
+import config from '../config';
+import { BatchDeleteResponse, QueryParams, Track } from '../types';
 
 /**
  * Result of getTracks with pagination
@@ -19,9 +11,6 @@ interface GetTracksResult {
   tracks: Track[];
   total: number;
 }
-
-// Determine which paths to use
-const isTestMode = process.env.TEST_MODE === 'true';
 
 // Get the paths from config, which will reflect the right environment
 const TRACKS_DIR = config.storage.tracksDir;
@@ -111,14 +100,12 @@ export const getTracks = async (
         (track) =>
           track.title.toLowerCase().includes(searchLower) ||
           track.artist.toLowerCase().includes(searchLower) ||
-          (track.album && track.album.toLowerCase().includes(searchLower))
+          track.album?.toLowerCase().includes(searchLower)
       );
     }
 
     if (params.genre) {
-      tracks = tracks.filter((track) =>
-        track.genres.includes(params.genre as string)
-      );
+      tracks = tracks.filter((track) => track.genres.includes(params.genre!));
     }
 
     if (params.artist) {
@@ -208,7 +195,7 @@ export const getTrackById = async (id: string): Promise<Track | undefined> => {
     const filePath = path.join(TRACKS_DIR, `${id}.json`);
     const content = await fs.readFile(filePath, 'utf-8');
     return JSON.parse(content) as Track;
-  } catch (error) {
+  } catch {
     return;
   }
 };
@@ -362,7 +349,7 @@ export const deleteAudioFile = async (id: string): Promise<boolean> => {
   try {
     const track = await getTrackById(id);
 
-    if (!track || !track.audioFile) {
+    if (!track?.audioFile) {
       return false;
     }
 

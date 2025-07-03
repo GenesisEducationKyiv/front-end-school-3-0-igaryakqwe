@@ -1,6 +1,6 @@
 import { parseAsInteger, parseAsString, parseAsStringLiteral } from 'nuqs';
 
-import { SortOrder, SortValue } from '@/types/entities/track.ts';
+import { SortOrder, SortValue } from '@/types/entities/track';
 
 export const MAX_TRACKS_PER_PAGE = 6;
 

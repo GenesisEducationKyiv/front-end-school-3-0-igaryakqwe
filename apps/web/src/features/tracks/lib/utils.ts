@@ -1,12 +1,12 @@
 import { createSerializer } from 'nuqs';
 
-import { Option } from '@/components/ui/multiselect.tsx';
-import { API_URL } from '@/constants/global.ts';
+import { Option } from '@/components/ui/multiselect';
+import { API_URL } from '@/constants/global';
 import {
   SEARCH_PARAMS_SCHEMA,
   SORT_OPTIONS_MAPPER,
-} from '@/features/tracks/lib/constants.ts';
-import { SortValue, Track } from '@/types/entities/track.ts';
+} from '@/features/tracks/lib/constants';
+import { SortValue, Track } from '@/types/entities/track';
 
 export const serialize = createSerializer(SEARCH_PARAMS_SCHEMA);
 

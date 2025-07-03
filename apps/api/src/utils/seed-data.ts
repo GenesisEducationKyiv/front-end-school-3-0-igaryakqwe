@@ -1,9 +1,9 @@
+import fs from 'fs/promises';
+
+import config from '../config';
+import { Track } from '../types';
 import { createTrack } from './db';
 import { createSlug } from './slug';
-import { Track } from '../types';
-import config from '../config';
-import fs from 'fs/promises';
-import path from 'path';
 
 // Initialize directories
 const initDirectories = async () => {
@@ -155,9 +155,9 @@ const getRandomElements = <T>(array: T[], min: number, max: number): T[] => {
 };
 
 // Generate a single random track
-const generateRandomTrack = async (
+const generateRandomTrack = (
   genres: string[]
-): Promise<Omit<Track, 'id' | 'createdAt' | 'updatedAt'>> => {
+): Omit<Track, 'id' | 'createdAt' | 'updatedAt'> => {
   const title = getRandomElement(trackTitles);
   const artist = getRandomElement(artists);
   const includeAlbum = Math.random() > 0.3; // 70% chance to have an album
@@ -188,7 +188,7 @@ export const seedDatabase = async (count = 50): Promise<void> => {
 
     console.log(`Generating ${count} random tracks...`);
     for (let i = 0; i < count; i++) {
-      const trackData = await generateRandomTrack(genres);
+      const trackData = generateRandomTrack(genres);
       await createTrack(trackData);
       process.stdout.write(`.`); // Show progress
     }
@@ -201,10 +201,7 @@ export const seedDatabase = async (count = 50): Promise<void> => {
 };
 
 // If this script is run directly
-if (
-  import.meta.url === process.argv[1] ||
-  import.meta.url === `file://${process.argv[1]}`
-) {
+if (require.main === module) {
   const count = process.argv[2] ? parseInt(process.argv[2], 10) : 50;
   seedDatabase(count)
     .then(() => {

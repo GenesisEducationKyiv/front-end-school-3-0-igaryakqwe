@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { uploadTrackFile } from '@/features/tracks/api/tracks.api';
 import { toast } from '@/lib/toast';
-import { Track } from '@/types/entities/track.ts';
+import { Track } from '@/types/entities/track';
 
 const useTrackUploadMutation = (id: string) => {
   const queryClient = useQueryClient();

@@ -1,4 +1,5 @@
 import { expect } from '@playwright/test';
+
 import { test } from '../fixtures/test-tracks-fixture';
 
 test.describe('Tracks Page', () => {
@@ -13,6 +14,8 @@ test.describe('Tracks Page', () => {
   });
 
   test.describe('Tracks list', () => {
+    test.describe.configure({ mode: 'serial' });
+
     test('should show loading state', async ({ page }) => {
       const loadingElement = page.getByTestId('loading-tracks');
       await expect(loadingElement).toBeVisible();
@@ -43,20 +46,18 @@ test.describe('Tracks Page', () => {
   });
 
   test.describe('Tracks filters', () => {
-    let tracksIds: string[] = [];
     test.beforeEach(async ({ getTrack, createTrack }) => {
-      const track = await createTrack(getTrack());
-      tracksIds.push(track.id);
+      await createTrack(getTrack());
     });
 
-    test.afterAll(async ({ deleteTrack }) => {
-      await Promise.all(tracksIds.map((id) => deleteTrack(id)));
+    test.afterAll(async ({ deleteAllTracks }) => {
+      await deleteAllTracks();
     });
 
-    test('should filter tracks by title', async ({ page, getTrack }) => {
+    test('should filter tracks by title', async ({ page }) => {
       await page.getByTestId('loading-tracks').waitFor({ state: 'hidden' });
 
-      const searchTerm = getTrack().title;
+      const searchTerm = 'Track 1';
       const searchInput = page.getByTestId('search-input');
       await searchInput.fill(searchTerm);
 
@@ -122,6 +123,10 @@ test.describe('Tracks Page', () => {
       genre: 'Rock',
     };
 
+    test.afterAll(async ({ deleteAllTracks }) => {
+      await deleteAllTracks();
+    });
+
     test('should allow to create track', async ({
       page,
       deleteTrack,
@@ -179,10 +184,10 @@ test.describe('Tracks Page', () => {
       const tracksList = page.getByTestId('tracks-list');
       await expect(tracksList).toBeVisible();
 
-      const trackItems = await page.getByTestId(/^track-item-/).all();
-      expect(trackItems.length).toBeGreaterThan(0);
+      const trackItem = page.getByTestId(`track-item-${data.id}`);
+      expect(trackItem).toBeVisible();
 
-      const editButton = await trackItems[0].getByTestId(/edit/).first();
+      const editButton = trackItem.getByTestId(/edit/).first();
       await editButton.click();
 
       const editForm = page.getByTestId('track-form');
@@ -214,6 +219,7 @@ test.describe('Tracks Page', () => {
       const updatedTrackTitle = page
         .getByTestId(/title$/)
         .filter({ hasText: updatedTrack.title });
+      updatedTrackTitle.waitFor({ timeout: 10000 });
       await expect(updatedTrackTitle).toBeVisible();
       await expect(updatedTrackTitle).toHaveText(updatedTrack.title);
 
@@ -227,10 +233,8 @@ test.describe('Tracks Page', () => {
     }) => {
       const trackData = await createTrack(getTrack());
 
-      const tracksList = page.getByTestId('tracks-list');
-      await expect(tracksList).toBeVisible();
-
       const trackItem = page.getByTestId(`track-item-${trackData.id}`);
+      await trackItem.waitFor({ timeout: 10000 });
       await expect(trackItem).toBeVisible();
 
       const deleteButton = trackItem.getByTestId(/delete/).first();
@@ -246,10 +250,9 @@ test.describe('Tracks Page', () => {
       page,
       createTrack,
       getTrack,
-      getUpdatedTrack,
     }) => {
       const testTrack1 = getTrack();
-      const testTrack2 = getUpdatedTrack();
+      const testTrack2 = getTrack();
 
       const [data1, data2] = await Promise.all([
         createTrack(testTrack1),
@@ -258,14 +261,16 @@ test.describe('Tracks Page', () => {
 
       await page.getByTestId('loading-tracks').waitFor({ state: 'hidden' });
 
-      const trackItems = await page.getByTestId(/^track-item-/).all();
-      expect(trackItems.length).toBeGreaterThanOrEqual(2);
+      const trackItem1 = page.getByTestId(`track-item-${data1.id}`);
+      const trackItem2 = page.getByTestId(`track-item-${data2.id}`);
+      await trackItem1.waitFor({ timeout: 10000 });
+      await trackItem2.waitFor({ timeout: 10000 });
+
+      expect(trackItem1).toBeVisible();
+      expect(trackItem2).toBeVisible();
 
       const selectMode = page.getByTestId('select-mode-toggle');
       await selectMode.click();
-
-      const trackItem1 = page.getByTestId(`track-item-${data1.id}`);
-      const trackItem2 = page.getByTestId(`track-item-${data2.id}`);
 
       const firstTrackCheckbox = trackItem1.getByTestId(
         `track-checkbox-${data1.id}`
@@ -303,6 +308,7 @@ test.describe('Tracks Page', () => {
       const trackData = await createTrack(audioTestTrack);
 
       const trackItem = page.getByTestId(`track-item-${trackData.id}`);
+      await trackItem.waitFor({ timeout: 10000 });
       await expect(trackItem).toBeVisible();
 
       const uploadButton = trackItem.getByTestId(/^upload-track-/);
@@ -345,5 +351,24 @@ test.describe('Tracks Page', () => {
 
       await expect(trackItem).not.toBeVisible();
     });
+  });
+
+  test('should make screenshot of tracks page', async ({
+    page,
+    createManyTracks,
+    deleteAllTracks,
+  }) => {
+    await createManyTracks(6);
+
+    await page.getByTestId('loading-tracks').waitFor({ state: 'hidden' });
+    await page
+      .getByTestId('tracks-list')
+      .waitFor({ state: 'visible', timeout: 5000 });
+    await page.screenshot({
+      path: 'tests/screenshots/tracks-page.png',
+      fullPage: true,
+    });
+
+    await deleteAllTracks();
   });
 });

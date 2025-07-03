@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { deleteTracks } from '@/features/tracks/api/tracks.api';
 import { toast } from '@/lib/toast';
-import { Track } from '@/types/entities/track.ts';
+import { Track } from '@/types/entities/track';
 
 const useDeleteTracksMutation = () => {
   const queryClient = useQueryClient();
@@ -10,14 +10,16 @@ const useDeleteTracksMutation = () => {
     mutationFn: (ids: string[]) => deleteTracks(ids),
     onMutate: async (trackIds) => {
       await queryClient.cancelQueries({ queryKey: ['tracks'] });
-      
+
       const previousTracks = queryClient.getQueryData<Track[]>(['tracks']);
-      
+
       if (previousTracks) {
-        const updatedTracks = previousTracks.filter(track => !trackIds.includes(track.id));
+        const updatedTracks = previousTracks.filter(
+          (track) => !trackIds.includes(track.id)
+        );
         queryClient.setQueryData(['tracks'], updatedTracks);
       }
-      
+
       return { previousTracks };
     },
     onSuccess: () => {
@@ -31,7 +33,7 @@ const useDeleteTracksMutation = () => {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['tracks'] });
-    }
+    },
   });
 
   return {
