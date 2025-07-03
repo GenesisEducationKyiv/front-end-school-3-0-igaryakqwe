@@ -73,4 +73,10 @@ export default defineConfig({
     // Таймаут для очікувань
     timeout: 10_000,
   },
+
+  webServer: {
+    command: 'pnpm dev',
+    port: 3000,
+    reuseExistingServer: !process.env.CI,
+  },
 });
