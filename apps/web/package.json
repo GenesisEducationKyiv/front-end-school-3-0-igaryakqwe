@@ -39,7 +39,6 @@
     "class-variance-authority": "^0.7.1",
     "classnames": "^2.5.1",
     "cmdk": "^1.0.0",
-    "dotenv": "^16.5.0",
     "framer-motion": "^12.7.4",
     "lucide-react": "^0.488.0",
     "nuqs": "^2.4.3",
