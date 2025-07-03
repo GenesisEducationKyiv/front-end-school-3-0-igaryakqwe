@@ -352,4 +352,23 @@ test.describe('Tracks Page', () => {
       await expect(trackItem).not.toBeVisible();
     });
   });
+
+  test('should make screenshot of tracks page', async ({
+    page,
+    createManyTracks,
+    deleteAllTracks,
+  }) => {
+    await createManyTracks(6);
+
+    await page.getByTestId('loading-tracks').waitFor({ state: 'hidden' });
+    await page
+      .getByTestId('tracks-list')
+      .waitFor({ state: 'visible', timeout: 5000 });
+    await page.screenshot({
+      path: 'tests/screenshots/tracks-page.png',
+      fullPage: true,
+    });
+
+    await deleteAllTracks();
+  });
 });
