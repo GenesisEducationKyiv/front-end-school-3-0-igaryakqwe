@@ -1,5 +1,5 @@
 import { ListTracksRequest } from '@grpc-generated/proto/tracks_pb';
-import { QueryParams } from 'src/types';
+import { QueryParams } from '@/types';
 
 export const parseTrackSearchParams = (req: ListTracksRequest): QueryParams => {
   const allowedSorts = ['title', 'artist', 'album', 'createdAt'] as const;

@@ -38,9 +38,9 @@ import {
   deleteAudioFile,
 } from '../utils/db';
 import { createSlug } from '../utils/slug';
-import { getErrorMessage } from 'src/utils/error';
+import { getErrorMessage } from '@/utils/error';
 import { create } from '@bufbuild/protobuf';
-import { parseTrackSearchParams } from 'src/utils/query-params';
+import { parseTrackSearchParams } from '@/utils/query-params';
 
 export const tracksService: ServiceImpl<typeof TracksService> = {
   async getTrack(req: GetTrackRequest): Promise<GetTrackResponse> {
