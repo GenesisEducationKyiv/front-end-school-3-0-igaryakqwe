@@ -17,6 +17,7 @@ interface TestTracksFixture {
   getUpdatedTrack: () => CreateTrackDto;
   getFullTrack: () => Track;
   createTrack: (track: CreateTrackDto) => Promise<Track>;
+  createManyTracks: (count: number) => Promise<Track[]>;
   deleteTrack: (id: string) => Promise<void>;
   deleteAllTracks: () => Promise<void>;
 }
@@ -53,6 +54,21 @@ export const test = base.extend<TestTracksFixture>({
       return data;
     };
     await use(createTrack);
+  },
+  createManyTracks: async ({}, use) => {
+    const createManyTracks = async (count: number) => {
+      const data: Track[] = [];
+      for (let i = 0; i < count; i++) {
+        const track = await createTrackApi({
+          ...createTrackMock,
+          title: `Track ${i}`,
+        });
+        data.push(track);
+        tracksIds.push(track.id);
+      }
+      return data;
+    };
+    await use(createManyTracks);
   },
   deleteTrack: async ({}, use) => {
     const deleteTrack = async (id: string) => {
