@@ -1,4 +1,5 @@
 import { fastifyConnectPlugin } from '@connectrpc/connect-fastify';
+import fastifyCompress from '@fastify/compress';
 import cors from '@fastify/cors';
 import multipart from '@fastify/multipart';
 import fastifyStatic from '@fastify/static';
@@ -11,12 +12,13 @@ import config from './config';
 import { ActiveTrackManager } from './services/active-track.service';
 import { genresService } from './services/genres.service';
 import { tracksService } from './services/tracks.service';
-import { initializeDb } from './utils/db';
+import { downloadAllTrackImages, initializeDb } from './utils/db';
 
 async function start() {
   try {
     console.log(`Starting server in ${config.server.env} mode`);
     await initializeDb();
+    await downloadAllTrackImages();
 
     const fastify = Fastify({
       logger: {
@@ -54,6 +56,15 @@ async function start() {
       root: config.storage.uploadsDir,
       prefix: '/api/files/',
       decorateReply: false,
+      setHeaders: (res, path) => {
+        if (path.endsWith('.webp')) {
+          res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        }
+      },
+    });
+
+    await fastify.register(fastifyCompress, {
+      global: true,
     });
 
     await fastify.register(fastifyConnectPlugin, {
@@ -62,6 +73,20 @@ async function start() {
         router.service(GenresService, genresService);
         router.service(TracksService, tracksService);
       },
+    });
+
+    // REST endpoint to return array of image names
+    fastify.get('/api/images', async (request, reply) => {
+      const fs = await import('fs/promises');
+      const path = await import('path');
+      const imagesDir = path.join(config.storage.uploadsDir, 'images');
+      try {
+        const files = await fs.readdir(imagesDir);
+        return files;
+      } catch (err) {
+        console.error('Error reading images directory:', err);
+        reply.status(500).send({ error: 'Unable to read images directory' });
+      }
     });
 
     await fastify.register(fastifySocketIO, {

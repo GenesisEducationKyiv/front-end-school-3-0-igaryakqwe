@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
+import sharp from 'sharp';
 
 import config from '../config';
 import { BatchDeleteResponse, QueryParams, Track } from '../types';
@@ -363,4 +364,42 @@ export const deleteAudioFile = async (id: string): Promise<boolean> => {
     console.error(`Failed to delete audio file for track ${id}:`, error);
     return false;
   }
+};
+
+export const downloadAllTrackImages = async () => {
+  const imagesDir = path.join(UPLOADS_DIR, 'images');
+  await fs.mkdir(imagesDir, { recursive: true });
+
+  const files = await fs.readdir(TRACKS_DIR);
+  const downloaded = new Set();
+  const existingImages = new Set(await fs.readdir(imagesDir));
+
+  for (const file of files) {
+    if (!file.endsWith('.json')) continue;
+    const content = await fs.readFile(path.join(TRACKS_DIR, file), 'utf-8');
+    const track = JSON.parse(content);
+    const imageUrl = track.coverImage;
+    const baseName = track.id || track.slug || file.replace('.json', '');
+    const fileName = `${baseName}.webp`;
+    if (!imageUrl || downloaded.has(imageUrl) || existingImages.has(fileName))
+      continue;
+
+    if (!imageUrl || downloaded.has(imageUrl)) continue;
+    try {
+      const res = await fetch(imageUrl);
+      if (!res.ok) throw new Error(`Failed to fetch ${imageUrl}`);
+      const arrayBuffer = await res.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+      await sharp(buffer)
+        .resize(300, 300, { fit: 'cover', position: 'center' })
+        .webp({ quality: 50 })
+        .withMetadata({})
+        .toFile(path.join(imagesDir, fileName));
+      downloaded.add(imageUrl);
+      console.log(`Downloaded and processed image for track ${baseName}`);
+    } catch (err) {
+      console.error(`Error downloading or processing image for ${file}:`, err);
+    }
+  }
+  console.log('All images processed.');
 };

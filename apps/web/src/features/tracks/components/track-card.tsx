@@ -1,5 +1,5 @@
 import { EditIcon, Trash2Icon } from 'lucide-react';
-import { lazy } from 'react';
+import { lazy, memo, PropsWithChildren } from 'react';
 
 import ConfirmationDialog from '@/components/confirmation-dialog';
 import { Badge } from '@/components/ui/badge';
@@ -11,7 +11,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import TrackDialog from '@/features/tracks/components/track-dialog';
-import TrackImage from '@/features/tracks/components/track-image';
+import TrackUpload from '@/features/tracks/components/track-upload';
 import useDeleteTrackMutation from '@/features/tracks/hooks/use-delete-track-mutation';
 import useTrackStore from '@/features/tracks/store/use-track.store';
 import useTracksStore from '@/features/tracks/store/use-tracks.store';
@@ -20,20 +20,18 @@ import { Track } from '@/types/entities/track';
 const TrackAudio = lazy(
   () => import('@/features/tracks/components/track-audio')
 );
-const TrackUpload = lazy(
-  () => import('@/features/tracks/components/track-upload')
-);
+
 const Checkbox = lazy(() =>
   import('@/components/ui/checkbox').then((module) => ({
     default: module.Checkbox,
   }))
 );
 
-interface TrackCardProps {
+interface TrackCardProps extends PropsWithChildren {
   track: Track;
 }
 
-const TrackCard = ({ track }: TrackCardProps) => {
+const TrackCard = ({ track, children }: TrackCardProps) => {
   const { isSelectMode, selectedTracksIds, selectTrack } = useTracksStore();
   const { deleteTrack, isDeleting } = useDeleteTrackMutation();
 
@@ -68,11 +66,7 @@ const TrackCard = ({ track }: TrackCardProps) => {
         />
       )}
 
-      <TrackImage
-        image={track.coverImage}
-        alt={`${track.title} by ${track.artist}`}
-        className="rounded-lg"
-      />
+      {children}
 
       <CardContent className="pb-6 h-full flex flex-col justify-between">
         <div className="mb-4">
@@ -148,4 +142,4 @@ const TrackCard = ({ track }: TrackCardProps) => {
   );
 };
 
-export default TrackCard;
+export default memo(TrackCard);
