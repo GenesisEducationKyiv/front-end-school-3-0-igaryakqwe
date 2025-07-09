@@ -17,6 +17,9 @@ export default defineConfig({
   ].filter(Boolean),
   build: {
     sourcemap: true,
+    modulePreload: {
+      polyfill: false,
+    },
   },
   server: {
     port: 3000,

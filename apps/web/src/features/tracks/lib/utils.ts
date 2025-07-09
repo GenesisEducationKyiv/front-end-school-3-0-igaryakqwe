@@ -30,3 +30,7 @@ export const getAudioFile = (fileName?: string | null) => {
   if (!fileName) return;
   return `${API_URL}/files/${fileName}`;
 };
+
+export const getTrackImage = (trackId: string) => {
+  return `${API_URL}/files/images/${trackId}.webp`;
+};

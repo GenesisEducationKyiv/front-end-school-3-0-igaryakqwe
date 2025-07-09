@@ -1,18 +1,16 @@
-import { lazy } from 'react';
+import { memo } from 'react';
 
+import TrackImageFallback from '@/features/tracks/components/track-image-fallback';
 import { cn } from '@/lib/utils';
 
-const TrackImageFallback = lazy(
-  () => import('@/features/tracks/components/track-image-fallback')
-);
-
 interface TrackImage {
+  isLCP?: boolean;
   image?: string | null;
   alt?: string;
   className?: string;
 }
 
-const TrackImage = ({ image, alt, className }: TrackImage) => {
+const TrackImage = ({ isLCP = false, image, alt, className }: TrackImage) => {
   return (
     <div
       className={cn('aspect-square w-full p-6 h-full rounded-lg', className)}
@@ -22,14 +20,17 @@ const TrackImage = ({ image, alt, className }: TrackImage) => {
           src={image}
           alt={alt}
           className="object-cover w-full h-full rounded-lg"
-          loading="lazy"
-          fetchPriority="high"
+          loading={isLCP ? 'eager' : 'lazy'}
+          fetchPriority={isLCP ? 'high' : 'low'}
+          width={300}
+          height={300}
+          decoding="sync"
         />
       ) : (
-        <TrackImageFallback alt={alt} />
+        <TrackImageFallback alt={alt} isLCP={isLCP} />
       )}
     </div>
   );
 };
 
-export default TrackImage;
+export default memo(TrackImage);
