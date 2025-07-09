@@ -15,7 +15,7 @@ const TracksPage = () => {
   const { currentStoreTrack } = useAudioController();
 
   return (
-    <main className="mx-auto relative flex flex-col space-y-4 p-3 pb-0 max-w-7xl ">
+    <main className="mx-auto relative flex flex-col space-y-4 p-3 max-w-7xl ">
       <h1 className="text-3xl font-bold">Tracks</h1>
 
       <div className="flex flex-col lg:flex-row gap-5">
