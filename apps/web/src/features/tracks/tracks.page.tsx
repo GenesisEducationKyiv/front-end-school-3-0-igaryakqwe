@@ -1,10 +1,18 @@
-import AudioSnackbar from '@/features/tracks/components/audio-snackbar.tsx';
-import TracksFilters from '@/features/tracks/components/tracks-filters.tsx';
-import TracksList from '@/features/tracks/components/tracks-list.tsx';
-import TracksListHeader from '@/features/tracks/components/tracks-list-header.tsx';
-import TracksPagination from '@/features/tracks/components/tracks-pagination.tsx';
+import { lazy } from 'react';
+
+import TracksFilters from '@/features/tracks/components/tracks-filters';
+import TracksList from '@/features/tracks/components/tracks-list';
+import TracksListHeader from '@/features/tracks/components/tracks-list-header';
+import TracksPagination from '@/features/tracks/components/tracks-pagination';
+import useAudioController from './hooks/use-audio-controller';
+
+const AudioSnackbar = lazy(
+  () => import('@/features/tracks/components/audio-snackbar')
+);
 
 const TracksPage = () => {
+  const { currentStoreTrack } = useAudioController();
+
   return (
     <main className="mx-auto relative flex flex-col space-y-4 p-3 pb-0 max-w-7xl ">
       <h1 className="text-3xl font-bold">Tracks</h1>
@@ -17,7 +25,8 @@ const TracksPage = () => {
           <TracksPagination />
         </div>
       </div>
-      <AudioSnackbar />
+
+      {currentStoreTrack && <AudioSnackbar />}
     </main>
   );
 };
