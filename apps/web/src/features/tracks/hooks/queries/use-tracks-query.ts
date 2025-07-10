@@ -6,7 +6,7 @@ import { MAX_TRACKS_PER_PAGE } from '@/features/tracks/lib/constants.ts';
 import { filterTracks } from '@/features/tracks/lib/utils.ts';
 import useDebounce from '@/hooks/use-debounce.ts';
 import { usePagination } from '@/hooks/use-pagination.ts';
-import { GetTracksQueryParams } from '../api/dto/tracks.dto';
+import { GetTracksQueryParams } from '@/features/tracks/api/dto/tracks.dto';
 
 const useTracksQuery = () => {
   const {

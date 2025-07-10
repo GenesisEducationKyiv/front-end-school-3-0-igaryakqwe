@@ -3,9 +3,11 @@ import TrackCard from '@/features/tracks/components/track-card.tsx';
 import TrackCardSkeleton from '@/features/tracks/components/track-card-skeleton.tsx';
 import useTracksQuery from '@/features/tracks/hooks/queries/use-tracks-query';
 import { MAX_TRACKS_PER_PAGE } from '@/features/tracks/lib/constants.ts';
+import { env } from '@/config/env';
 
 const TracksList = () => {
   const { tracks, isLoading } = useTracksQuery();
+  console.log(env.BASE_API_URL);
 
   if (!tracks.length && !isLoading) {
     return (
