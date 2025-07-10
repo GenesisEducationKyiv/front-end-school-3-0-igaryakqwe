@@ -1,15 +1,18 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
-import { CreateTrackDto, createTrackDto } from '@/features/tracks/api/dto/tracks.dto';
+import {
+  CreateTrackDto,
+  createTrackDto,
+} from '@/features/tracks/api/dto/tracks.dto';
 import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Label } from '@/components/ui/label.tsx';
 import MultipleSelector, { Option } from '@/components/ui/multiselect.tsx';
 import TrackImage from '@/features/tracks/components/track-image.tsx';
-import useGenreQuery from '@/features/tracks/hooks/use-genre-query.ts';
-import useCreateTrackMutation from '@/features/tracks/hooks/use-create-track-mutation.ts';
-import useUpdateTrackMutation from '@/features/tracks/hooks/use-update-track-mutation.ts';
+import useGenreQuery from '@/features/tracks/hooks/queries/use-genre-query';
+import useCreateTrackMutation from '@/features/tracks/hooks/mutations/use-create-track-mutation';
+import useUpdateTrackMutation from '@/features/tracks/hooks/mutations/use-update-track-mutation';
 import { mapGenre } from '@/features/tracks/lib/utils.ts';
 import { Track } from '@/types/entities/track.ts';
 
@@ -23,7 +26,7 @@ const TrackForm = ({ onClose, isEdit, track }: CreateTrackFormProps) => {
   const { genres: genresData } = useGenreQuery();
   const createTrackMutation = useCreateTrackMutation();
   const updateTrackMutation = useUpdateTrackMutation();
-  
+
   const {
     register,
     handleSubmit,
@@ -54,12 +57,12 @@ const TrackForm = ({ onClose, isEdit, track }: CreateTrackFormProps) => {
   };
 
   const onSubmit = (data: CreateTrackDto) => {
-      if (isEdit && track) {
-        updateTrackMutation.mutate({ id: track.id, data });
-      } else {
-        createTrackMutation.mutate(data);
-      }
-      onClose();
+    if (isEdit && track) {
+      updateTrackMutation.mutate({ id: track.id, data });
+    } else {
+      createTrackMutation.mutate(data);
+    }
+    onClose();
   };
 
   return (
