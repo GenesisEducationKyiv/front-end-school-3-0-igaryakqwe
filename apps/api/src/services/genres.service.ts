@@ -5,6 +5,7 @@ import {
   GetGenresResponse,
   GetGenresResponseSchema,
 } from '@grpc-generated/proto/genres_pb';
+
 import { getGenres } from '@/utils/db';
 import { getErrorMessage } from '@/utils/error';
 

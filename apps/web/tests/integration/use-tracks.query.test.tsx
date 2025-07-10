@@ -1,17 +1,15 @@
-import React from 'react';
-
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { renderHook, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { getTracks } from '../../src/features/tracks/api/tracks.api';
 import useTracksQuery from '../../src/features/tracks/hooks/queries/use-tracks-query';
 import useTracksSearch from '../../src/features/tracks/hooks/use-tracks-search';
-import { usePagination } from '../../src/hooks/use-pagination';
 import {
   filterTracks,
   serialize,
 } from '../../src/features/tracks/lib/utils';
-import { getTracks } from '../../src/features/tracks/api/tracks.api';
+import { usePagination } from '../../src/hooks/use-pagination';
 
 vi.mock('@/hooks/use-debounce.ts', () => ({
   default: vi.fn((value) => value),

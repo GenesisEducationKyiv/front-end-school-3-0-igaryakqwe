@@ -1,13 +1,11 @@
 import { lazy, memo } from 'react';
 
 import { Card, CardContent } from '@/components/ui/card';
-import { Track } from '@/types/entities/track';
-
-import TrackImage from '@/features/tracks/components/track-image';
 import TrackActions from '@/features/tracks/components/track-actions';
-import TrackSelector from '@/features/tracks/components/track-selector';
-
+import TrackImage from '@/features/tracks/components/track-image';
 import TrackInfo from '@/features/tracks/components/track-info';
+import TrackSelector from '@/features/tracks/components/track-selector';
+import { Track } from '@/types/entities/track';
 
 const TrackAudio = lazy(
   () => import('@/features/tracks/components/track-audio')
