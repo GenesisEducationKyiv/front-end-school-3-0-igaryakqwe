@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { lazy, memo } from 'react';
 
 import { Card, CardContent } from '@/components/ui/card';
 import { Track } from '@/types/entities/track';
