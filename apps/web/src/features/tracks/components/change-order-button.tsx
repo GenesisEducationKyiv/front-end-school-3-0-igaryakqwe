@@ -14,7 +14,12 @@ const ChangeOrderButton = () => {
   };
 
   return (
-    <Button size="icon" variant="outline" onClick={handleChangeOrder}>
+    <Button
+      className="bg-input/30"
+      size="icon"
+      variant="outline"
+      onClick={handleChangeOrder}
+    >
       {order === 'asc' ? (
         <ArrowDownWideNarrowIcon className="h-4 w-4" />
       ) : (

@@ -41,7 +41,7 @@ const GenresCombobox = () => {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between"
+          className="w-full justify-between bg-input/30"
         >
           {genre
             ? genres?.find((genreItem) => genreItem === genre)
@@ -67,10 +67,7 @@ const GenresCombobox = () => {
             <CommandGroup>
               <CommandItem
                 value=""
-                className={cn(
-                  genre === '' &&
-                    'font-semibold bg-gray-100 dark:bg-neutral-800'
-                )}
+                className={cn(genre === '' && 'font-semibold bg-accent')}
                 onSelect={async (currentValue) => {
                   await setGenre(currentValue);
                   setOpen(false);
@@ -83,8 +80,7 @@ const GenresCombobox = () => {
                   key={genreItem}
                   value={genreItem}
                   className={cn(
-                    genre === genreItem &&
-                      'font-semibold bg-gray-100 dark:bg-neutral-800'
+                    genre === genreItem && 'font-semibold bg-accent'
                   )}
                   onSelect={async (currentValue) =>
                     await handleSelectGenre(currentValue)
