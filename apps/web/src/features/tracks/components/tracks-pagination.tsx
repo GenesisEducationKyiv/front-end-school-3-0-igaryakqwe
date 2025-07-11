@@ -1,4 +1,4 @@
-import PaginationControls from '@/components/pagination-controls.tsx';
+import PaginationControls from '@/components/pagination-controls';
 import useTracksQuery from '@/features/tracks/hooks/queries/use-tracks-query';
 
 const TracksPagination = () => {

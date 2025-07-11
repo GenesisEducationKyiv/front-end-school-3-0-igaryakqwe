@@ -1,8 +1,8 @@
-import { Card, CardTitle } from '@/components/ui/card.tsx';
-import useTracksQuery from '@/features/tracks/hooks/queries/use-tracks-query';
-import { MAX_TRACKS_PER_PAGE } from '@/features/tracks/lib/constants.ts';
-import { env } from '@/config/env';
 import { lazy } from 'react';
+
+import { Card, CardTitle } from '@/components/ui/card';
+import useTracksQuery from '@/features/tracks/hooks/queries/use-tracks-query';
+import { MAX_TRACKS_PER_PAGE } from '@/features/tracks/lib/constants';
 
 const TrackCard = lazy(() => import('@/features/tracks/components/track-card'));
 const TrackCardSkeleton = lazy(

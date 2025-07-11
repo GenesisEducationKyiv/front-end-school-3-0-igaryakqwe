@@ -1,8 +1,9 @@
+import { memo } from 'react';
+
 import { Badge } from '@/components/ui/badge';
 import { CardDescription, CardTitle } from '@/components/ui/card';
-import { Track } from '@/types/entities/track';
-import { memo } from 'react';
 import useTrackStore from '@/features/tracks/store/use-track.store';
+import { Track } from '@/types/entities/track';
 
 interface TrackInfoProps {
   track: Track;

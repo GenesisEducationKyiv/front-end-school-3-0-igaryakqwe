@@ -1,11 +1,11 @@
-import { useQueryStates } from 'nuqs';
 import * as Belt from '@mobily/ts-belt';
+import { useQueryStates } from 'nuqs';
 
 import {
   MAX_TRACKS_PER_PAGE,
   SEARCH_PARAMS_SCHEMA,
-} from '@/features/tracks/lib/constants.ts';
-import { SortOrder, SortValue } from '@/types/entities/track.ts';
+} from '@/features/tracks/lib/constants';
+import { SortOrder, SortValue } from '@/types/entities/track';
 import { pipeSearchParam } from '@/utils/search-params.utils';
 
 const useTracksSearch = () => {

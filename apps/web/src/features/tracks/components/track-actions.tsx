@@ -1,12 +1,13 @@
-import TrackDialog from '@/features/tracks/components/track-dialog';
-import { Track } from '@/types/entities/track';
-import { Button } from '@/components/ui/button';
-import ConfirmationDialog from '@/components/confirmation-dialog';
 import { EditIcon, Trash2Icon } from 'lucide-react';
-import useDeleteTrackMutation from '@/features/tracks/hooks/mutations/use-delete-track-mutation';
 import { memo } from 'react';
 
-interface TrackActionsProps {
+import ConfirmationDialog from '@/components/confirmation-dialog';
+import { Button } from '@/components/ui/button';
+import TrackDialog from '@/features/tracks/components/track-dialog';
+import useDeleteTrackMutation from '@/features/tracks/hooks/mutations/use-delete-track-mutation';
+import { Track } from '@/types/entities/track';
+
+interface TrackActionsProps { 
   track: Track;
 }
 

@@ -1,10 +1,11 @@
-import { Checkbox } from '@/components/ui/checkbox';
-import { Track } from '@/types/entities/track';
-import useTracksStore from '@/features/tracks/store/use-tracks.store';
 import { memo } from 'react';
 
+import { Checkbox } from '@/components/ui/checkbox';
+import useTracksStore from '@/features/tracks/store/use-tracks.store';
+import { Track } from '@/types/entities/track';
+
 interface TrackSelectorProps {
-  track: Track;
+  track: Track; 
 }
 
 const TrackSelector = ({ track }: TrackSelectorProps) => {

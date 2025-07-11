@@ -1,9 +1,10 @@
-import { setupServer } from 'msw/node';
 import { http, HttpResponse } from 'msw';
+import { setupServer } from 'msw/node';
+
 import { API_URL } from '../../src/constants/global';
-import { tracksMock, metaMock, genresMock } from './tracks';
 import { CreateTrackDto } from '../../src/features/tracks/api/dto/tracks.dto';
 import { createSlug } from '../../src/utils/string.utils';
+import { genresMock,metaMock, tracksMock } from './tracks';
 
 const handlers = [
   http.get(`${API_URL}/tracks`, () =>

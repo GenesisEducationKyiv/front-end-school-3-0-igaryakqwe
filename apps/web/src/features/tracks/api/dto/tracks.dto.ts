@@ -1,5 +1,6 @@
-import { SortOrder, SortValue } from '@/types/entities/track';
 import { z } from 'zod';
+
+import { SortOrder, SortValue } from '@/types/entities/track';
 
 export const createTrackDto = z.object({
   title: z.string().min(1, { message: 'Title is required' }),

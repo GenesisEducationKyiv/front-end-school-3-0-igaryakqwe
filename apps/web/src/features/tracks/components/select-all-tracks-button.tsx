@@ -1,6 +1,6 @@
 import { CheckCheckIcon, SquareCheckIcon } from 'lucide-react';
 
-import { Button } from '@/components/ui/button.tsx';
+import { Button } from '@/components/ui/button';
 import useTracksQuery from '@/features/tracks/hooks/queries/use-tracks-query';
 import useTracksStore from '@/features/tracks/store/use-tracks.store';
 
