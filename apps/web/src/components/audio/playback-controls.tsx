@@ -27,15 +27,15 @@ const PlaybackControls = memo(
 
         <Button
           onClick={onTogglePlay}
-          variant="default"
+          variant="secondary"
           size="icon"
           className="h-8 w-8 rounded-full shadow-md"
           data-testid={isPlaying ? `pause-button-${id}` : `play-button-${id}`}
         >
           {isPlaying ? (
-            <Pause className="h-5 w-5" />
+            <Pause className="h-4 w-4" />
           ) : (
-            <Play className="h-5 w-5 ml-[0.5px]" />
+            <Play className="h-4 w-4 ml-0.5" />
           )}
         </Button>
 

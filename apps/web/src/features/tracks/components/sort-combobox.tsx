@@ -44,7 +44,7 @@ const SortCombobox = () => {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between"
+          className="w-full justify-between bg-input/30"
         >
           {getSortValue(sort)}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -59,8 +59,7 @@ const SortCombobox = () => {
                   key={sortValue}
                   value={sortValue}
                   className={cn(
-                    sort === sortValue &&
-                      'font-semibold bg-gray-100 dark:neutral-800'
+                    sort === sortValue && 'font-semibold bg-accent'
                   )}
                   onSelect={() => handleSelect(sortValue)}
                 >

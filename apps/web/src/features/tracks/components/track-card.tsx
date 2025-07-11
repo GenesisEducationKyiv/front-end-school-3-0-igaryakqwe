@@ -32,15 +32,18 @@ const TrackCard = memo(({ track }: TrackCardProps) => {
         'hover:shadow-lg transition-all duration-300 group animate-fade-in-up overflow-hidden',
         selectedTracks.some((id) => id === track.id) &&
           isSelectMode &&
-          'ring-2 ring-primary bg-primary-container/20'
+          'ring-3 ring-ring/30 border-ring bg-primary-container/20'
       )}
     >
       <TrackSelector track={track} />
+      {!isSelectMode && <TrackActions track={track} />}
 
-      <TrackImage
-        image={track.coverImage}
-        alt={`${track.title} by ${track.artist}`}
-      />
+      <div>
+        <TrackImage
+          image={track.coverImage}
+          alt={`${track.title} by ${track.artist}`}
+        />
+      </div>
 
       <CardContent className="p-4 h-full gap-2 flex flex-col justify-between">
         <TrackInfo track={track} />
@@ -51,8 +54,6 @@ const TrackCard = memo(({ track }: TrackCardProps) => {
           <TrackUpload trackId={track.id} />
         )}
       </CardContent>
-
-      <TrackActions track={track} />
     </Card>
   );
 });

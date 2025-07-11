@@ -99,7 +99,7 @@ const TrackAudio = ({ track }: TrackAudioProps) => {
     >
       <CardContent className="p-3">
         <div className="space-y-2">
-          <div className="flex items-center justify-between relative">
+          <div className="flex items-center justify-center relative">
             <PlaybackControls
               isPlaying={isThisPlaying}
               onTogglePlay={handleTogglePlay}
@@ -109,7 +109,7 @@ const TrackAudio = ({ track }: TrackAudioProps) => {
             <Button
               variant="ghost"
               size="icon"
-              className="text-slate-500 hover:text-red-500 transition-colors"
+              className="absolute right-2 text-slate-500 hover:text-red-500 transition-colors"
               onClick={handleRemoveTrack}
             >
               {isRemoving ? (
