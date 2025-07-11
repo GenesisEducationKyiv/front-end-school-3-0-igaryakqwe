@@ -18,22 +18,26 @@ interface TrackImage {
 
 const TrackImage = ({ image, alt, className }: TrackImage) => {
   return (
-    <div className={cn('aspect-square w-full p-6', className)}>
-      <Avatar className="w-full h-full rounded-lg">
+    <div>
+      <Avatar
+        className={cn('w-full h-full rounded-none aspect-square', className)}
+      >
         {image && (
           <AvatarImage
             src={image ?? undefined}
             alt={alt}
-            className="object-cover w-full h-full rounded-lg"
+            className="object-cover w-full h-full"
           />
         )}
         <AvatarFallback>
-          <div className="w-full h-full grid place-items-center bg-gray-100 dark:bg-neutral-800 rounded-lg">
-            <img
-              src={MUSIC_ICON}
-              alt={alt}
-              className={'object-cover w-1/3 h-auto'}
-            />
+          <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 rounded-none">
+            <div className="w-full h-full grid place-items-center bg-gradient-to-br from-blue-400 via-purple-500 to-pink-400 opacity-80">
+              <img
+                src={MUSIC_ICON}
+                alt={alt}
+                className={'object-cover opacity-80 w-1/3 h-auto'}
+              />
+            </div>
           </div>
         </AvatarFallback>
       </Avatar>

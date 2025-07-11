@@ -7,7 +7,7 @@ interface TimeDisplayProps {
 }
 
 const TimeDisplay = memo(({ time }: TimeDisplayProps) => (
-  <span className="text-xs font-mono w-12 text-slate-500">
+  <span className="text-xs font-mono w-fit text-slate-500 m-0">
     {formatTime(time)}
   </span>
 ));

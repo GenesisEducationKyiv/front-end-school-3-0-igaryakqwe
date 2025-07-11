@@ -18,29 +18,32 @@ const TrackInfo = memo(({ track }: TrackInfoProps) => {
       : track.title;
 
   return (
-    <div className="mb-4">
+    <div className="space-y-2">
       <CardTitle
         data-testid={`track-item-${track.id}-title`}
-        className="text-xl truncate text-center"
+        className="font-semibold text-foreground truncate text-lg mb-0"
       >
         {trackTitle}
       </CardTitle>
-      <CardDescription className="text-center text-muted-foreground">
-        <p data-testid={`track-item-${track.id}-album`} className="truncate">
-          {track.album}
-        </p>
-        <p data-testid={`track-item-${track.id}-artist`} className="truncate">
-          By {track.artist}
-        </p>
+      <CardDescription className="text-sm text-muted-foreground">
+        {track.album && (
+          <p data-testid={`track-item-${track.id}-album`} className="truncate">
+            {track.album}
+          </p>
+        )}
+        {track.artist && (
+          <p data-testid={`track-item-${track.id}-artist`} className="truncate">
+            By {track.artist}
+          </p>
+        )}
       </CardDescription>
 
-      <div className="flex flex-wrap items-center justify-center gap-1 mt-2">
-        {track.genres.map((genre, index) => (
+      <div className="flex flex-wrap gap-1">
+        {track.genres.slice(0, 3).map((genre) => (
           <Badge
-            data-testid={`genre-${genre}`}
-            key={index}
+            key={genre}
             variant="secondary"
-            className="text-xs"
+            className="text-xs px-2 py-1 rounded-full"
           >
             {genre}
           </Badge>

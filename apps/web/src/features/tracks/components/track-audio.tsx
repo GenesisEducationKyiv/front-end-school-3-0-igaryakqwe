@@ -9,7 +9,7 @@ import useRemoveTrackMutation from '@/features/tracks/hooks/mutations/use-remove
 import useTrackAudio from '@/features/tracks/hooks/use-track-audio';
 import { getAudioFile } from '@/features/tracks/lib/utils';
 import useAudioStore from '@/store/use-audio-store';
-import type { Track } from '@/types/entities/track.ts';
+import type { Track } from '@/types/entities/track';
 
 interface TrackAudioProps {
   track: Track;
@@ -95,11 +95,11 @@ const TrackAudio = ({ track }: TrackAudioProps) => {
   return (
     <Card
       data-testid={`track-audio-${track.id}`}
-      className="w-full p-0 bg-accent/20 shadow-md"
+      className="w-full p-0 bg-accent/20 shadow-md rounded-sm"
     >
-      <CardContent className="p-4">
+      <CardContent className="p-3">
         <div className="space-y-2">
-          <div className="flex items-center justify-center relative">
+          <div className="flex items-center justify-between relative">
             <PlaybackControls
               isPlaying={isThisPlaying}
               onTogglePlay={handleTogglePlay}
@@ -109,7 +109,7 @@ const TrackAudio = ({ track }: TrackAudioProps) => {
             <Button
               variant="ghost"
               size="icon"
-              className="absolute right-0 text-slate-500 hover:text-red-500 transition-colors"
+              className="text-slate-500 hover:text-red-500 transition-colors"
               onClick={handleRemoveTrack}
             >
               {isRemoving ? (

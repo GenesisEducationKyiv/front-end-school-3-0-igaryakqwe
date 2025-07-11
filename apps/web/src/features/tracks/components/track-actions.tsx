@@ -7,7 +7,7 @@ import TrackDialog from '@/features/tracks/components/track-dialog';
 import useDeleteTrackMutation from '@/features/tracks/hooks/mutations/use-delete-track-mutation';
 import { Track } from '@/types/entities/track';
 
-interface TrackActionsProps { 
+interface TrackActionsProps {
   track: Track;
 }
 
@@ -19,16 +19,16 @@ const TrackActions = ({ track }: TrackActionsProps) => {
   };
 
   return (
-    <div className="flex gap-2 absolute top-2 right-2 z-10">
+    <div className="flex gap-2 absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
       <TrackDialog track={track} isEdit>
         <Button
           data-testid={`edit-track-${track.id}`}
           variant="ghost"
           size="icon"
-          className="bg-background/80 backdrop-blur-sm hover:bg-background/90"
+          className="bg-background/80 size-8 backdrop-blur-sm hover:bg-background/90"
           aria-label="Edit track"
         >
-          <EditIcon className="h-4 w-4" />
+          <EditIcon className="h-3 w-3" />
         </Button>
       </TrackDialog>
       <ConfirmationDialog
@@ -41,8 +41,9 @@ const TrackActions = ({ track }: TrackActionsProps) => {
           data-testid={`delete-track-${track.id}`}
           variant="destructive"
           size="icon"
+          className="size-8"
         >
-          <Trash2Icon className="h-4 w-4 text-white" />
+          <Trash2Icon className="h-3 w-3 text-white" />
         </Button>
       </ConfirmationDialog>
     </div>
