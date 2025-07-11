@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, chore/build-setup-optimization]
+    branches: [main]
   pull_request:
-    branches: [main, chore/build-setup-optimization]
+    branches: [main]
 
 env:
   NODE_VERSION: 23
