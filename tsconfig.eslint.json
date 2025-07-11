@@ -1,0 +1,9 @@
+{
+  "include": [
+    "apps/web/**/*.ts",
+    "apps/web/**/*.tsx",
+    "apps/api/**/*.ts",
+    "apps/api/**/*.tsx"
+  ],
+  "exclude": ["node_modules", "dist"]
+}
