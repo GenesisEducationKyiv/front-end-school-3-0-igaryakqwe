@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react';
 
 import { Card, CardTitle } from '@/components/ui/card';
-import useTracksQuery from '@/features/tracks/hooks/use-tracks-query';
+import useTracksQuery from '@/features/tracks/hooks/queries/use-tracks-query';
 import { MAX_TRACKS_PER_PAGE } from '@/features/tracks/lib/constants';
 import { getTrackImage } from '@/features/tracks/lib/utils';
 
