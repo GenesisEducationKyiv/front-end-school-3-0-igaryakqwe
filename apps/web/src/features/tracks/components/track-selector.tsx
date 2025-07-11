@@ -5,7 +5,7 @@ import useTracksStore from '@/features/tracks/store/use-tracks.store';
 import { Track } from '@/types/entities/track';
 
 interface TrackSelectorProps {
-  track: Track; 
+  track: Track;
 }
 
 const TrackSelector = ({ track }: TrackSelectorProps) => {
@@ -28,7 +28,7 @@ const TrackSelector = ({ track }: TrackSelectorProps) => {
       data-testid={`track-checkbox-${track.id}`}
       checked={isSelected}
       onCheckedChange={handleSelect}
-      className="size-5 cursor-pointer absolute left-4 top-4 z-10 bg-white hover:scale-125 transition-all"
+      className="size-4 cursor-pointer absolute left-4 top-4 z-10 bg-white hover:scale-125 transition-all"
     />
   );
 };

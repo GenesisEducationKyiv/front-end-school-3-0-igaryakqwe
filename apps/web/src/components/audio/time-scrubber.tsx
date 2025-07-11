@@ -23,7 +23,7 @@ const TimeScrubber = memo(
     return (
       <div className="max-w-[500px] flex items-center space-x-2 w-full">
         <TimeDisplay time={currentTime} />
-        <div className="relative flex-1">
+        <div className="relative flex-1 mx-2">
           {showWaveform && (
             <WaveformVisualizer
               currentTime={currentTime}

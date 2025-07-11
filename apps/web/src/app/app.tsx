@@ -4,7 +4,7 @@ import TracksPage from '@/features/tracks/tracks.page';
 
 const App = () => {
   return (
-    <ScrollArea className="h-screen">
+    <ScrollArea className="h-[100dvh] flex flex-col">
       <Header />
       <TracksPage />
     </ScrollArea>
