@@ -44,6 +44,7 @@ const TrackInfo = memo(({ track }: TrackInfoProps) => {
             key={genre}
             variant="secondary"
             className="text-xs px-2 py-1 rounded-full"
+            data-testid={`genre-${genre}`}
           >
             {genre}
           </Badge>
