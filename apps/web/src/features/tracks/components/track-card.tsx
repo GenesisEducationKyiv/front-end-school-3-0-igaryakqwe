@@ -19,20 +19,22 @@ const TrackUpload = lazy(
 
 interface TrackCardProps {
   track: Track;
+  className?: string;
 }
 
-const TrackCard = memo(({ track }: TrackCardProps) => {
+const TrackCard = memo(({ track, className }: TrackCardProps) => {
   const selectedTracks = useTracksStore((state) => state.selectedTracksIds);
   const isSelectMode = useTracksStore((state) => state.isSelectMode);
   return (
     <Card
       data-testid={`track-item-${track.id}`}
       className={cn(
-        'w-full relative p-0 gap-0 max-w-md mx-auto overflow-hidden',
+        'min-w-[270px] w-full relative p-0 gap-0 max-w-md mx-auto overflow-hidden',
         'hover:shadow-lg transition-all duration-300 group animate-fade-in-up overflow-hidden',
         selectedTracks.some((id) => id === track.id) &&
           isSelectMode &&
-          'ring-3 ring-ring/30 border-ring bg-primary-container/20'
+          'ring-3 ring-ring/30 border-ring bg-primary-container/20',
+        className
       )}
     >
       <TrackSelector track={track} />
