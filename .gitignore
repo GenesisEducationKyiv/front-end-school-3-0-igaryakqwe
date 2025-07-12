@@ -32,3 +32,6 @@ dist-ssr
 **/blob-report/
 **/playwright/.cache/
 **/test-results.json
+
+*storybook.log
+storybook-static

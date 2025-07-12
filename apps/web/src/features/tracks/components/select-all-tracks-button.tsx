@@ -1,7 +1,8 @@
-import { CheckCheckIcon, SquareCheckIcon } from 'lucide-react';
+import { CheckCheckIcon, CheckSquareIcon, Square } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import useTracksQuery from '@/features/tracks/hooks/queries/use-tracks-query';
+import { MAX_TRACKS_PER_PAGE } from '@/features/tracks/lib/constants';
 import useTracksStore from '@/features/tracks/store/use-tracks.store';
 
 const SelectAllTracksButton = () => {
@@ -32,9 +33,15 @@ const SelectAllTracksButton = () => {
   return (
     <div className="flex items-center gap-2">
       <Button
-        icon={<SquareCheckIcon />}
+        icon={
+          isSelectMode ? (
+            <CheckSquareIcon className="h-4 w-4 mr-2" />
+          ) : (
+            <Square className="h-4 w-4 mr-2" />
+          )
+        }
         onClick={handleSelectMode}
-        variant="outline"
+        variant={isSelectMode ? 'default' : 'outline'}
         data-testid="select-mode-toggle"
       >
         Select mode
@@ -44,8 +51,11 @@ const SelectAllTracksButton = () => {
           data-testid="select-all"
           onClick={handleSelectAll}
           icon={<CheckCheckIcon />}
+          variant="outline"
         >
-          Select all
+          {selectedTracksIds.length >= MAX_TRACKS_PER_PAGE
+            ? 'Select none'
+            : 'Select all'}
         </Button>
       )}
     </div>

@@ -14,7 +14,7 @@ const TracksList = () => {
 
   if (!tracks.length && !isLoading) {
     return (
-      <Card className="w-full grid place-items-center h-full">
+      <Card className="w-full h-full flex-1 grid place-items-center">
         <CardTitle>No tracks found</CardTitle>
       </Card>
     );
