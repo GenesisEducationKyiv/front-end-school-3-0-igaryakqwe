@@ -67,7 +67,10 @@ const GenresCombobox = () => {
             <CommandGroup>
               <CommandItem
                 value=""
-                className={cn(genre === '' && 'font-semibold bg-accent')}
+                className={cn(
+                  'hover:bg-accent',
+                  genre === '' && 'font-semibold bg-accent'
+                )}
                 onSelect={async (currentValue) => {
                   await setGenre(currentValue);
                   setOpen(false);
