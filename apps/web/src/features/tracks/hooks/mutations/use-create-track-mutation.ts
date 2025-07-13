@@ -40,6 +40,7 @@ const useCreateTrackMutation = () => {
       if (context?.previousTracks) {
         queryClient.setQueryData(['tracks'], context.previousTracks);
       }
+      console.log(error);
       toast.error(error?.message || 'Failed to create track');
     },
     onSettled: () => {
