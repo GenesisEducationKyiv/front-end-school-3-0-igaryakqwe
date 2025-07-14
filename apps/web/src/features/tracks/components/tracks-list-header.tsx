@@ -1,5 +1,6 @@
+'use client';
+
 import { PlusIcon } from 'lucide-react';
-import { lazy } from 'react';
 
 import { Button } from '@/components/ui/button';
 import SelectAllTracksButton from '@/features/tracks/components/select-all-tracks-button';
@@ -7,9 +8,11 @@ import TrackDialog from '@/features/tracks/components/track-dialog';
 import useTracksStore from '@/features/tracks/store/use-tracks.store';
 
 import useTracksQuery from '../hooks/queries/use-tracks-query';
+import dynamic from 'next/dynamic';
 
-const DeleteManyTracksDialog = lazy(
-  () => import('@/features/tracks/components/delete-many-tracks-dialog')
+const DeleteManyTracksDialog = dynamic(
+  () => import('@/features/tracks/components/delete-many-tracks-dialog'),
+  { ssr: false }
 );
 
 const TracksListHeader = () => {

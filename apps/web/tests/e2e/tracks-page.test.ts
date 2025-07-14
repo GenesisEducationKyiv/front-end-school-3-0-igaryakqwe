@@ -4,7 +4,7 @@ import { test } from '../fixtures/test-tracks-fixture';
 
 test.describe('Tracks Page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/tracks');
   });
 
   test('should have title and icon', async ({ page }) => {

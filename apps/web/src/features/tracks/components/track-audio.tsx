@@ -1,3 +1,4 @@
+'use client';
 import { Loader2Icon, Trash2Icon } from 'lucide-react';
 import { memo, useEffect, useState } from 'react';
 

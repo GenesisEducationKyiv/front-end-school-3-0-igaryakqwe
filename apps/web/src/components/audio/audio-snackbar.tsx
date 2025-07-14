@@ -8,7 +8,7 @@ import { useActiveTrackStream } from '@/features/tracks/hooks/use-active-track.s
 import useAudioController from '@/features/tracks/hooks/use-audio-controller';
 import { getAudioFile } from '@/features/tracks/lib/utils';
 
-import TrackImage from './track-image';
+import TrackImage from '../../features/tracks/components/track-image';
 
 const AudioSnackbar = () => {
   const [visible, setVisible] = useState(false);

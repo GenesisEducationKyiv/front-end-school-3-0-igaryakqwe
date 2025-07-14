@@ -1,18 +1,26 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { NuqsAdapter } from 'nuqs/adapters/react';
+'use client';
+
+import { QueryClientProvider } from '@tanstack/react-query';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { PropsWithChildren } from 'react';
 
-import { ThemeProvider } from './theme-provider';
-
-const queryClient = new QueryClient();
+import { ThemeProvider } from '@/providers/theme-provider';
+import AudioProvider from '@/providers/audio-provider';
+import { Toaster } from '@/components/ui/sonner';
+import { getQueryClient } from '@/lib/query-client';
 
 const Providers = ({ children }: PropsWithChildren) => {
+  const queryClient = getQueryClient();
+
   return (
-    <ThemeProvider>
-      <QueryClientProvider client={queryClient}>
-        <NuqsAdapter>{children}</NuqsAdapter>
-      </QueryClientProvider>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <NuqsAdapter>
+        <ThemeProvider>
+          <AudioProvider>{children}</AudioProvider>
+          <Toaster richColors />
+        </ThemeProvider>
+      </NuqsAdapter>
+    </QueryClientProvider>
   );
 };
 

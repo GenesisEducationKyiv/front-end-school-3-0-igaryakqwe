@@ -1,4 +1,5 @@
-import { lazy, PropsWithChildren, useState } from 'react';
+'use client';
+import { PropsWithChildren, useState } from 'react';
 
 import {
   Dialog,
@@ -7,8 +8,12 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Track } from '@/types/entities/track';
+import dynamic from 'next/dynamic';
 
-const TrackForm = lazy(() => import('@/features/tracks/components/track-form'));
+const TrackForm = dynamic(
+  () => import('@/features/tracks/components/track-form'),
+  { ssr: false }
+);
 
 interface TaskDialogProps {
   isEdit?: boolean;

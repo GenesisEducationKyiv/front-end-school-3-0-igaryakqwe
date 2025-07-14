@@ -1,36 +1,22 @@
-import { lazy } from 'react';
+'use client';
 
 import { Card, CardTitle } from '@/components/ui/card';
-import useTracksQuery from '@/features/tracks/hooks/queries/use-tracks-query';
-import { MAX_TRACKS_PER_PAGE } from '@/features/tracks/lib/constants';
+import dynamic from 'next/dynamic';
+import TrackImage from '@/features/tracks/components/track-image';
+import useTracksQuery from '../hooks/queries/use-tracks-query';
 
-const TrackCard = lazy(() => import('@/features/tracks/components/track-card'));
-const TrackCardSkeleton = lazy(
-  () => import('@/features/tracks/components/track-card-skeleton')
+const TrackCard = dynamic(
+  () => import('@/features/tracks/components/track-card')
 );
 
 const TracksList = () => {
-  const { tracks, isLoading } = useTracksQuery();
+  const { tracks } = useTracksQuery();
 
-  if (!tracks.length && !isLoading) {
+  if (!tracks) {
     return (
       <Card className="w-full h-full flex-1 grid place-items-center">
         <CardTitle>No tracks found</CardTitle>
       </Card>
-    );
-  }
-
-  if (isLoading) {
-    return (
-      <div
-        data-testid="loading-tracks"
-        data-loading="true"
-        className="grid w-full grid-cols-1 gap-4 lg:grid-cols-3 sm:grid-cols-2"
-      >
-        {Array.from({ length: MAX_TRACKS_PER_PAGE }).map((_, index) => (
-          <TrackCardSkeleton key={index} />
-        ))}
-      </div>
     );
   }
 
@@ -39,8 +25,15 @@ const TracksList = () => {
       data-testid="tracks-list"
       className="grid w-full grid-cols-1 gap-4 lg:grid-cols-3 sm:grid-cols-2"
     >
-      {tracks?.map((track) => (
-        <TrackCard track={track} key={track.id} />
+      {tracks?.map((track, index) => (
+        <TrackCard track={track} key={track.id}>
+          <TrackImage
+            isLCP={index < 1}
+            image={track.coverImage}
+            alt={`${track.title} by ${track.artist}`}
+            className="rounded-lg"
+          />
+        </TrackCard>
       ))}
     </div>
   );

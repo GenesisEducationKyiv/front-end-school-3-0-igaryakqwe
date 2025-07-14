@@ -1,28 +1,29 @@
-import { lazy, memo } from 'react';
+'use client';
+import { memo, PropsWithChildren } from 'react';
 
 import { Card, CardContent } from '@/components/ui/card';
 import TrackActions from '@/features/tracks/components/track-actions';
-import TrackImage from '@/features/tracks/components/track-image';
 import TrackInfo from '@/features/tracks/components/track-info';
 import TrackSelector from '@/features/tracks/components/track-selector';
 import { cn } from '@/lib/utils';
 import { Track } from '@/types/entities/track';
 
 import useTracksStore from '../store/use-tracks.store';
+import dynamic from 'next/dynamic';
 
-const TrackAudio = lazy(
+const TrackAudio = dynamic(
   () => import('@/features/tracks/components/track-audio')
 );
-const TrackUpload = lazy(
+const TrackUpload = dynamic(
   () => import('@/features/tracks/components/track-upload')
 );
 
-interface TrackCardProps {
+interface TrackCardProps extends PropsWithChildren {
   track: Track;
   className?: string;
 }
 
-const TrackCard = memo(({ track, className }: TrackCardProps) => {
+const TrackCard = memo(({ track, className, children }: TrackCardProps) => {
   const selectedTracks = useTracksStore((state) => state.selectedTracksIds);
   const isSelectMode = useTracksStore((state) => state.isSelectMode);
   return (
@@ -40,12 +41,7 @@ const TrackCard = memo(({ track, className }: TrackCardProps) => {
       <TrackSelector track={track} />
       {!isSelectMode && <TrackActions track={track} />}
 
-      <div>
-        <TrackImage
-          image={track.coverImage}
-          alt={`${track.title} by ${track.artist}`}
-        />
-      </div>
+      {children}
 
       <CardContent className="p-4 h-full gap-2 flex flex-col justify-between">
         <TrackInfo track={track} />
