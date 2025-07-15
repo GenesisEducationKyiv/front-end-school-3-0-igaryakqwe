@@ -1,4 +1,4 @@
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import { GetTracksQueryParams } from '@/features/tracks/api/dto/tracks.dto';
 import useTracksSearch from '@/features/tracks/hooks/use-tracks-search';
@@ -25,7 +25,7 @@ const useTracksQuery = () => {
     limit,
   };
 
-  const { data, isLoading, error } = useSuspenseQuery({
+  const { data, isFetching, error } = useQuery({
     ...tracksQueryOptions(params),
     select: (data) => {
       if (!data) return;
@@ -44,7 +44,7 @@ const useTracksQuery = () => {
   return {
     tracks: data?.data ?? [],
     meta: data?.meta,
-    isLoading,
+    isLoading: isFetching,
     error,
     currentPage,
     handlePageChange,

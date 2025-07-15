@@ -1,3 +1,6 @@
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+import { SearchParams } from 'nuqs/server';
+
 import {
   convertNullToUndefined,
   loadSearchParams,
@@ -5,8 +8,6 @@ import {
 } from '@/features/tracks/lib/utils';
 import TracksPage from '@/features/tracks/tracks.page';
 import { getQueryClient } from '@/lib/query-client';
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-import { SearchParams } from 'nuqs/server';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,7 +20,7 @@ const Tracks = async ({ searchParams }: TracksProps) => {
   const sanitizedParams = convertNullToUndefined(params);
   const queryClient = getQueryClient();
 
-  queryClient.prefetchQuery(tracksQueryOptions(sanitizedParams));
+  await queryClient.prefetchQuery(tracksQueryOptions(sanitizedParams));
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

@@ -74,8 +74,9 @@ const TrackForm = ({ onClose, isEdit, track }: CreateTrackFormProps) => {
       <div className="m-3 self-center">
         <TrackImage
           image={image}
-          className="size-48 rounded-sm"
+          className="size-48 rounded-lg"
           alt="Track image"
+          loader={({ src }) => src}
         />
       </div>
       <Input

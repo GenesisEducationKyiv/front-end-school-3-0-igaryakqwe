@@ -7,13 +7,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import TrackForm from '@/features/tracks/components/track-form';
 import { Track } from '@/types/entities/track';
-import dynamic from 'next/dynamic';
-
-const TrackForm = dynamic(
-  () => import('@/features/tracks/components/track-form'),
-  { ssr: false }
-);
 
 interface TaskDialogProps {
   isEdit?: boolean;

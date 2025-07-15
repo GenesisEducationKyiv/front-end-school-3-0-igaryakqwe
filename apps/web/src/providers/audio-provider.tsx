@@ -1,8 +1,9 @@
 'use client';
 
-import useAudioController from '@/features/tracks/hooks/use-audio-controller';
 import dynamic from 'next/dynamic';
 import { PropsWithChildren } from 'react';
+
+import useAudioController from '@/features/tracks/hooks/use-audio-controller';
 
 const AudioSnackbar = dynamic(
   () => import('@/components/audio/audio-snackbar'),

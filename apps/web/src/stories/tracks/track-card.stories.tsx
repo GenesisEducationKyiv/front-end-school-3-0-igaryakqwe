@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from '@storybook/nextjs';
 
 import TrackCard from '@/features/tracks/components/track-card';
 import Providers from '@/providers';

@@ -30,7 +30,7 @@ test.describe('Tracks Page', () => {
       const searchInput = page.getByTestId('search-input');
       await searchInput.fill('nonexistent track');
 
-      const emptyMessage = page.getByText('No tracks found');
+      const emptyMessage = page.getByTestId('empty-tracks-list');
       await expect(emptyMessage).toBeVisible();
     });
 

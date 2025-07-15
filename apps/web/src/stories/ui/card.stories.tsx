@@ -1,5 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import type { Meta, StoryObj } from '@storybook/nextjs';
 import { BellRing } from 'lucide-react';
+import { ClassAttributes, HTMLAttributes } from 'react';
+import { JSX } from 'react/jsx-runtime';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -10,8 +12,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { ClassAttributes, HTMLAttributes } from 'react';
-import { JSX } from 'react/jsx-runtime';
 
 const notifications = [
   {

@@ -4,8 +4,7 @@ import TracksFilters from '@/features/tracks/components/tracks-filters';
 import TracksList from '@/features/tracks/components/tracks-list';
 import TracksListHeader from '@/features/tracks/components/tracks-list-header';
 import TracksPagination from '@/features/tracks/components/tracks-pagination';
-import { MAX_TRACKS_PER_PAGE } from './lib/constants';
-import TrackCardSkeleton from './components/track-card-skeleton';
+import TracksSkeletonList from '@/features/tracks/components/tracks-skeleton-list';
 
 const TracksPage = () => {
   return (
@@ -16,19 +15,7 @@ const TracksPage = () => {
         <TracksFilters />
         <div className="flex w-full flex-col gap-4">
           <TracksListHeader />
-          <Suspense
-            fallback={
-              <div
-                data-testid="loading-tracks"
-                data-loading="true"
-                className="grid w-full grid-cols-1 gap-4 lg:grid-cols-3 sm:grid-cols-2"
-              >
-                {Array.from({ length: MAX_TRACKS_PER_PAGE }).map((_, index) => (
-                  <TrackCardSkeleton key={index} />
-                ))}
-              </div>
-            }
-          >
+          <Suspense fallback={<TracksSkeletonList />}>
             <TracksList />
           </Suspense>
           <TracksPagination />

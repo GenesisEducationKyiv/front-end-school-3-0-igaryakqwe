@@ -1,20 +1,30 @@
 'use client';
 
-import { Card, CardTitle } from '@/components/ui/card';
 import dynamic from 'next/dynamic';
+
+import { Card, CardTitle } from '@/components/ui/card';
 import TrackImage from '@/features/tracks/components/track-image';
+
 import useTracksQuery from '../hooks/queries/use-tracks-query';
+import TracksSkeletonList from './tracks-skeleton-list';
 
 const TrackCard = dynamic(
   () => import('@/features/tracks/components/track-card')
 );
 
 const TracksList = () => {
-  const { tracks } = useTracksQuery();
+  const { tracks, isLoading } = useTracksQuery();
 
-  if (!tracks) {
+  if (isLoading) {
+    return <TracksSkeletonList />;
+  }
+
+  if (!tracks.length) {
     return (
-      <Card className="w-full h-full flex-1 grid place-items-center">
+      <Card
+        data-testid="empty-tracks-list"
+        className="w-full h-full flex-1 grid place-items-center"
+      >
         <CardTitle>No tracks found</CardTitle>
       </Card>
     );
@@ -31,7 +41,6 @@ const TracksList = () => {
             isLCP={index < 1}
             image={track.coverImage}
             alt={`${track.title} by ${track.artist}`}
-            className="rounded-lg"
           />
         </TrackCard>
       ))}

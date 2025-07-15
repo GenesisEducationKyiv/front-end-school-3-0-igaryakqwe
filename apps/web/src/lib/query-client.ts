@@ -1,10 +1,11 @@
-import { QueryClient, isServer } from '@tanstack/react-query';
+import { isServer, QueryClient } from '@tanstack/react-query';
 
 const makeQueryClient = () => {
   return new QueryClient({
     defaultOptions: {
       queries: {
         staleTime: 60 * 1000,
+        gcTime: 60 * 1000,
       },
     },
   });

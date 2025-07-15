@@ -1,3 +1,6 @@
+import type { Meta, StoryObj } from '@storybook/nextjs';
+import type { CSSProperties, ReactNode } from 'react';
+
 import {
   Table,
   TableBody,
@@ -6,13 +9,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import type { CSSProperties, ReactNode } from 'react';
 
-type Typography = {
+interface Typography {
   name: string;
   value: string;
-};
+}
 
 const TypographyRow = ({
   value,

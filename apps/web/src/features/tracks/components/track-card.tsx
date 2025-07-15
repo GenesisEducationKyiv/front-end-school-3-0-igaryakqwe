@@ -1,4 +1,5 @@
 'use client';
+import dynamic from 'next/dynamic';
 import { memo, PropsWithChildren } from 'react';
 
 import { Card, CardContent } from '@/components/ui/card';
@@ -9,7 +10,6 @@ import { cn } from '@/lib/utils';
 import { Track } from '@/types/entities/track';
 
 import useTracksStore from '../store/use-tracks.store';
-import dynamic from 'next/dynamic';
 
 const TrackAudio = dynamic(
   () => import('@/features/tracks/components/track-audio')

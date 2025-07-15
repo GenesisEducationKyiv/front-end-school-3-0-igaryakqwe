@@ -1,5 +1,5 @@
-import { createLoader } from 'nuqs/server';
 import { queryOptions } from '@tanstack/react-query';
+import { createLoader } from 'nuqs/server';
 
 import { Option } from '@/components/ui/multiselect';
 import { API_URL } from '@/constants/global';
@@ -8,9 +8,9 @@ import {
   SORT_OPTIONS_MAPPER,
 } from '@/features/tracks/lib/constants';
 import { SortValue, Track } from '@/types/entities/track';
-import { getTracks } from '../api/tracks.api';
+
 import { GetTracksQueryParams } from '../api/dto/tracks.dto';
-import { object } from 'zod';
+import { getTracks } from '../api/tracks.api';
 
 export const loadSearchParams = createLoader(SEARCH_PARAMS_SCHEMA);
 

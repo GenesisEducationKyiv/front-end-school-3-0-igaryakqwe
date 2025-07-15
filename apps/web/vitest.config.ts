@@ -1,17 +1,23 @@
-import { defineConfig, mergeConfig } from 'vitest/config';
+import path from 'node:path';
 
-import viteConfig from './vite.config';
+import { defineConfig } from 'vitest/config';
 
-export default mergeConfig(
-  viteConfig,
-  defineConfig({
-    test: {
-      environment: 'jsdom',
-      globals: true,
-      include: [
-        '**/{unit,integration}/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
-      ],
-      setupFiles: ['./vitest.setup.ts'],
+export default defineConfig({
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    include: [
+      '**/{unit,integration}/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
+    ],
+    setupFiles: ['./vitest.setup.ts'],
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+      '@grpc-generated': path.resolve(
+        __dirname,
+        '../../packages/grpc-client/src/generated'
+      ),
     },
-  })
-);
+  },
+});

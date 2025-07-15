@@ -1,11 +1,12 @@
-import type { Metadata } from 'next';
 import '@/app/index.css';
-import { Inter } from 'next/font/google';
 
-import Providers from '@/providers';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import Header from '@/components/header';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 import { Suspense } from 'react';
+
+import Header from '@/components/header';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import Providers from '@/providers';
 
 const interSans = Inter({
   variable: '--font-geist-sans',

@@ -1,5 +1,6 @@
 'use client';
 import { LaptopMinimalIcon, Moon, MoonIcon, Sun, SunIcon } from 'lucide-react';
+import { useTheme } from 'next-themes';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -9,7 +10,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
-import { useTheme } from 'next-themes';
 
 interface ThemeItem {
   label: string;
