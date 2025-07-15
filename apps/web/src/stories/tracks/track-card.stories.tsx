@@ -6,7 +6,6 @@ import useTracksStore from '@/features/tracks/store/use-tracks.store';
 import Providers from '@/providers';
 import { Track } from '@/types/entities/track';
 
-// Mock track data
 const mockTrackWithAudio: Track = {
   id: '1',
   title: 'Bohemian Rhapsody',
@@ -61,7 +60,6 @@ const mockTrackMinimal: Track = {
   updatedAt: undefined,
 };
 
-// Wrapper component to control store state
 const TrackCardWrapper = ({
   track,
   isSelectMode = false,
@@ -74,7 +72,6 @@ const TrackCardWrapper = ({
   const { toggleSelectMode, setSelectedTracksIds } = useTracksStore();
 
   useEffect(() => {
-    // Set initial store state
     if (isSelectMode) {
       toggleSelectMode();
     }
