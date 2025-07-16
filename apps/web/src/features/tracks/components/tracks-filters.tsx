@@ -22,7 +22,7 @@ const TracksFilters = () => {
             value={config.value}
             placeholder={config.placeholder}
             onChange={config.onChange}
-            data-testId={config.testId}
+            data-testid={config.testId}
           />
         ))}
         <div>

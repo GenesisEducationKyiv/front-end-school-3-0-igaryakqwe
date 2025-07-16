@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 
-import { Card, CardTitle } from '@/components/ui/card';
+import EmptyTrackListCard from '@/features/tracks/components/empty-track-list-card';
 import TrackImage from '@/features/tracks/components/track-image';
 
 import useTracksQuery from '../hooks/queries/use-tracks-query';
@@ -15,19 +15,12 @@ const TrackCard = dynamic(
 const TracksList = () => {
   const { tracks, isLoading } = useTracksQuery();
 
-  if (isLoading) {
-    return <TracksSkeletonList />;
+  if (!tracks.length && !isLoading) {
+    return <EmptyTrackListCard />;
   }
 
-  if (!tracks.length) {
-    return (
-      <Card
-        data-testid="empty-tracks-list"
-        className="w-full h-full flex-1 grid place-items-center"
-      >
-        <CardTitle>No tracks found</CardTitle>
-      </Card>
-    );
+  if (isLoading) {
+    return <TracksSkeletonList />;
   }
 
   return (
@@ -35,7 +28,7 @@ const TracksList = () => {
       data-testid="tracks-list"
       className="grid w-full grid-cols-1 gap-4 lg:grid-cols-3 sm:grid-cols-2"
     >
-      {tracks?.map((track, index) => (
+      {tracks.map((track, index) => (
         <TrackCard track={track} key={track.id}>
           <TrackImage
             isLCP={index < 1}
