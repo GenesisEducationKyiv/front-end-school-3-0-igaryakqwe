@@ -27,10 +27,8 @@ export const createTrack = async (track: CreateTrackDto) => {
 
 export const getTrackBySlug = async (slug: string) => {
   try {
-    const { track } = await tracksClient.getTrack({
-      slug,
-    });
-    return handleGrpcResponse(track, TracksSchema);
+    const { track } = await tracksClient.getTrack({ slug });
+    return handleGrpcResponse(track, TrackSchema);
   } catch (error) {
     handleGrpcError(error);
   }

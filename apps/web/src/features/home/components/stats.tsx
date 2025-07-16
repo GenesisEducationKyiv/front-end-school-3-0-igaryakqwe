@@ -22,7 +22,7 @@ export function Stats() {
 
         <Card className="grid gap-0.5 divide-y *:py-8 *:text-center md:grid-cols-3 md:divide-x md:divide-y-0">
           {stats.map((stat) => (
-            <div>
+            <div key={stat.name}>
               <div className="text-foreground space-y-1 text-4xl font-bold">
                 {stat.value}
               </div>

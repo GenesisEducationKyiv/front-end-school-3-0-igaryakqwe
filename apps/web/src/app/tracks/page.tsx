@@ -9,8 +9,6 @@ import {
 import TracksPage from '@/features/tracks/tracks.page';
 import { getQueryClient } from '@/lib/query-client';
 
-export const dynamic = 'force-dynamic';
-
 interface TracksProps {
   searchParams: Promise<SearchParams>;
 }

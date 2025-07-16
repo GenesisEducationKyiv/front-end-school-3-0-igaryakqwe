@@ -1,17 +1,20 @@
-import { EditIcon, Trash2Icon } from 'lucide-react';
+import { EditIcon, SquareArrowOutUpRightIcon, Trash2Icon } from 'lucide-react';
 import { memo } from 'react';
 
 import ConfirmationDialog from '@/components/confirmation-dialog';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import TrackDialog from '@/features/tracks/components/track-dialog';
 import useDeleteTrackMutation from '@/features/tracks/hooks/mutations/use-delete-track-mutation';
 import { Track } from '@/types/entities/track';
+import Link from 'next/link';
+import { ROUTES } from '@/constants/routes';
 
 interface TrackActionsProps {
   track: Track;
 }
 
 const TrackActions = ({ track }: TrackActionsProps) => {
+  const trackLink = ROUTES.track.replace(':slug', track.slug);
   const { deleteTrack, isDeleting } = useDeleteTrackMutation();
 
   const handleDelete = () => {
@@ -20,6 +23,12 @@ const TrackActions = ({ track }: TrackActionsProps) => {
 
   return (
     <div className="flex gap-2 absolute top-2 right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
+      <Link
+        href={trackLink}
+        className={buttonVariants({ size: 'icon', variant: 'secondary' })}
+      >
+        <SquareArrowOutUpRightIcon className="w-3 h-3" />
+      </Link>
       <TrackDialog track={track} isEdit>
         <Button
           data-testid={`edit-track-${track.id}`}
