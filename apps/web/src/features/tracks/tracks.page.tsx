@@ -8,7 +8,7 @@ import TracksSkeletonList from '@/features/tracks/components/tracks-skeleton-lis
 
 const TracksPage = () => {
   return (
-    <main className="mx-auto flex-1 relative h-full flex flex-col space-y-4 p-3 max-w-7xl ">
+    <main className="mx-auto flex-1 relative h-full flex flex-col space-y-4 p-3 pt-5 max-w-7xl ">
       <h1 className="text-3xl font-bold">Tracks</h1>
 
       <div className="flex flex-col lg:flex-row gap-5">

@@ -5,7 +5,6 @@ import { Inter } from 'next/font/google';
 import { Suspense } from 'react';
 
 import Header from '@/components/header';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import Providers from '@/providers';
 
 const interSans = Inter({
@@ -23,13 +22,11 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${interSans.variable} antialiased`}>
+      <body className={`${interSans.variable} min-h-screen antialiased`}>
         <Suspense>
           <Providers>
-            <ScrollArea className="h-[100dvh] flex flex-col">
-              <Header />
-              {children}
-            </ScrollArea>
+            <Header />
+            {children}
           </Providers>
         </Suspense>
       </body>

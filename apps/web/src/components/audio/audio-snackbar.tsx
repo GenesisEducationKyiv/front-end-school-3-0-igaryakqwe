@@ -1,14 +1,10 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
-import PlaybackControls from '@/components/audio/playback-controls';
-import TimeScrubber from '@/components/audio/time-scrubber';
-import VolumeControl from '@/components/audio/volume-control';
+import AudioPlayer from '@/components/audio/audio-player';
 import { useActiveTrackStream } from '@/features/tracks/hooks/use-active-track.stream';
 import useAudioController from '@/features/tracks/hooks/use-audio-controller';
 import { getAudioFile } from '@/features/tracks/lib/utils';
-
-import TrackImage from '../../features/tracks/components/track-image';
 
 const AudioSnackbar = () => {
   const [visible, setVisible] = useState(false);
@@ -69,52 +65,28 @@ const AudioSnackbar = () => {
         {visible && (
           <motion.div
             data-testid={`audio-player-${currentStoreTrack?.id}`}
-            className="sticky max-w-5xl mx-auto bottom-5 mt-2 left-0 w-full z-50 rounded-lg p-3 bg-card text-card-foreground border shadow-sm"
+            className="sticky max-w-5xl mx-auto bottom-5 mt-5 left-0 w-full z-50 rounded-lg p-3 bg-card text-card-foreground border shadow-sm"
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
           >
-            <div className="flex justify-center lg:justify-between items-center flex-col lg:flex-row gap-5">
-              <div className="flex grow gap-2 items-center justify-between flex-col lg:flex-row">
-                <div className="flex gap-2">
-                  <TrackImage
-                    image={currentStoreTrack?.coverImage}
-                    alt={trackName}
-                    className="size-10 rounded-[10px]"
-                  />
-                  <div className="mb-2 text-center lg:text-start w-[200px]">
-                    <h4 className="text-sm font-medium truncate">
-                      {trackName}
-                    </h4>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">
-                      {trackArtist}
-                    </p>
-                  </div>
-                </div>
-
-                <PlaybackControls
-                  isPlaying={isPlaying}
-                  onTogglePlay={togglePlay}
-                  onPrevious={previous}
-                  onNext={next}
-                />
-              </div>
-
-              <TimeScrubber
-                currentTime={currentTime}
-                duration={duration}
-                onTimeChange={handleTimeChange}
-                showWaveform
-              />
-
-              <VolumeControl
-                volume={volume}
-                isMuted={isMuted}
-                onVolumeChange={handleVolumeChange}
-                onToggleMute={toggleMute}
-              />
-            </div>
+            <AudioPlayer
+              trackName={trackName}
+              trackArtist={trackArtist}
+              coverImage={currentStoreTrack?.coverImage ?? undefined}
+              isPlaying={isPlaying}
+              onTogglePlay={togglePlay}
+              onPrevious={previous}
+              onNext={next}
+              currentTime={currentTime}
+              duration={duration}
+              onTimeChange={handleTimeChange}
+              volume={volume}
+              isMuted={isMuted}
+              onVolumeChange={handleVolumeChange}
+              onToggleMute={toggleMute}
+            />
           </motion.div>
         )}
       </AnimatePresence>

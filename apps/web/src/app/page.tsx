@@ -1,5 +1,7 @@
+import HomePage from '@/features/home/home.page';
+
 const Home = () => {
-  return <div className="font-semibold">home</div>;
+  return <HomePage />;
 };
 
 export default Home;

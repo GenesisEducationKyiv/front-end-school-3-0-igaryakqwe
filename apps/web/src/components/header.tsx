@@ -1,5 +1,8 @@
+import Link from 'next/link';
+
 import Logo from '@/components/logo';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { ROUTES } from '@/constants/routes';
 import { cn } from '@/lib/utils';
 
 const Header = () => {
@@ -11,14 +14,14 @@ const Header = () => {
       <nav className={cn('w-full border-b transition-colors duration-150')}>
         <div className="mx-auto max-w-7xl px-6">
           <div className="relative flex flex-wrap items-center justify-center gap-6 py-3 lg:gap-0 lg:py-4">
-            <a
+            <Link
               data-testid="logo-link"
-              href="/"
+              href={ROUTES.home}
               aria-label="home"
               className="flex items-center space-x-2"
             >
               <Logo />
-            </a>
+            </Link>
             <ThemeToggle className="absolute right-0" />
           </div>
         </div>
