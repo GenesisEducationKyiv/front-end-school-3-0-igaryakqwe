@@ -22,7 +22,7 @@ const TrackSection = () => {
 
   return (
     <TrackCard className="w-[300px]" track={track}>
-      <TrackImage image={track.coverImage} alt={track.title} />
+      <TrackImage image={track.coverImage} alt={track.title} isLCP />
     </TrackCard>
   );
 };

@@ -60,6 +60,8 @@ pnpm run dev
 
 ## Infrastructure
 
+<img src="./docs/images/infrastructure.png" alt="Infrastructure" />
+
 - Monorepo managed with Turborepo, containing both frontend and backend apps.
 
 - Frontend is a Vite-based React app, using TanStack Query for data fetching, Zustand for state management, and shadcn/ui for UI components.
@@ -73,3 +75,49 @@ pnpm run dev
 - Development uses pnpm for package management, with scripts for dev, build, lint, and test.
 
 - Testing is set up for both frontend (Playwright, Vitest) and backend (Vitest).
+
+## Architecture
+
+### Front-end
+
+<img src="./docs/images/architecture.png" alt="Architecture" />
+
+Frontend architecture is based on the **Bulletproof React**. Application has shared layer with common components and hooks, features layer with feature-specific components and hooks, and app layer with page-specific components and hooks.
+
+- **app** - app layer with page-specific components and hooks
+- **components** - components folder with shared components
+- **config** - config folders contains config files (like env variables)
+- **constants** - constants folder contains constants (like routes, colors, etc)
+- **features** - features layer with feature-specific components and hooks
+- **hooks** - hooks folder with shared hooks
+- **lib** - lib folder with library related utils
+- **providers** - providers folder with shared providers
+- **store** - store folder with shared stores
+- **stories** - stories layer with component documentation
+- **types** - types folder with shared types
+- **utils** - utils folder with shared utils
+
+## Rendering strategy
+
+### Pages
+
+- `/` - RSC with Track card rendered on the client
+- `/tracks` - RSC with interactive elemented rendered on the client
+- `/tracks/:slug` - SSR with Track audio player rendered on the client
+
+### Pros
+
+- Fast initial load
+- Fast navigation
+- Fast page refresh
+
+### Cons
+
+- Hard to combine react query caching with SSR
+- Hard to implement optimistic UI updates with SSR
+
+## Impact
+
+- **UX** - Fast initial load, fast navigation, fast page refresh
+- **SEO** - Improved SEO for static pages and pages rendered on the server
+- **Performance** - Improved LCP, FCP, TTFB
