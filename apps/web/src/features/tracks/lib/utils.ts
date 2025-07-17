@@ -1,4 +1,5 @@
-import { createSerializer } from 'nuqs';
+import { queryOptions } from '@tanstack/react-query';
+import { createLoader } from 'nuqs/server';
 
 import { Option } from '@/components/ui/multiselect';
 import { API_URL } from '@/constants/global';
@@ -8,7 +9,10 @@ import {
 } from '@/features/tracks/lib/constants';
 import { SortValue, Track } from '@/types/entities/track';
 
-export const serialize = createSerializer(SEARCH_PARAMS_SCHEMA);
+import { GetTracksQueryParams } from '../api/dto/tracks.dto';
+import { getTracks } from '../api/tracks.api';
+
+export const loadSearchParams = createLoader(SEARCH_PARAMS_SCHEMA);
 
 export const filterTracks = (tracks: Track[], album?: string) => {
   if (!album) return tracks;
@@ -29,4 +33,17 @@ export const getSortValue = (value: SortValue) => {
 export const getAudioFile = (fileName?: string | null) => {
   if (!fileName) return;
   return `${API_URL}/files/${fileName}`;
+};
+
+export const convertNullToUndefined = <T extends object>(object: T) => {
+  return Object.fromEntries(
+    Object.entries(object).map(([k, v]) => [k, v === null ? undefined : v])
+  );
+};
+
+export const tracksQueryOptions = (params: GetTracksQueryParams) => {
+  return queryOptions({
+    queryKey: ['tracks', params],
+    queryFn: () => getTracks(params),
+  });
 };

@@ -1,10 +1,15 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import TrackImage from '@/features/tracks/components/track-image';
+import { cn } from '@/lib/utils';
 
-const TrackCardSkeleton = () => {
+interface TrackCardSkeletonProps {
+  className?: string;
+}
+
+const TrackCardSkeleton = ({ className }: TrackCardSkeletonProps) => {
   return (
-    <Card className="w-full p-0 gap-0 mx-auto overflow-hidden">
+    <Card className={cn('w-full p-0 gap-0 mx-auto overflow-hidden', className)}>
       <TrackImage />
 
       <CardContent className="p-4">

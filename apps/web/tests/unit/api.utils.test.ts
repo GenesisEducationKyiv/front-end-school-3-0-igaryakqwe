@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import { extractErrorMessage } from '../../src/utils/api.utils.ts';
 
 describe('extractErrorMessage', () => {

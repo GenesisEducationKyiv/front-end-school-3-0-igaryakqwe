@@ -1,46 +1,49 @@
-import { lazy } from 'react';
+import Image, { ImageLoader } from 'next/image';
 
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { MUSIC_ICON } from '@/constants/icons';
 import { cn } from '@/lib/utils';
 
-const AvatarImage = lazy(() =>
-  import('@/components/ui/avatar').then((module) => ({
-    default: module.AvatarImage,
-  }))
-);
-
 interface TrackImage {
+  isLCP?: boolean;
   image?: string | null;
   alt?: string;
   className?: string;
+  loader?: ImageLoader;
 }
 
-const TrackImage = ({ image, alt, className }: TrackImage) => {
+const TrackImage = ({
+  isLCP = false,
+  image,
+  alt,
+  className,
+  loader,
+}: TrackImage) => {
   return (
-    <div>
-      <Avatar
-        className={cn('w-full h-full rounded-none aspect-square', className)}
-      >
-        {image && (
-          <AvatarImage
-            src={image ?? undefined}
-            alt={alt}
-            className="object-cover w-full h-full"
-          />
-        )}
-        <AvatarFallback>
-          <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 rounded-none">
-            <div className="w-full h-full grid place-items-center bg-gradient-to-br from-blue-400 via-purple-500 to-pink-400 opacity-80">
-              <img
-                src={MUSIC_ICON}
-                alt={alt}
-                className={'object-cover opacity-80 w-1/3 h-auto'}
-              />
-            </div>
+    <div className={cn('w-full h-full aspect-square', className)}>
+      {image ? (
+        <Image
+          src={image ?? undefined}
+          alt={alt ?? ''}
+          className="object-cover w-full h-full"
+          loading={isLCP ? 'eager' : 'lazy'}
+          fetchPriority={isLCP ? 'high' : 'low'}
+          width={300}
+          height={300}
+          loader={loader}
+        />
+      ) : (
+        <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20">
+          <div className="w-full h-full grid place-items-center bg-gradient-to-br from-blue-400 via-purple-500 to-pink-400 opacity-80">
+            <Image
+              src={MUSIC_ICON}
+              alt={alt ?? ''}
+              className={'object-cover opacity-80 w-1/3 h-auto'}
+              width={50}
+              height={50}
+            />
           </div>
-        </AvatarFallback>
-      </Avatar>
+        </div>
+      )}
     </div>
   );
 };

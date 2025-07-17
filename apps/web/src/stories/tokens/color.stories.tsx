@@ -1,3 +1,5 @@
+import type { Meta, StoryObj } from '@storybook/nextjs';
+
 import {
   Table,
   TableBody,
@@ -7,12 +9,10 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-import type { Meta, StoryObj } from '@storybook/react-vite';
-
-type Swatch = {
+interface Swatch {
   name: string;
   colors: Record<string, string>;
-};
+}
 
 const SwatchList = ({ colors }: { colors: Record<string, string> }) => {
   return (

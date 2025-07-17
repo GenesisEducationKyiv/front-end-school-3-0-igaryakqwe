@@ -4,9 +4,10 @@ export const tracksMock = [
     title: 'Track 1',
     artist: 'Artist 1',
     album: 'Album 1',
-    genres: ['Rock', 'Genre 2'],
+    genres: ['Rock', 'Pop'],
     slug: 'track-1',
-    coverImage: 'https://cover-image-1.jpg',
+    coverImage:
+      'https://cdn.prod.website-files.com/62d84e447b4f9e7263d31e94/6399a4d27711a5ad2c9bf5cd_ben-sweet-2LowviVHZ-E-unsplash-1.jpeg',
     createdAt: '2021-01-01T00:00:00.000Z',
     updatedAt: '2021-01-01T00:00:00.000Z',
   },
@@ -15,9 +16,10 @@ export const tracksMock = [
     title: 'Track 2',
     artist: 'Artist 2',
     album: 'Album 2',
-    genres: ['Genre 3', 'Genre 4'],
+    genres: ['Hip Hop', 'Jazz'],
     slug: 'track-2',
-    coverImage: 'https://cover-image-2.jpg',
+    coverImage:
+      'https://cdn.prod.website-files.com/62d84e447b4f9e7263d31e94/6399a4d27711a5ad2c9bf5cd_ben-sweet-2LowviVHZ-E-unsplash-1.jpeg',
     createdAt: '2021-01-02T00:00:00.000Z',
     updatedAt: '2021-01-02T00:00:00.000Z',
   },
@@ -34,18 +36,18 @@ export const createTrackMock = {
   title: 'Track 1',
   artist: 'Artist 1',
   album: 'Album 1',
-  genres: ['Genre 1', 'Genre 2'],
+  genres: ['Rock', 'Pop'],
   coverImage:
-    'https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg',
+    'https://cdn.prod.website-files.com/62d84e447b4f9e7263d31e94/6399a4d27711a5ad2c9bf5cd_ben-sweet-2LowviVHZ-E-unsplash-1.jpeg',
 };
 
 export const updateTrackMock = {
   title: 'Track 2',
   artist: 'Artist 2',
   album: 'Album 2',
-  genres: ['Genre 3', 'Genre 4'],
+  genres: ['Hip Hop', 'Jazz'],
   coverImage:
-    'https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg',
+    'https://cdn.prod.website-files.com/62d84e447b4f9e7263d31e94/6399a4d27711a5ad2c9bf5cd_ben-sweet-2LowviVHZ-E-unsplash-1.jpeg',
 };
 
 export const genresMock = [

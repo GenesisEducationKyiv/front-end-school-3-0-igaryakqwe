@@ -1,6 +1,3 @@
-// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
-import storybook from "eslint-plugin-storybook";
-
 const { defineConfig } = require('eslint/config');
 
 const tsParser = require('@typescript-eslint/parser');
@@ -23,6 +20,7 @@ const compat = new FlatCompat({
 
 module.exports = defineConfig([
   {
+    ignores: ['**/dist/**/*', '**/build/**/*'],
     files: ['**/*.ts', '**/*.tsx'],
 
     languageOptions: {

@@ -1,10 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { GetTracksQueryParams } from '@/features/tracks/api/dto/tracks.dto';
-import { getTracks } from '@/features/tracks/api/tracks.api';
 import useTracksSearch from '@/features/tracks/hooks/use-tracks-search';
 import { MAX_TRACKS_PER_PAGE } from '@/features/tracks/lib/constants';
-import { filterTracks } from '@/features/tracks/lib/utils';
+import { filterTracks, tracksQueryOptions } from '@/features/tracks/lib/utils';
 import useDebounce from '@/hooks/use-debounce';
 import { usePagination } from '@/hooks/use-pagination';
 
@@ -26,9 +25,8 @@ const useTracksQuery = () => {
     limit,
   };
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['tracks', params],
-    queryFn: () => getTracks(params),
+  const { data, isFetching, error } = useQuery({
+    ...tracksQueryOptions(params),
     select: (data) => {
       if (!data) return;
       return {
@@ -46,7 +44,7 @@ const useTracksQuery = () => {
   return {
     tracks: data?.data ?? [],
     meta: data?.meta,
-    isLoading,
+    isLoading: isFetching,
     error,
     currentPage,
     handlePageChange,

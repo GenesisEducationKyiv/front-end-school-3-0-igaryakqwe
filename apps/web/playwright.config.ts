@@ -36,7 +36,7 @@ export default defineConfig({
       testMatch: '**/e2e/**/*.test.ts',
       use: {
         ...devices['Desktop Chrome'],
-        baseURL: 'http://localhost:4173',
+        baseURL: 'http://localhost:3000',
         screenshot: 'only-on-failure',
         video: 'retain-on-failure',
         trace: 'on-first-retry',
@@ -47,7 +47,7 @@ export default defineConfig({
       testMatch: '**/e2e/**/*.test.ts',
       use: {
         ...devices['iPhone 13'],
-        baseURL: 'http://localhost:4173',
+        baseURL: 'http://localhost:3000',
       },
     },
   ],
@@ -61,7 +61,7 @@ export default defineConfig({
 
   webServer: {
     command: 'pnpm build && pnpm start',
-    port: 4173,
+    port: 3000,
     reuseExistingServer: !process.env.CI,
     env: {
       VITE_API_URL: process.env.VITE_API_URL ?? 'http://localhost:8000',

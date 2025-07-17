@@ -5,7 +5,7 @@ import { TracksService } from '@grpc-generated/proto/tracks_pb';
 
 import { API_URL } from '@/constants/global';
 
-const transport = createConnectTransport({
+export const transport = createConnectTransport({
   baseUrl: API_URL,
 });
 

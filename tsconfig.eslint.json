@@ -3,7 +3,8 @@
     "apps/web/**/*.ts",
     "apps/web/**/*.tsx",
     "apps/api/**/*.ts",
-    "apps/api/**/*.tsx"
+    "apps/api/**/*.tsx",
+    "**/.storybook/**/*"
   ],
   "exclude": ["node_modules", "dist"]
 }

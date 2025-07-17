@@ -1,3 +1,5 @@
+'use client';
+
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -20,7 +22,7 @@ const TracksFilters = () => {
             value={config.value}
             placeholder={config.placeholder}
             onChange={config.onChange}
-            data-testId={config.testId}
+            data-testid={config.testId}
           />
         ))}
         <div>

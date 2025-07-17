@@ -1,3 +1,5 @@
+'use client';
+
 import PaginationControls from '@/components/pagination-controls';
 import useTracksQuery from '@/features/tracks/hooks/queries/use-tracks-query';
 

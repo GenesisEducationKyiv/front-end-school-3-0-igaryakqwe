@@ -1,4 +1,6 @@
+'use client';
 import { LaptopMinimalIcon, Moon, MoonIcon, Sun, SunIcon } from 'lucide-react';
+import { useTheme } from 'next-themes';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -8,12 +10,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
-import { Theme, useTheme } from '@/providers/theme-provider';
 
 interface ThemeItem {
   label: string;
   icon: React.ComponentType<React.ComponentProps<'svg'>>;
-  value: Theme;
+  value: string;
 }
 
 const THEME_ITEMS: ThemeItem[] = [

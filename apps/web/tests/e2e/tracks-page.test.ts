@@ -4,7 +4,7 @@ import { test } from '../fixtures/test-tracks-fixture';
 
 test.describe('Tracks Page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/tracks');
   });
 
   test('should have title and icon', async ({ page }) => {
@@ -30,7 +30,7 @@ test.describe('Tracks Page', () => {
       const searchInput = page.getByTestId('search-input');
       await searchInput.fill('nonexistent track');
 
-      const emptyMessage = page.getByText('No tracks found');
+      const emptyMessage = page.getByTestId('empty-tracks-list');
       await expect(emptyMessage).toBeVisible();
     });
 
@@ -96,19 +96,18 @@ test.describe('Tracks Page', () => {
       await expect(albumElement).toContainText(searchTerm);
     });
 
-    test('should filter tracks by genre', async ({ page }) => {
+    test('should filter tracks by genre', async ({ page, getTrack }) => {
+      const track = getTrack();
       await page.getByTestId('loading-tracks').waitFor({ state: 'hidden' });
 
       const genreFilter = page.getByTestId('filter-genre');
       await genreFilter.click();
 
-      const genreOptions = await page.getByTestId(/^command-option-/).all();
+      const genreOption = page.getByTestId(`command-option-${track.genres[0]}`);
 
-      const selectedGenre = await genreOptions[1].textContent();
-      const trimmedGenre = selectedGenre?.trim();
-      await genreOptions[1].click();
+      await genreOption.click();
 
-      const genreElement = page.getByTestId(`genre-${trimmedGenre}`).first();
+      const genreElement = page.getByTestId(`genre-${track.genres[0]}`).first();
       await expect(genreElement).toBeVisible();
     });
   });
