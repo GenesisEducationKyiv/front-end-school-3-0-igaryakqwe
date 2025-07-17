@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useEffect } from 'react';
 
 import TrackCard from '@/features/tracks/components/track-card';
-import useTracksStore from '@/features/tracks/store/use-tracks.store';
 import Providers from '@/providers';
 import { Track } from '@/types/entities/track';
 
@@ -60,50 +58,18 @@ const mockTrackMinimal: Track = {
   updatedAt: undefined,
 };
 
-const TrackCardWrapper = ({
-  track,
-  isSelectMode = false,
-  selectedTracksIds = [],
-}: {
-  track: Track;
-  isSelectMode?: boolean;
-  selectedTracksIds?: string[];
-}) => {
-  const { toggleSelectMode, setSelectedTracksIds } = useTracksStore();
-
-  useEffect(() => {
-    if (isSelectMode) {
-      toggleSelectMode();
-    }
-    if (selectedTracksIds.length > 0) {
-      setSelectedTracksIds(selectedTracksIds);
-    }
-  }, [isSelectMode, selectedTracksIds, toggleSelectMode, setSelectedTracksIds]);
-
-  return (
-    <Providers>
-      <TrackCard track={track} className="max-w-[280px]" />
-    </Providers>
-  );
-};
-
 const meta = {
   title: 'features/tracks/TrackCard',
-  component: TrackCardWrapper,
+  component: TrackCard,
   tags: ['autodocs'],
   argTypes: {
     track: {
       control: 'object',
       description: 'Track data object',
     },
-    isSelectMode: {
-      control: 'boolean',
-      description: 'Whether the tracks list is in select mode',
-    },
-    selectedTracksIds: {
-      control: 'object',
-      description: 'Array of selected track IDs',
-    },
+  },
+  args: {
+    className: 'w-[280px]',
   },
   parameters: {
     layout: 'centered',
@@ -114,7 +80,14 @@ const meta = {
       },
     },
   },
-} satisfies Meta<typeof TrackCardWrapper>;
+  decorators: [
+    (Story, { args }) => (
+      <Providers>
+        <Story {...args} />
+      </Providers>
+    ),
+  ],
+} satisfies Meta<typeof TrackCard>;
 
 export default meta;
 
