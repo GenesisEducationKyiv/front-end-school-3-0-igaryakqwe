@@ -56,8 +56,7 @@ export const ThemeToggle = ({ className }: ThemeToggleProps) => {
             key={item.value}
             className={cn(
               'cursor-pointer',
-              item.value === theme &&
-                'font-semibold bg-gray-100 dark:bg-neutral-800'
+              item.value === theme && 'font-semibold bg-accent'
             )}
             onSelect={() => setTheme(item.value)}
           >

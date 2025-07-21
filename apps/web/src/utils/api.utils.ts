@@ -47,7 +47,12 @@ export const handleGrpcResponse = <T>(
 
 export const handleGrpcError = (error: unknown): never => {
   if (error instanceof Error) {
-    throw new Error(error.message || 'gRPC request failed');
+    const message = extractErrorMessage(error.message);
+    throw new Error(message || 'gRPC request failed');
   }
   throw new Error('gRPC request failed with unknown error');
+};
+
+export const extractErrorMessage = (error: string): string => {
+  return error.replace(/^(\[[^\]]+\]\s*)+/, '').trim();
 };

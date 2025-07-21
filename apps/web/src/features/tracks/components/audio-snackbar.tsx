@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
+import TrackImage from '@/features/tracks/components/track-image';
 import PlaybackControls from '@/components/audio/playback-controls';
 import TimeScrubber from '@/components/audio/time-scrubber';
 import VolumeControl from '@/components/audio/volume-control';
@@ -67,7 +68,7 @@ const AudioSnackbar = () => {
         {visible && (
           <motion.div
             data-testid={`audio-player-${currentStoreTrack?.id}`}
-            className="sticky max-w-5xl mx-auto bottom-5 mt-2 left-0 w-full z-50 rounded-lg shadow-lg p-3 bg-accent border border-slate-200 dark:border-neutral-600 dark:bg-neutral-900"
+            className="sticky max-w-5xl mx-auto bottom-5 mt-2 left-0 w-full z-50 rounded-lg p-3 bg-card text-card-foreground border shadow-sm"
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
@@ -75,14 +76,22 @@ const AudioSnackbar = () => {
           >
             <div className="flex justify-center lg:justify-between items-center flex-col lg:flex-row gap-5">
               <div className="flex grow gap-2 items-center justify-between flex-col lg:flex-row">
-                <div className="mb-2 text-center lg:text-start w-[200px]">
-                  <h4 className="text-sm font-medium text-slate-900 dark:text-white truncate">
-                    {trackName}
-                  </h4>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
-                    {trackArtist}
-                  </p>
+                <div className="flex gap-2">
+                  <TrackImage
+                    image={currentStoreTrack?.coverImage}
+                    alt={trackName}
+                    className="size-10 rounded-[10px]"
+                  />
+                  <div className="mb-2 text-center lg:text-start w-[200px]">
+                    <h4 className="text-sm font-medium truncate">
+                      {trackName}
+                    </h4>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">
+                      {trackArtist}
+                    </p>
+                  </div>
                 </div>
+
                 <PlaybackControls
                   isPlaying={isPlaying}
                   onTogglePlay={togglePlay}

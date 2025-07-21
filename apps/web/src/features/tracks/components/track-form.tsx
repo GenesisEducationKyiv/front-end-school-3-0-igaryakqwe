@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import MultipleSelector, { Option } from '@/components/ui/multiselect';
-import { 
+import {
   CreateTrackDto,
   createTrackDto,
 } from '@/features/tracks/api/dto/tracks.dto';
@@ -69,10 +69,14 @@ const TrackForm = ({ onClose, isEdit, track }: CreateTrackFormProps) => {
     <form
       data-testid="track-form"
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-2 px-1"
+      className="flex flex-col gap-2 px-1 pb-1"
     >
-      <div className="w-64 self-center">
-        <TrackImage image={image} alt="Track image" />
+      <div className="m-3 self-center">
+        <TrackImage
+          image={image}
+          className="size-48 rounded-sm"
+          alt="Track image"
+        />
       </div>
       <Input
         id="cover-image"

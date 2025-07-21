@@ -39,10 +39,10 @@ const toastIcons = {
 };
 
 const toastStyles = {
-  info: 'bg-blue-100 border border-blue-100 text-info-foreground',
+  info: 'bg-blue-100 border border-blue-300 text-info-foreground',
   success: 'bg-green-100 border border-green-300 text-success-foreground',
   warning: 'bg-orange-100 border border-yellow-300 text-warning-foreground',
-  error: 'bg-red-100 border border-red-300 text-destructive-foreground',
+  error: 'bg-red-100 border border-red-300 text-destructive',
 } as const;
 
 const Toast = ({ id, title, description, type = 'info' }: ToastProps) => {
