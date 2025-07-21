@@ -1,3 +1,1 @@
-import musicIcon from '../assets/icons/music.svg';
-
-export const MUSIC_ICON = musicIcon;
+export const MUSIC_ICON = '/icons/music.svg';

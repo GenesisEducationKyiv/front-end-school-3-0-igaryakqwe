@@ -1,44 +1,36 @@
-import { lazy } from 'react';
+import { memo } from 'react';
 
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { MUSIC_ICON } from '@/constants/icons';
+import TrackImageFallback from '@/features/tracks/components/track-image-fallback';
 import { cn } from '@/lib/utils';
 
-const AvatarImage = lazy(() =>
-  import('@/components/ui/avatar').then((module) => ({
-    default: module.AvatarImage,
-  }))
-);
-
 interface TrackImage {
+  isLCP?: boolean;
   image?: string | null;
   alt?: string;
   className?: string;
 }
 
-const TrackImage = ({ image, alt, className }: TrackImage) => {
+const TrackImage = ({ isLCP = false, image, alt, className }: TrackImage) => {
   return (
-    <div className={cn('aspect-square w-full p-6', className)}>
-      <Avatar className="w-full h-full rounded-lg">
-        {image && (
-          <AvatarImage
-            src={image ?? undefined}
-            alt={alt}
-            className="object-cover w-full h-full rounded-lg"
-          />
-        )}
-        <AvatarFallback>
-          <div className="w-full h-full grid place-items-center bg-gray-100 dark:bg-neutral-800 rounded-lg">
-            <img
-              src={MUSIC_ICON}
-              alt={alt}
-              className={'object-cover w-1/3 h-auto'}
-            />
-          </div>
-        </AvatarFallback>
-      </Avatar>
+    <div
+      className={cn('aspect-square w-full p-6 h-full rounded-lg', className)}
+    >
+      {image ? (
+        <img
+          src={image}
+          alt={alt}
+          className="object-cover w-full h-full rounded-lg"
+          loading={isLCP ? 'eager' : 'lazy'}
+          fetchPriority={isLCP ? 'high' : 'low'}
+          width={300}
+          height={300}
+          decoding="sync"
+        />
+      ) : (
+        <TrackImageFallback alt={alt} isLCP={isLCP} />
+      )}
     </div>
   );
 };
 
-export default TrackImage;
+export default memo(TrackImage);

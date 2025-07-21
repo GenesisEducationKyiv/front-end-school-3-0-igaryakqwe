@@ -1,8 +1,7 @@
-import { lazy, memo } from 'react';
+import { lazy, memo, PropsWithChildren } from 'react';
 
 import { Card, CardContent } from '@/components/ui/card';
 import TrackActions from '@/features/tracks/components/track-actions';
-import TrackImage from '@/features/tracks/components/track-image';
 import TrackInfo from '@/features/tracks/components/track-info';
 import TrackSelector from '@/features/tracks/components/track-selector';
 import { Track } from '@/types/entities/track';
@@ -14,11 +13,11 @@ const TrackUpload = lazy(
   () => import('@/features/tracks/components/track-upload')
 );
 
-interface TrackCardProps {
+interface TrackCardProps extends PropsWithChildren {
   track: Track;
 }
 
-const TrackCard = memo(({ track }: TrackCardProps) => {
+const TrackCard = memo(({ track, children }: TrackCardProps) => {
   return (
     <Card
       data-testid={`track-item-${track.id}`}
@@ -26,11 +25,7 @@ const TrackCard = memo(({ track }: TrackCardProps) => {
     >
       <TrackSelector track={track} />
 
-      <TrackImage
-        image={track.coverImage}
-        alt={`${track.title} by ${track.artist}`}
-        className="rounded-lg"
-      />
+      {children}
 
       <CardContent className="pb-6 h-full flex flex-col justify-between">
         <TrackInfo track={track} />
