@@ -3,12 +3,8 @@ import { lazy, Suspense } from 'react';
 import { Card, CardTitle } from '@/components/ui/card';
 import useTracksQuery from '@/features/tracks/hooks/queries/use-tracks-query';
 import { MAX_TRACKS_PER_PAGE } from '@/features/tracks/lib/constants';
-import { getTrackImage } from '@/features/tracks/lib/utils';
 
 const TrackCard = lazy(() => import('@/features/tracks/components/track-card'));
-const TrackImage = lazy(
-  () => import('@/features/tracks/components/track-image')
-);
 const TrackCardSkeleton = lazy(
   () => import('@/features/tracks/components/track-card-skeleton')
 );
@@ -43,16 +39,9 @@ const TracksList = () => {
       data-testid="tracks-list"
       className="grid w-full grid-cols-1 gap-4 lg:grid-cols-3 sm:grid-cols-2"
     >
-      {tracks?.map((track, index) => (
+      {tracks?.map((track) => (
         <Suspense fallback={<TrackCardSkeleton />}>
-          <TrackCard track={track} key={track.id}>
-            <TrackImage
-              isLCP={index < 1}
-              image={track.coverImage ? getTrackImage(track.id) : undefined}
-              alt={`${track.title} by ${track.artist}`}
-              className="rounded-lg"
-            />
-          </TrackCard>
+          <TrackCard track={track} key={track.id} />
         </Suspense>
       ))}
     </div>

@@ -1,14 +1,13 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
+import TrackImage from '@/features/tracks/components/track-image';
 import PlaybackControls from '@/components/audio/playback-controls';
 import TimeScrubber from '@/components/audio/time-scrubber';
 import VolumeControl from '@/components/audio/volume-control';
 import { useActiveTrackStream } from '@/features/tracks/hooks/use-active-track.stream';
 import useAudioController from '@/features/tracks/hooks/use-audio-controller';
 import { getAudioFile } from '@/features/tracks/lib/utils';
-
-import TrackImage from './track-image';
 
 const AudioSnackbar = () => {
   const [visible, setVisible] = useState(false);
