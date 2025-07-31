@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2023"],
+    "baseUrl": ".",
+    "paths": {
+      "@grpc-generated/*": ["packages/grpc-client/src/generated/*"],
+      "@/*": ["apps/web/src/*"]
+    },
+    "strict": true,
+    "esModuleInterop": true
+  }
+}

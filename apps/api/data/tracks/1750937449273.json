@@ -1,0 +1,14 @@
+{
+  "title": "London Calling",
+  "artist": "Beyoncé",
+  "album": "Un Verano Sin Ti",
+  "genres": [
+    "Jazz",
+    "R&B"
+  ],
+  "slug": "london-calling",
+  "coverImage": "https://picsum.photos/seed/London%20Calling/300/300",
+  "id": "1750937449273",
+  "createdAt": "2025-06-26T11:30:49.273Z",
+  "updatedAt": "2025-06-26T11:30:49.273Z"
+}
